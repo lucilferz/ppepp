@@ -1,0 +1,15 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Direct request for root folder to public/
+    RewriteRule ^$ public/ [L]
+
+    # If requested file or folder does not exist in root, pass to public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+</IfModule>
+
+DirectoryIndex index.php public/index.php
