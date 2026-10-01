@@ -6,9 +6,9 @@ $breadcrumbs = [
 ];
 
 $roleBadges = [
-  'dekan'   => ['bg' => '#fef3c7', 'text' => '#b45309', 'label' => '👑 Dekan'],
-  'kaprodi' => ['bg' => '#ede9fe', 'text' => '#6d28d9', 'label' => '🎓 Kaprodi'],
-  'dosen'   => ['bg' => '#e0f2fe', 'text' => '#0369a1', 'label' => '🧑‍🏫 Dosen'],
+  'dekan'   => ['bg' => '#fef3c7', 'text' => '#b45309', 'label' => 'Dekan'],
+  'kaprodi' => ['bg' => '#ede9fe', 'text' => '#6d28d9', 'label' => 'Kaprodi'],
+  'dosen'   => ['bg' => '#e0f2fe', 'text' => '#0369a1', 'label' => 'Dosen'],
 ];
 
 $jenjangLabel = [
@@ -71,12 +71,12 @@ $jenjangLabel = [
 <div style="display:flex;gap:10px;border-bottom:2px solid #e2e8f0;margin-bottom:24px;padding-bottom:2px;">
   <button type="button" id="tabBtnUsers" onclick="switchAdminTab('users')"
           style="padding:10px 20px;font-weight:800;font-size:14px;border:none;background:none;cursor:pointer;color:#4f46e5;border-bottom:3px solid #4f46e5;margin-bottom:-3px;display:flex;align-items:center;gap:8px;">
-    <span>👥 Manajemen Pengguna</span>
+    <span>Manajemen Pengguna</span>
     <span style="background:#eef2ff;color:#4f46e5;font-size:11.5px;padding:2px 8px;border-radius:12px;"><?= $totalUsers ?></span>
   </button>
   <button type="button" id="tabBtnProdi" onclick="switchAdminTab('prodi')"
           style="padding:10px 20px;font-weight:800;font-size:14px;border:none;background:none;cursor:pointer;color:#64748b;border-bottom:3px solid transparent;margin-bottom:-3px;display:flex;align-items:center;gap:8px;">
-    <span>🎓 Manajemen Program Studi</span>
+    <span>Manajemen Program Studi</span>
     <span style="background:#f1f5f9;color:#64748b;font-size:11.5px;padding:2px 8px;border-radius:12px;"><?= $totalProdi ?></span>
   </button>
 </div>

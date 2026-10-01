@@ -34,17 +34,17 @@
       --text-main: #1e293b;
       --text-muted: #64748b;
       --text-light: #94a3b8;
-      --bg: #f0f4ff;
+      --bg: #f4f6fb;
       --card: #ffffff;
       --border: #e2e8f0;
-      --sidebar-bg: linear-gradient(180deg, #0f172a 0%, #1a237e 60%, #283593 100%);
-      --sidebar-width: 255px;
-      --header-height: 62px;
-      --radius: 14px;
-      --radius-sm: 10px;
-      --shadow: 0 2px 16px rgba(26, 35, 126, 0.09);
-      --shadow-lg: 0 8px 32px rgba(26, 35, 126, 0.16);
-      --transition: 0.18s ease;
+      --sidebar-bg: linear-gradient(180deg, #111827 0%, #1a237e 70%, #283593 100%);
+      --sidebar-width: 252px;
+      --header-height: 58px;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 1px 6px rgba(15, 23, 42, 0.07);
+      --shadow-lg: 0 4px 20px rgba(15, 23, 42, 0.12);
+      --transition: 0.15s ease;
     }
 
     html {
@@ -420,7 +420,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 22px;
+      padding: 14px 20px;
       border-bottom: 1px solid var(--border);
       background: #fafbff;
     }
@@ -828,11 +828,11 @@
     }
 
     thead th {
-      background: #fafbff;
-      font-size: 12px;
+      background: #f8fafc;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       color: var(--text-muted);
       padding: 10px 14px;
       text-align: left;
@@ -1665,36 +1665,31 @@ function isActive(string $path, string $current, string $base = ''): bool
     <!-- User Profile Widget -->
     <?php
     $roleLabel = [
-      'kaprodi' => '👑 Ketua Program Studi',
-      'dekan' => '🏛️ Dekan / Pimpinan',
-      'dosen' => '🧑‍🏫 Dosen / Auditor',
-    ];
-    $roleColors = [
-      'kaprodi' => '#fbbf24',
-      'dekan' => '#60a5fa',
-      'dosen' => '#34d399',
+      'kaprodi' => 'Ketua Program Studi',
+      'dekan' => 'Dekan / Pimpinan',
+      'dosen' => 'Dosen / Auditor',
     ];
     $userRole = $currentUser['role'] ?? 'dosen';
     ?>
     <div class="sidebar-profile"
-      style="padding:14px 16px;margin:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+      style="padding:12px 14px;margin:10px 12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;">
+      <div style="display:flex;align-items:center;gap:9px;">
         <?php if (!empty($currentUser['avatar'])): ?>
           <img src="<?= htmlspecialchars($currentUser['avatar']) ?>" alt="Avatar"
-            style="width:30px;height:30px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;">
+            style="width:30px;height:30px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;">
         <?php else: ?>
           <div
-            style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;">
+            style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;letter-spacing:0;">
             <?= strtoupper(mb_substr(explode(' ', $currentUser['nama_lengkap'] ?: $currentUser['username'] ?: 'U')[0], 0, 1)) ?>
           </div>
         <?php endif; ?>
-        <div>
-          <div class="prodi-label"
-            style="font-size:11px;font-weight:700;color:<?= $roleColors[$userRole] ?? '#fff' ?>;">
+        <div style="min-width:0;">
+          <div
+            style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.5px;">
             <?= $roleLabel[$userRole] ?? 'Dosen' ?>
           </div>
-          <div class="prodi-name"
-            style="font-size:12px;color:#fff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px;">
+          <div
+            style="font-size:12px;font-weight:600;color:#fff;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:145px;">
             <?= htmlspecialchars($currentUser['nama_lengkap'] ?: $currentUser['username']) ?>
           </div>
         </div>
@@ -1720,14 +1715,14 @@ function isActive(string $path, string $current, string $base = ''): bool
         </li>
         <li class="nav-item">
           <a href="<?= BASE_URL ?>/pending"
-            class="nav-link <?= str_starts_with($appRelPath, '/pending') ? 'active' : '' ?>" style="color:#fca5a5;">
-            <span class="nav-icon" style="color:#fca5a5;">
+            class="nav-link <?= str_starts_with($appRelPath, '/pending') ? 'active' : '' ?>">
+            <span class="nav-icon">
               <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path
                   d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </span>
-            📌 Dokumen Belum Dikerjakan
+            Dokumen Belum Dikerjakan
           </a>
         </li>
         <li class="nav-item">
@@ -1743,10 +1738,14 @@ function isActive(string $path, string $current, string $base = ''): bool
         </li>
         <li class="nav-item">
           <a href="<?= BASE_URL ?>/users/api-key"
-            class="nav-link <?= str_starts_with($appRelPath, '/users/api-key') ? 'active' : '' ?>"
-            style="<?= empty($currentUser['gemini_api_key']) ? 'color:#fcd34d;' : '' ?>">
-            <span class="nav-icon"><?= empty($currentUser['gemini_api_key']) ? '⚠️' : '🔑' ?></span>
-            <?= empty($currentUser['gemini_api_key']) ? 'Configuration' : 'API Key Gemini' ?>
+            class="nav-link <?= str_starts_with($appRelPath, '/users/api-key') ? 'active' : '' ?>">
+            <span class="nav-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path
+                  d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+              </svg>
+            </span>
+            <?= empty($currentUser['gemini_api_key']) ? 'Konfigurasi' : 'API Key Gemini' ?>
           </a>
         </li>
         <li class="nav-item">
@@ -2045,8 +2044,13 @@ function isActive(string $path, string $current, string $base = ''): bool
       <div class="topbar-right">
         <?php if (empty($currentUser['gemini_api_key'])): ?>
           <a href="<?= BASE_URL ?>/users/api-key"
-            style="display:inline-flex;align-items:center;gap:6px;background:#fff7ed;border:1px solid #fed7aa;color:#c2410c;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;text-decoration:none;">
-            ⚠️ Set API Key
+            style="display:inline-flex;align-items:center;gap:6px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;text-decoration:none;">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            Set API Key
           </a>
         <?php endif; ?>
         <div class="user-badge">
@@ -2063,7 +2067,7 @@ function isActive(string $path, string $current, string $base = ''): bool
               <?= htmlspecialchars($currentUser['nama_prodi'] ?: $currentUser['nama_lengkap'] ?: '') ?>
             </div>
             <div class="user-role">
-              <?= ['dekan' => '👑 Dekan', 'kaprodi' => '🎓 Kaprodi', 'dosen' => '🧑‍🏫 Dosen'][$currentUser['role'] ?? 'dosen'] ?? 'Dosen' ?>
+              <?= ['dekan' => 'Dekan', 'kaprodi' => 'Kaprodi', 'dosen' => 'Dosen'][$currentUser['role'] ?? 'dosen'] ?? 'Dosen' ?>
             </div>
           </div>
         </div>
@@ -2330,28 +2334,28 @@ function isActive(string $path, string $current, string $base = ''): bool
         }
 
         if (type === 'quota_exceeded') {
-          header.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
-          icon.innerHTML = '⚠️';
-          title.textContent = 'Kuota API Key Gemini Habis / Rate Limit Exceeded';
+          header.style.background = '#f59e0b';
+          icon.innerHTML = '<svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+          title.textContent = 'Kuota API Key Gemini Habis';
           message.innerHTML = msg || 'API Key Gemini Anda telah mencapai batas kuota gratis atau rate limit panggilan dari Google (HTTP 429 / Resource Exhausted).';
-          tips.innerHTML = '⏳ <strong>Solusi cepat:</strong><br>1. Tunggu 1–2 menit sebelum mencoba lagi.<br>2. Ganti model AI ke <code>gemini-2.0-flash-lite</code> di menu Pengaturan.<br>3. Gunakan API Key Gemini yang lain.';
-          btnAction.textContent = '⚙️ Buka Pengaturan Model AI';
+          tips.innerHTML = '<strong>Solusi cepat:</strong><br>1. Tunggu 1–2 menit sebelum mencoba lagi.<br>2. Ganti model AI ke <code>gemini-2.0-flash-lite</code> di menu Pengaturan.<br>3. Gunakan API Key Gemini yang lain.';
+          btnAction.textContent = 'Buka Pengaturan Model AI';
           btnAction.href = '<?= BASE_URL ?>/setting';
         } else if (type === 'missing_key' || type === 'invalid_key') {
-          header.style.background = 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)';
-          icon.innerHTML = '🔑';
+          header.style.background = '#ef4444';
+          icon.innerHTML = '<svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>';
           title.textContent = (type === 'invalid_key') ? 'API Key Gemini Tidak Valid' : 'API Key Gemini Belum Terpasang';
           message.innerHTML = msg || 'Fitur AI Generate memerlukan API Key Gemini milik Anda yang aktif.';
-          tips.innerHTML = '💡 <strong>Petunjuk:</strong> Anda dapat membuat Gemini API Key gratis di <strong>Google AI Studio</strong> (aistudio.google.com) lalu memasukkannya di Pengaturan.';
-          btnAction.textContent = '⚙️ Buka Pengaturan API Key';
+          tips.innerHTML = '<strong>Petunjuk:</strong> Anda dapat membuat Gemini API Key gratis di <strong>Google AI Studio</strong> (aistudio.google.com) lalu memasukkannya di Pengaturan.';
+          btnAction.textContent = 'Buka Pengaturan API Key';
           btnAction.href = '<?= BASE_URL ?>/setting';
         } else {
-          header.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
-          icon.innerHTML = '🤖';
+          header.style.background = '#3b82f6';
+          icon.innerHTML = '<svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
           title.textContent = 'Peringatan Fitur AI';
           message.innerHTML = msg || 'Terjadi hambatan saat menghubungi layanan Google Gemini AI.';
-          tips.innerHTML = ' Silakan periksa koneksi internet atau coba beberapa saat lagi.';
-          btnAction.textContent = '⚙️ Buka Pengaturan';
+          tips.innerHTML = 'Silakan periksa koneksi internet atau coba beberapa saat lagi.';
+          btnAction.textContent = 'Buka Pengaturan';
           btnAction.href = '<?= BASE_URL ?>/setting';
         }
 
@@ -2364,40 +2368,35 @@ function isActive(string $path, string $current, string $base = ''): bool
 
   <!-- GLOBAL AI WARNING MODAL -->
   <div class="modal-overlay" id="globalAiWarningModal" style="z-index:99999;">
-    <div class="modal-card"
-      style="max-width:500px;border-radius:18px;box-shadow:0 24px 48px rgba(0,0,0,0.3);overflow:hidden;border:none;padding:0;">
+    <div class="modal" style="max-width:480px;">
       <div id="aiModalHeader"
-        style="background:linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);color:#fff;padding:22px 24px;display:flex;align-items:center;gap:14px;">
+        style="background:#ef4444;color:#fff;padding:20px 22px;display:flex;align-items:center;gap:12px;">
         <div id="aiModalIcon"
-          style="width:44px;height:44px;background:rgba(255,255,255,0.22);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">
-          🔑
+          style="width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24">
+            <path
+              d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+          </svg>
         </div>
         <div>
-          <h3 id="aiModalTitle" style="font-size:17px;font-weight:800;margin:0 0 2px;color:#fff;letter-spacing:-0.2px;">
+          <h3 id="aiModalTitle" style="font-size:15px;font-weight:700;margin:0 0 2px;color:#fff;">
             API Key Gemini Belum Terpasang</h3>
-          <p style="font-size:12px;margin:0;opacity:0.9;color:#fff;">Peringatan Fitur AI PPEPP</p>
+          <p style="font-size:12px;margin:0;color:rgba(255,255,255,0.8);">Peringatan Fitur AI PPEPP</p>
         </div>
       </div>
-      <div class="modal-body" style="padding:22px 24px;background:#fff;">
-        <div id="aiModalMessage"
-          style="font-size:13.5px;color:#334155;line-height:1.65;margin-bottom:18px;font-weight:500;">
+      <div class="modal-body">
+        <div id="aiModalMessage" style="font-size:13.5px;color:#334155;line-height:1.65;margin-bottom:16px;">
           API Key Gemini belum diisi. Silakan masukkan API Key Gemini Anda di menu Pengaturan.
         </div>
         <div id="aiModalTips"
-          style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;font-size:12.5px;color:#475569;margin-bottom:22px;line-height:1.6;">
-          💡 <strong>Petunjuk:</strong> Anda dapat memperoleh Gemini API Key secara gratis dari Google AI Studio
+          style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:12.5px;color:#475569;margin-bottom:20px;line-height:1.6;">
+          <strong>Petunjuk:</strong> Anda dapat memperoleh Gemini API Key secara gratis dari Google AI Studio
           (aistudio.google.com).
         </div>
-        <div style="display:flex;gap:10px;justify-content:flex-end;align-items:center;">
-          <button type="button" class="btn btn-outline" data-modal-close="globalAiWarningModal"
-            style="padding:9px 18px;font-weight:600;border-radius:10px;">
-            Tutup
-          </button>
-          <a href="<?= BASE_URL ?>/setting" id="aiModalBtnAction" class="btn btn-primary"
-            style="padding:9px 20px;font-weight:700;border-radius:10px;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;color:#fff;text-decoration:none;">
-            ⚙️ Buka Pengaturan API Key
-          </a>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-modal-close="globalAiWarningModal">Tutup</button>
+        <a href="<?= BASE_URL ?>/setting" id="aiModalBtnAction" class="btn btn-primary">Buka Pengaturan</a>
       </div>
     </div>
   </div>

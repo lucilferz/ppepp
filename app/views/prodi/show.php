@@ -13,7 +13,7 @@ $dosenProdi   = $prodi['dosen'] ?? [];
 $dosenLain = array_filter($allDosen, fn($u) => $u['prodi_id'] !== $prodi['id'] || $u['prodi_id'] === null);
 $roleBadge = [
   'dekan'   => ['bg'=>'#dbeafe','text'=>'#1d4ed8','label'=>'👑 Dekan'],
-  'kaprodi' => ['bg'=>'#ede9fe','text'=>'#6d28d9','label'=>'🎓 Kaprodi'],
+  'kaprodi' => ['bg'=>'#ede9fe','text'=>'#6d28d9','label'=>'Kaprodi'],
   'dosen'   => ['bg'=>'#f1f5f9','text'=>'#475569','label'=>'🧑‍🏫 Dosen'],
 ];
 ?>

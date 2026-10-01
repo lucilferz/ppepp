@@ -56,7 +56,7 @@ $jenjangLabel = ['D3' => 'D-III', 'S1' => 'S-1', 'S2' => 'S-2', 'S3' => 'S-3'];
         </div>
         <h3 style="font-size:16px;font-weight:900;color:#0c4a6e;margin:0 0 4px;"><?= htmlspecialchars($p['nama']) ?></h3>
         <?php if ($p['kaprodi_nama']): ?>
-        <div style="font-size:12.5px;color:#0284c7;font-weight:600;">🎓 Kaprodi: <?= htmlspecialchars($p['kaprodi_nama']) ?></div>
+        <div style="font-size:12.5px;color:#0284c7;font-weight:600;">Kaprodi: <?= htmlspecialchars($p['kaprodi_nama']) ?></div>
         <?php else: ?>
         <div style="font-size:12.5px;color:#94a3b8;font-style:italic;">Kaprodi belum ditentukan</div>
         <?php endif; ?>

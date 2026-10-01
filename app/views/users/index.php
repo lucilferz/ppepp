@@ -6,27 +6,26 @@ $breadcrumbs = [
 ];
 
 $roleBadge = [
-  'dekan'   => ['bg' => '#dbeafe', 'text' => '#1d4ed8', 'label' => '👑 Dekan'],
-  'kaprodi' => ['bg' => '#ede9fe', 'text' => '#6d28d9', 'label' => '🎓 Kaprodi'],
-  'dosen'   => ['bg' => '#f1f5f9', 'text' => '#475569', 'label' => '🧑‍🏫 Dosen'],
+  'dekan'   => ['bg' => '#dbeafe', 'text' => '#1d4ed8', 'label' => 'Dekan'],
+  'kaprodi' => ['bg' => '#ede9fe', 'text' => '#6d28d9', 'label' => 'Kaprodi'],
+  'dosen'   => ['bg' => '#f1f5f9', 'text' => '#475569', 'label' => 'Dosen'],
 ];
 ?>
 
 <!-- Header -->
-<div style="background:linear-gradient(135deg,#0f172a,#1e1b4b,#312e81);border-radius:16px;padding:26px 32px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;box-shadow:0 8px 28px rgba(15,23,42,0.15);">
+<div class="page-header" style="margin-bottom:20px;">
   <div>
-    <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#a5b4fc;margin-bottom:6px;">Manajemen Pengguna Sistem</div>
-    <h2 style="font-size:22px;font-weight:900;color:#fff;margin:0 0 4px;">👥 Daftar Dosen PPEPP</h2>
-    <p style="font-size:13px;color:rgba(255,255,255,0.7);margin:0;">Kelola akun dosen, role, dan status API Key Gemini</p>
+    <h2>Daftar Pengguna PPEPP</h2>
+    <p class="page-desc">Kelola akun dosen, role, dan status API Key Gemini</p>
   </div>
-  <a href="<?= BASE_URL ?>/users/create"
-     style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:800;font-size:13px;padding:11px 20px;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(79,70,229,0.4);">
+  <a href="<?= BASE_URL ?>/users/create" class="btn btn-primary">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
     + Tambah Dosen Baru
   </a>
 </div>
 
 <?php if (!empty($flash['message'])): ?>
-<div style="margin-bottom:16px;padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:600;<?= $flash['type']==='success' ? 'background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;' : 'background:#fef2f2;border:1px solid #fecaca;color:#991b1b;' ?>">
+<div class="alert alert-<?= $flash['type']==='success' ? 'success' : 'error' ?>" style="margin-bottom:16px;">
   <?= htmlspecialchars($flash['message']) ?>
 </div>
 <?php endif; ?>

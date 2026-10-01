@@ -17,42 +17,43 @@ $countPenI = count(array_filter($incList, fn($x) => $x['stage'] === 'peningkatan
 ?>
 
 <!-- Header Banner -->
-<div style="background:linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);border-radius:16px;padding:28px 32px;margin-bottom:24px;color:#ffffff;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 8px 30px rgba(15,23,42,0.15);">
-  <div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-      <span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#a5b4fc;">
-        Monitoring Work In Progress
-      </span>
-      <span style="background:#ef4444;color:#fff;font-size:11.5px;font-weight:800;padding:3px 12px;border-radius:20px;">
-        <?= $totalCount ?> Dokumen Perlu Ditindaklanjuti
-      </span>
+<div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:var(--shadow);">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="width:44px;height:44px;border-radius:10px;background:#fef2f2;border:1.5px solid #fca5a5;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <svg width="22" height="22" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
     </div>
-    <h2 style="font-size:26px;font-weight:900;color:#ffffff;margin-bottom:6px;letter-spacing:-0.5px;">
-      📌 Filter Dokumen Belum Dikerjakan (Per Project)
-    </h2>
-    <p style="font-size:14px;color:rgba(255,255,255,0.75);max-width:650px;line-height:1.5;">
-      Dokumen dan tahap PPEPP dikelompokkan secara terpisah per <strong>Project / Tahun Ajaran</strong> agar lebih mudah dipilah dan ditindaklanjuti.
-    </p>
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <h2 style="font-size:16px;font-weight:800;color:var(--text-main);margin:0;">Dokumen Belum Dikerjakan</h2>
+        <span style="background:#ef4444;color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;">
+          <?= $totalCount ?> item
+        </span>
+      </div>
+      <p style="font-size:12.5px;color:var(--text-muted);margin:0;">Dokumen dan tahap PPEPP dikelompokkan per <strong>Project / Tahun Ajaran</strong> agar lebih mudah dipilah dan ditindaklanjuti.</p>
+    </div>
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-    <a href="<?= BASE_URL ?>/ppepp" class="btn btn-outline" style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25);color:#fff;font-weight:700;font-size:13px;border-radius:10px;padding:10px 18px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-      📁 Library Project PPEPP
+    <a href="<?= BASE_URL ?>/ppepp" class="btn btn-outline btn-sm">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><path d="M3 7l9 6 9-6"/></svg>
+      Library Project PPEPP
     </a>
   </div>
 </div>
 
 <!-- Toolbar Filter per Project, Stage, Status & Search -->
-<div class="card mb-4" style="border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,0.04);border:1.5px solid #cbd5e1;padding:18px 24px;margin-bottom:28px;background:#fff;">
-  <div style="display:flex;flex-direction:column;gap:14px;">
+<div class="card mb-4" style="margin-bottom:20px;">
+  <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
     
     <!-- Row 1: Filter Project Dropdown & Search -->
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <!-- Filter Project Dropdown -->
       <div style="flex:1;min-width:240px;">
-        <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 4px;display:block;">📁 Pilih Project / Tahun Ajaran:</label>
-        <select id="pendingProjectSelect" onchange="applyPendingFilters()" class="form-control"
-                style="font-size:13.5px;font-weight:700;border-radius:8px;border-color:#6366f1;background:#f5f3ff;color:#312e81;">
-          <option value="all">✨ Semua Project (Tahun Ajaran)</option>
+        <label style="font-size:12px;font-weight:700;color:var(--text-muted);margin:0 0 4px;display:block;text-transform:uppercase;letter-spacing:0.4px;">Project / Tahun Ajaran</label>
+        <select id="pendingProjectSelect" onchange="applyPendingFilters()" class="form-control" style="font-size:13px;">
+          <option value="all">Semua Project (Tahun Ajaran)</option>
           <?php foreach ($projList as $pj): ?>
           <?php
           $pCount = count(array_filter($incList, fn($x) => $x['project_id'] == $pj['id']));
@@ -66,20 +67,20 @@ $countPenI = count(array_filter($incList, fn($x) => $x['stage'] === 'peningkatan
 
       <!-- Filter Status Dropdown -->
       <div style="width:180px;">
-        <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 4px;display:block;">⚡ Status Dokumen:</label>
-        <select id="pendingStatusSelect" onchange="applyPendingFilters()" class="form-control" style="font-size:13px;font-weight:700;border-radius:8px;border-color:#cbd5e1;">
-          <option value="all">✨ Semua Status</option>
-          <option value="empty">🔴 Belum Dibuat Saja</option>
-          <option value="draft">🟡 Draft Saja</option>
+        <label style="font-size:12px;font-weight:700;color:var(--text-muted);margin:0 0 4px;display:block;text-transform:uppercase;letter-spacing:0.4px;">Status Dokumen</label>
+        <select id="pendingStatusSelect" onchange="applyPendingFilters()" class="form-control" style="font-size:13px;">
+          <option value="all">Semua Status</option>
+          <option value="empty">Belum Dibuat</option>
+          <option value="draft">Draft</option>
         </select>
       </div>
 
       <!-- Live Search Box -->
       <div style="flex:1;min-width:200px;">
-        <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 4px;display:block;">🔍 Cari Kata Kunci:</label>
+        <label style="font-size:12px;font-weight:700;color:var(--text-muted);margin:0 0 4px;display:block;text-transform:uppercase;letter-spacing:0.4px;">Cari Kata Kunci</label>
         <div style="position:relative;">
           <input type="text" id="pendingSearchInput" onkeyup="applyPendingFilters()" placeholder="Cari nama dokumen..." class="form-control"
-                 style="padding-left:34px;font-size:13px;border-radius:8px;border-color:#cbd5e1;">
+                 style="padding-left:34px;font-size:13px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" width="16" height="16"
                style="position:absolute;left:10px;top:50%;transform:translateY(-50%);"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
@@ -87,8 +88,8 @@ $countPenI = count(array_filter($incList, fn($x) => $x['stage'] === 'peningkatan
     </div>
 
     <!-- Row 2: Filter Stage Buttons -->
-    <div style="border-top:1px solid #f1f5f9;padding-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-      <div style="font-size:12px;font-weight:800;color:#475569;">📌 Filter Tahap PPEPP:</div>
+    <div style="border-top:1px solid var(--border);padding-top:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Filter Tahap PPEPP:</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;" id="stageFilterButtons">
         <button type="button" onclick="filterPendingStage('all', this)" class="btn btn-sm pending-stage-btn active"
                 style="font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;background:#1e293b;color:#fff;border:1px solid #1e293b;cursor:pointer;">

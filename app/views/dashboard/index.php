@@ -4,31 +4,29 @@ $breadcrumbs = [['label' => 'Dashboard']];
 ?>
 
 <!-- Greeting Banner -->
-<div style="background:linear-gradient(135deg, #0f172a 0%, #1a237e 60%, #283593 100%);border-radius:var(--radius);padding:28px 32px;margin-bottom:28px;color:#ffffff;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:var(--shadow-lg);">
-  <div>
-    <p style="font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:6px;">Selamat datang,</p>
-    <h2 style="font-size:24px;font-weight:800;color:#ffffff;margin-bottom:6px;">
-      Program Studi <?= htmlspecialchars($user['nama_prodi']) ?>
-    </h2>
-    <p style="font-size:14px;color:rgba(255,255,255,0.85);">
-      Platform PPEPP — Penyusunan Laporan Evaluasi Diri (LED)
-    </p>
-    <?php if (!empty($tahunAktif) && is_array($tahunAktif) && !empty($tahunAktif['nama'])): ?>
-    <div style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);padding:7px 16px;border-radius:30px;font-size:13px;font-weight:700;color:#ffffff;">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-      </svg>
-      Tahun Ajaran: <?= htmlspecialchars($tahunAktif['nama']) ?>
-    </div>
-    <?php endif; ?>
-  </div>
-  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-    <div style="width:80px;height:80px;background:rgba(255,255,255,0.1);border-radius:20px;display:flex;align-items:center;justify-content:center;">
-      <svg width="44" height="44" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" viewBox="0 0 24 24">
+<div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 1px 4px rgba(26,35,126,0.05);">
+  <div style="display:flex;align-items:center;gap:18px;">
+    <div style="width:52px;height:52px;border-radius:14px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <svg width="26" height="26" fill="none" stroke="var(--primary-light)" stroke-width="1.8" viewBox="0 0 24 24">
         <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
       </svg>
     </div>
+    <div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:3px;font-weight:500;">Selamat datang</p>
+      <h2 style="font-size:18px;font-weight:800;color:var(--text-main);margin-bottom:2px;letter-spacing:-0.3px;">
+        <?= htmlspecialchars($user['nama_prodi']) ?>
+      </h2>
+      <p style="font-size:13px;color:var(--text-muted);">Platform PPEPP — Penyusunan Laporan Evaluasi Diri (LED)</p>
+    </div>
   </div>
+  <?php if (!empty($tahunAktif) && is_array($tahunAktif) && !empty($tahunAktif['nama'])): ?>
+  <div style="display:inline-flex;align-items:center;gap:7px;background:var(--bg);border:1.5px solid var(--border);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;color:var(--text-main);flex-shrink:0;">
+    <svg width="14" height="14" fill="none" stroke="var(--primary-light)" stroke-width="2" viewBox="0 0 24 24">
+      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+    <?= htmlspecialchars($tahunAktif['nama']) ?>
+  </div>
+  <?php endif; ?>
 </div>
 
 <!-- Stats Grid -->
@@ -88,26 +86,29 @@ $breadcrumbs = [['label' => 'Dashboard']];
 </div>
 
 <!-- BANNER SIKLUS BELUM DIKERJAKAN -->
-<div class="card mb-4" style="border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,0.04);border:1.5px solid #fca5a5;background:linear-gradient(135deg,#fffef2,#fff5f5);padding:20px 24px;margin-top:24px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-  <div style="display:flex;align-items:center;gap:14px;">
-    <div style="width:44px;height:44px;background:#ef4444;color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(239,68,68,0.3);flex-shrink:0;">
-      📌
-    </div>
-    <div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
-        <h3 style="font-size:16px;font-weight:800;color:#0f172a;margin:0;">Dokumen &amp; Tahap Belum Dikerjakan</h3>
-        <span class="badge" style="background:#ef4444;color:#fff;font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:20px;">
-          <?= count($incompleteItems ?? []) ?> Perlu Dikerjakan
-        </span>
+<div class="card" style="border-color:#fca5a5;background:#fef2f2;margin-bottom:20px;">
+  <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 20px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div style="width:40px;height:40px;background:#ef4444;color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
       </div>
-      <p style="font-size:12.5px;color:#64748b;margin:0;">
-        Halaman khusus untuk memfilter dan langsung mengerjakan dokumen yang masih kosong atau draft.
-      </p>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+          <h3 style="font-size:14px;font-weight:700;color:#0f172a;margin:0;">Dokumen &amp; Tahap Belum Dikerjakan</h3>
+          <span class="badge" style="background:#ef4444;color:#fff;font-weight:700;font-size:11px;padding:2px 8px;border-radius:20px;">
+            <?= count($incompleteItems ?? []) ?> item
+          </span>
+        </div>
+        <p style="font-size:12.5px;color:#64748b;margin:0;">Halaman khusus untuk memfilter dan langsung mengerjakan dokumen yang masih kosong atau draft.</p>
+      </div>
     </div>
+    <a href="<?= BASE_URL ?>/pending" class="btn btn-danger btn-sm" style="white-space:nowrap;">
+      Lihat Dokumen Belum Dikerjakan
+    </a>
   </div>
-  <a href="<?= BASE_URL ?>/pending" class="btn btn-primary" style="background:#ef4444;border:none;font-weight:800;font-size:13px;padding:10px 20px;border-radius:9px;box-shadow:0 4px 14px rgba(239,68,68,0.3);display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;">
-    Buka Halaman Khusus Dokumen Belum Dikerjakan →
-  </a>
 </div>
 
 <!-- Content Grid -->

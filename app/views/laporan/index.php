@@ -19,12 +19,12 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
 <style>
 /* CSS Styling khusus halaman Laporan Eksekutif */
 .laporan-header-box {
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-  border-radius: 16px;
-  padding: 26px 30px;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 28px;
   margin-bottom: 24px;
-  color: #fff;
-  box-shadow: 0 10px 30px rgba(49,46,129,0.2);
+  box-shadow: var(--shadow);
 }
 .stat-pill-badge {
   display: inline-flex;
@@ -147,29 +147,34 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
 <!-- Project Header Banner -->
 <div class="laporan-header-box">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-    <div>
-      <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.6);margin-bottom:6px;">
-        Laporan Eksekutif &amp; Matriks Komprehensif PPEPP Fakultas
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="width:48px;height:48px;border-radius:12px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-light)" stroke-width="1.8" width="24" height="24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       </div>
-      <h2 style="font-size:26px;font-weight:900;color:#fff;margin:0 0 4px;letter-spacing:-0.4px;">
-        <?= htmlspecialchars($project['judul'] ?? 'Project PPEPP') ?>
-      </h2>
-      <div style="font-size:13.5px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px;">
-        <span>Tahun Ajaran: <strong><?= htmlspecialchars($project['ta_nama']) ?></strong> (<?= ucfirst($project['semester'] ?? '') ?>)</span>
-        <span>•</span>
-        <span>Status Project: <strong style="color:#a7f3d0;"><?= ucfirst($project['status'] ?? 'aktif') ?></strong></span>
-        <span>•</span>
-        <span>Tanggal Laporan: <?= date('d F Y') ?></span>
+      <div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:4px;">
+          Laporan Eksekutif &amp; Matriks Komprehensif PPEPP Fakultas
+        </div>
+        <h2 style="font-size:20px;font-weight:800;color:var(--text-main);margin:0 0 4px;letter-spacing:-0.3px;">
+          <?= htmlspecialchars($project['judul'] ?? 'Project PPEPP') ?>
+        </h2>
+        <div style="font-size:12.5px;color:var(--text-muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span>Tahun Ajaran: <strong style="color:var(--text-main);"><?= htmlspecialchars($project['ta_nama']) ?></strong> (<?= ucfirst($project['semester'] ?? '') ?>)</span>
+          <span>•</span>
+          <span>Status: <strong style="color:#059669;"><?= ucfirst($project['status'] ?? 'aktif') ?></strong></span>
+          <span>•</span>
+          <span>Laporan per: <?= date('d F Y') ?></span>
+        </div>
       </div>
     </div>
 
     <!-- Overall Progress Badge -->
-    <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:14px 20px;text-align:right;">
-      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;">Ketercapaian Standar</div>
-      <div style="font-size:28px;font-weight:900;color:#fbbf24;margin-top:2px;">
+    <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 18px;text-align:right;">
+      <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.4px;">Ketercapaian Standar</div>
+      <div style="font-size:26px;font-weight:800;color:var(--primary-light);margin-top:2px;">
         <?= $stats['pct_evaluasi'] ?? 0 ?>%
       </div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.6);">
+      <div style="font-size:11px;color:var(--text-muted);">
         <?= $stats['evaluasi']['tercapai'] ?? 0 ?> dari <?= $stats['total_standar'] ?? 0 ?> Standar Terpenuhi
       </div>
     </div>
@@ -302,11 +307,11 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
                 </div>
                 
                 <div style="font-size:13px;color:#0369a1;margin-top:4px;line-height:1.5;">
-                  <strong>📊 Target / Indikator:</strong> <?= htmlspecialchars($m['p1_indikator']) ?>
+                  <strong>Target / Indikator:</strong> <?= htmlspecialchars($m['p1_indikator']) ?>
                 </div>
                 <?php if (!empty($m['p1_aturan']) && $m['p1_aturan'] !== '—'): ?>
                 <div style="font-size:12px;color:#64748b;margin-top:4px;">
-                  <em>📌 Aturan: <?= htmlspecialchars($m['p1_aturan']) ?></em>
+                  <em>Aturan: <?= htmlspecialchars($m['p1_aturan']) ?></em>
                 </div>
                 <?php endif; ?>
               </td>

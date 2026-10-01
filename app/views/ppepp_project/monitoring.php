@@ -209,13 +209,13 @@ $pStats = $projectStats;
         <div style="background:#fff;border:1.5px solid #cbd5e1;border-radius:12px;padding:16px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;">
           <?php if (!empty($d['strategi'])): ?>
           <div style="background:#f8faff;border-left:4px solid #4f46e5;padding:10px 14px;border-radius:0 10px 10px 0;">
-            <div style="font-size:12px;font-weight:800;text-transform:uppercase;color:#4f46e5;margin-bottom:4px;letter-spacing:0.5px;">📌 Aturan / Dasar Hukum</div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4f46e5;margin-bottom:4px;letter-spacing:0.5px;">Aturan / Dasar Hukum</div>
             <div style="font-size:15px;color:#1e293b;line-height:1.7;white-space:pre-wrap;font-weight:500;"><?= htmlspecialchars($d['strategi']) ?></div>
           </div>
           <?php endif; ?>
 
           <div style="background:#f0fdf4;border-left:4px solid #059669;padding:10px 14px;border-radius:0 10px 10px 0;">
-            <div style="font-size:12px;font-weight:800;text-transform:uppercase;color:#065f46;margin-bottom:4px;letter-spacing:0.5px;">🎯 Pernyataan Standar (Target Capaian)</div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#065f46;margin-bottom:4px;letter-spacing:0.5px;">Pernyataan Standar (Target Capaian)</div>
             <div style="font-size:15px;color:#1e293b;line-height:1.7;white-space:pre-wrap;font-weight:500;"><?= !empty($d['target_capaian']) ? htmlspecialchars($d['target_capaian']) : '<span style="color:#94a3b8;font-style:italic;">Belum diisi</span>' ?></div>
           </div>
 

@@ -137,9 +137,9 @@ foreach ($allKriteria ?? [] as $ak) {
     
     <!-- 1. Filter Tahap PPEPP -->
     <div>
-      <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 5px;display:block;">📌 Tahap PPEPP:</label>
-      <select id="filterStageSelect" onchange="applyProjectFilters()" class="form-control" style="font-size:13px;font-weight:700;border-color:#a5b4fc;background:#f8faff;">
-        <option value="all">✨ Semua Tahap (5 Tahap)</option>
+      <label style="font-size:12px;font-weight:700;color:#1e293b;margin:0 0 5px;display:block;">Tahap PPEPP:</label>
+      <select id="filterStageSelect" onchange="applyProjectFilters()" class="form-control" style="font-size:13px;">
+        <option value="all">Semua Tahap (5 Tahap)</option>
         <option value="penetapan">P1 — Penetapan Standar</option>
         <option value="pelaksanaan">P2 — Pelaksanaan Standar</option>
         <option value="evaluasi">E  — Evaluasi Diri</option>
@@ -150,9 +150,9 @@ foreach ($allKriteria ?? [] as $ak) {
 
     <!-- 2. Filter Kriteria -->
     <div>
-      <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 5px;display:block;">🎯 Kriteria SPMI / Prodi:</label>
-      <select id="filterKriteriaSelect" onchange="applyProjectFilters()" class="form-control" style="font-size:13px;font-weight:700;border-color:#a5b4fc;background:#f8faff;">
-        <option value="all">✨ Semua Kriteria</option>
+      <label style="font-size:12px;font-weight:700;color:#1e293b;margin:0 0 5px;display:block;">Kriteria SPMI / Prodi:</label>
+      <select id="filterKriteriaSelect" onchange="applyProjectFilters()" class="form-control" style="font-size:13px;">
+        <option value="all">Semua Kriteria</option>
         <?php foreach ($allKriteria ?? [] as $ak): ?>
         <option value="<?= $ak['id'] ?>">
           <?= htmlspecialchars(($ak['kode'] ? '[' . $ak['kode'] . '] ' : '') . $ak['nama']) ?>
