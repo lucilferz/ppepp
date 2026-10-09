@@ -431,6 +431,8 @@ class ExcelHelper
                     $colMapping['pernyataan_standar'] = $colLetter;
                 } elseif (str_contains($lower, 'indikator') || str_contains($lower, 'ketercapaian') || str_contains($lower, 'ukuran')) {
                     $colMapping['indikator'] = $colLetter;
+                } elseif (str_contains($lower, 'turunan')) {
+                    $colMapping['turunan'] = $colLetter;
                 }
             }
         }
@@ -450,10 +452,16 @@ class ExcelHelper
         foreach ($rawRows as $rNum => $cols) {
             if ($headerRowIdx !== null && $rNum <= $headerRowIdx) continue;
 
-            $noVal     = $cols[$colMapping['no'] ?? ''] ?? ($cols['B'] ?? ($cols['A'] ?? ($cols[$availableCols[0] ?? ''] ?? '')));
-            $aturanVal = $cols[$colMapping['aturan'] ?? ''] ?? ($cols['C'] ?? ($cols['B'] ?? ($cols[$availableCols[1] ?? ''] ?? '')));
-            $targetVal = $cols[$colMapping['pernyataan_standar'] ?? ''] ?? ($cols['D'] ?? ($cols['C'] ?? ($cols[$availableCols[2] ?? ''] ?? '')));
-            $indVal    = $cols[$colMapping['indikator'] ?? ''] ?? ($cols['E'] ?? ($cols['D'] ?? ($cols[$availableCols[3] ?? ''] ?? '')));
+            $noVal      = $cols[$colMapping['no'] ?? ''] ?? ($cols['B'] ?? ($cols['A'] ?? ($cols[$availableCols[0] ?? ''] ?? '')));
+            $aturanVal  = $cols[$colMapping['aturan'] ?? ''] ?? ($cols['C'] ?? ($cols['B'] ?? ($cols[$availableCols[1] ?? ''] ?? '')));
+            $targetVal  = $cols[$colMapping['pernyataan_standar'] ?? ''] ?? ($cols['D'] ?? ($cols['C'] ?? ($cols[$availableCols[2] ?? ''] ?? '')));
+            $indVal     = $cols[$colMapping['indikator'] ?? ''] ?? ($cols['E'] ?? ($cols['D'] ?? ($cols[$availableCols[3] ?? ''] ?? '')));
+            $turunanVal = $cols[$colMapping['turunan'] ?? ''] ?? '';
+
+            // Deteksi apakah turunan dari kolom, nama sheet, atau teks
+            $isTurunanCol   = !empty($turunanVal) && in_array(strtolower(trim($turunanVal)), ['1', 'ya', 'yes', 'true', 'y', 'turunan']);
+            $isTurunanSheet = (stripos($sheetName, 'turunan') !== false);
+            $isTurunan      = ($isTurunanCol || $isTurunanSheet || stripos($targetVal . ' ' . $aturanVal, 'standar turunan') !== false) ? 1 : 0;
 
             // Jangan masukkan baris yang hanya titik atau simbol kosong
             if (trim($targetVal) === '.' || trim($indVal) === '.') {
@@ -473,6 +481,7 @@ class ExcelHelper
                 $currentStd = [
                     'no'                 => !empty($noVal) ? $noVal : (string)$stdSeq,
                     'sheet'              => $sheetName,
+                    'is_turunan'         => $isTurunan,
                     'aturan'             => $aturanVal,
                     'pernyataan_standar' => $targetVal,
                     'indikator'          => !empty($indVal) ? $indVal : '',
@@ -558,6 +567,7 @@ class ExcelHelper
             'aturan'             => '',
             'pernyataan_standar' => '',
             'indikator'          => '',
+            'is_turunan'         => 0,
         ];
 
         // Cari berdasarkan header jika cocok
@@ -573,6 +583,8 @@ class ExcelHelper
                 if (empty($item['pernyataan_standar'])) $item['pernyataan_standar'] = $val;
             } elseif (str_contains($hName, 'indikator') || str_contains($hName, 'ketercapaian') || str_contains($hName, 'ukuran')) {
                 if (empty($item['indikator'])) $item['indikator'] = $val;
+            } elseif (str_contains($hName, 'turunan')) {
+                $item['is_turunan'] = in_array(strtolower($val), ['1', 'ya', 'yes', 'true', 'y', 'turunan']) ? 1 : 0;
             }
         }
 

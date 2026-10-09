@@ -196,6 +196,7 @@ CREATE TABLE `penetapan_detail` (
   `penetapan_id` int NOT NULL,
   `kriteria_id` int NOT NULL,
   `kode` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_turunan` tinyint(1) NOT NULL DEFAULT 0,
   `target_capaian` text COLLATE utf8mb4_unicode_ci,
   `indikator` text COLLATE utf8mb4_unicode_ci,
   `strategi` text COLLATE utf8mb4_unicode_ci,

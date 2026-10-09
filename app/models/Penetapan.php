@@ -64,16 +64,17 @@ class Penetapan extends Model
         $indikator     = $data['indikator'] ?? '';
         $strategi      = $data['strategi'] ?? '';
         $sumberDaya    = $data['sumber_daya'] ?? '';
+        $isTurunan     = isset($data['is_turunan']) ? (int)$data['is_turunan'] : 0;
 
         $db = $this->getDb();
 
         if ($detailId && $detailId > 0) {
             $stmt = $db->prepare(
                 "UPDATE penetapan_detail 
-                 SET kriteria_id = ?, kode = ?, target_capaian = ?, indikator = ?, strategi = ?, sumber_daya = ?, ai_analisis = ?, updated_at = NOW()
+                 SET kriteria_id = ?, kode = ?, is_turunan = ?, target_capaian = ?, indikator = ?, strategi = ?, sumber_daya = ?, ai_analisis = ?, updated_at = NOW()
                  WHERE id = ? AND penetapan_id = ?"
             );
-            $stmt->execute([$kriteriaId, $kode, $targetCapaian, $indikator, $strategi, $sumberDaya, $aiAnalisis, $detailId, $penetapanId]);
+            $stmt->execute([$kriteriaId, $kode, $isTurunan, $targetCapaian, $indikator, $strategi, $sumberDaya, $aiAnalisis, $detailId, $penetapanId]);
             return $detailId;
         }
 
@@ -85,20 +86,20 @@ class Penetapan extends Model
             if ($existingId) {
                 $stmtUp = $db->prepare(
                     "UPDATE penetapan_detail 
-                     SET target_capaian = ?, indikator = ?, strategi = ?, sumber_daya = ?, ai_analisis = ?, updated_at = NOW()
+                     SET target_capaian = ?, indikator = ?, strategi = ?, sumber_daya = ?, ai_analisis = ?, is_turunan = ?, updated_at = NOW()
                      WHERE id = ?"
                 );
-                $stmtUp->execute([$targetCapaian, $indikator, $strategi, $sumberDaya, $aiAnalisis, $existingId]);
+                $stmtUp->execute([$targetCapaian, $indikator, $strategi, $sumberDaya, $aiAnalisis, $isTurunan, $existingId]);
                 return (int)$existingId;
             }
         }
 
         // INSERT standar baru
         $stmtIn = $db->prepare(
-            "INSERT INTO penetapan_detail (penetapan_id, kriteria_id, kode, target_capaian, indikator, strategi, sumber_daya, ai_analisis, created_at, updated_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())"
+            "INSERT INTO penetapan_detail (penetapan_id, kriteria_id, kode, is_turunan, target_capaian, indikator, strategi, sumber_daya, ai_analisis, created_at, updated_at)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())"
         );
-        $stmtIn->execute([$penetapanId, $kriteriaId, $kode, $targetCapaian, $indikator, $strategi, $sumberDaya, $aiAnalisis]);
+        $stmtIn->execute([$penetapanId, $kriteriaId, $kode, $isTurunan, $targetCapaian, $indikator, $strategi, $sumberDaya, $aiAnalisis]);
         return (int)$db->lastInsertId();
     }
 

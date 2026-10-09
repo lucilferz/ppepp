@@ -169,9 +169,12 @@ class PenetapanController extends Controller
                 $kode = 'STD-' . str_pad($applied + 1, 2, '0', STR_PAD_LEFT);
             }
 
+            $isTurunan  = !empty($item['is_turunan']) ? 1 : 0;
+
             // Simpan sebagai standard item tersendiri
             $this->penetapanModel->saveDetail($penetapanId, $kriteriaId, [
                 'kode'           => $kode,
+                'is_turunan'     => $isTurunan,
                 'target_capaian' => $target,
                 'indikator'      => $indikator,
                 'strategi'       => $aturan,
@@ -401,7 +404,7 @@ class PenetapanController extends Controller
         $field       = $this->post('field', '');
         $value       = $this->post('value', '');
 
-        $allowed = ['kode', 'kriteria_id', 'target_capaian', 'indikator', 'strategi', 'sumber_daya', 'ai_analisis'];
+        $allowed = ['kode', 'kriteria_id', 'is_turunan', 'target_capaian', 'indikator', 'strategi', 'sumber_daya', 'ai_analisis'];
         if (!in_array($field, $allowed)) {
             $this->json(['success' => false, 'message' => 'Field tidak valid.']);
             return;

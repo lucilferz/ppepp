@@ -142,6 +142,15 @@ $allKriteriaList = !empty($allKriteria) ? array_values($allKriteria) : (isset($s
               <input type="checkbox" id="excelSelectAllCheck" onchange="toggleSelectAllExcelRows(this.checked)" checked title="Pilih / Batal Semua" style="cursor:pointer;width:16px;height:16px;">
             </th>
             <th style="padding:10px 12px;width:45px;">No</th>
+            <th style="padding:10px 12px;width:115px;text-align:center;background:#f0f9ff;color:#0369a1;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <span>Turunan?</span>
+                <label style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#0369a1;cursor:pointer;margin:0;">
+                  <input type="checkbox" id="excelSelectAllTurunanCheck" onchange="toggleSelectAllExcelTurunan(this.checked)" title="Centang / Batal Semua Turunan" style="cursor:pointer;width:14px;height:14px;">
+                  <span>Semua</span>
+                </label>
+              </div>
+            </th>
             <th style="padding:10px 12px;min-width:180px;">Aturan / Dasar Hukum</th>
             <th style="padding:10px 12px;min-width:240px;">Pernyataan Standar (Target)</th>
             <th style="padding:10px 12px;min-width:200px;">Indikator</th>
@@ -181,8 +190,13 @@ $allKriteriaList = !empty($allKriteria) ? array_values($allKriteria) : (isset($s
     
     <!-- Header Accordion -->
     <div class="ka-header" onclick="toggleAcc(<?= $dId ?>)" style="cursor:pointer;padding:16px 20px;display:flex;align-items:center;gap:14px;background:#f8fafc;border-bottom:1px solid #e2e8f0;">
-      <div style="padding:4px 10px;background:#1a237e;color:#fff;border-radius:7px;font-weight:800;font-size:12px;" id="badgeKode_<?= $dId ?>">
-        <?= htmlspecialchars($displayKode) ?>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="padding:4px 10px;background:#1a237e;color:#fff;border-radius:7px;font-weight:800;font-size:12px;" id="badgeKode_<?= $dId ?>">
+          <?= htmlspecialchars($displayKode) ?>
+        </div>
+        <span id="badgeTurunan_<?= $dId ?>" style="display:<?= !empty($d['is_turunan']) ? 'inline-block' : 'none' ?>;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;">
+          Turunan
+        </span>
       </div>
       <div style="flex:1;">
         <h4 style="font-size:14.5px;font-weight:800;color:#1e293b;margin:0 0 2px;"><?= htmlspecialchars($d['kriteria_nama']) ?></h4>
@@ -199,8 +213,8 @@ $allKriteriaList = !empty($allKriteria) ? array_values($allKriteria) : (isset($s
         <span id="badge_<?= $dId ?>" style="font-size:11.5px;padding:4px 12px;border-radius:20px;font-weight:700;background:<?= $pct === 100 ? '#ecfdf5' : ($pct > 0 ? '#fffbeb' : '#f1f5f9') ?>;color:<?= $pct === 100 ? '#059669' : ($pct > 0 ? '#d97706' : '#64748b') ?>;">
           <?= $pct === 100 ? '✓ Lengkap' : ($pct > 0 ? 'Sebagian' : 'Kosong') ?>
         </span>
-        <button type="button" onclick="event.stopPropagation(); deleteStandard(<?= $penId ?>, <?= $dId ?>)" class="btn btn-outline btn-sm" style="padding:4px 8px;color:#ef4444;border-color:#fecaca;" title="Hapus Standar Ini">
-          🗑️
+        <button type="button" onclick="event.stopPropagation(); deleteStandard(<?= $penId ?>, <?= $dId ?>)" class="btn btn-outline btn-sm" style="padding:5px 9px;color:#ef4444;border-color:#fecaca;display:inline-flex;align-items:center;gap:4px;" title="Hapus Standar Ini">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
         </button>
         <svg id="toggle_<?= $dId ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="transition:transform 0.2s;transform:<?= $idx === 0 ? 'rotate(180deg)' : '' ?>;color:#64748b;">
           <polyline points="6 9 12 15 18 9"/>
@@ -211,10 +225,10 @@ $allKriteriaList = !empty($allKriteria) ? array_values($allKriteria) : (isset($s
     <!-- Body Detail Standar -->
     <div class="ka-body" id="body_<?= $dId ?>" style="padding:22px;display:<?= $idx === 0 ? 'block' : 'none' ?>;">
       
-      <!-- Kriteria Terpilih (Langkah 1) & Kode Standar Input -->
-      <div style="display:grid;grid-template-columns:1fr 220px;gap:14px;align-items:center;margin-bottom:18px;background:#eef2ff;padding:14px 16px;border-radius:10px;border:1.5px solid #c7d2fe;">
+      <!-- Kriteria Terpilih (Langkah 1) & Kode Standar Input & Standar Turunan -->
+      <div style="display:grid;grid-template-columns:1fr 180px 170px;gap:14px;align-items:center;margin-bottom:18px;background:#eef2ff;padding:14px 16px;border-radius:10px;border:1.5px solid #c7d2fe;">
         <div>
-          <label style="font-size:12px;font-weight:800;color:#3730a3;margin:0 0 4px;display:block;">🎯 Kriteria (Dipilih di Langkah 1):</label>
+          <label style="font-size:12px;font-weight:800;color:#3730a3;margin:0 0 4px;display:block;">Kriteria (Dipilih di Langkah 1):</label>
           <div style="display:flex;align-items:center;gap:8px;background:#fff;padding:8px 12px;border-radius:8px;border:1px solid #a5b4fc;font-size:13.5px;font-weight:700;color:#1e1b4b;">
             <span style="background:#4f46e5;color:#fff;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:900;text-transform:uppercase;">
               <?= htmlspecialchars(!empty($d['kriteria_kode']) ? $d['kriteria_kode'] : 'KR') ?>
@@ -224,11 +238,24 @@ $allKriteriaList = !empty($allKriteria) ? array_values($allKriteria) : (isset($s
           <input type="hidden" id="field_kriteria_<?= $dId ?>" value="<?= $kid ?>" data-penid="<?= $penId ?>" data-detailid="<?= $dId ?>" data-field="kriteria_id">
         </div>
         <div>
-          <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 4px;display:block;">🏷️ Kode Standar:</label>
+          <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 4px;display:block;">Kode Standar:</label>
           <input type="text" class="form-control" id="field_kode_<?= $dId ?>" value="<?= htmlspecialchars($displayKode) ?>"
                  data-penid="<?= $penId ?>" data-detailid="<?= $dId ?>" data-field="kode"
                  onchange="saveStandardField(this); updateKodeBadge(<?= $dId ?>, this.value);"
                  style="font-size:13px;font-weight:700;background:#fff;" placeholder="Contoh: STD-01">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 4px;display:block;">Tipe Standar:</label>
+          <label style="display:inline-flex;align-items:center;gap:8px;background:#fff;padding:8px 12px;border-radius:8px;border:1px solid #cbd5e1;cursor:pointer;font-size:12px;font-weight:700;color:#334155;width:100%;height:38px;box-sizing:border-box;">
+            <input type="checkbox" id="field_turunan_<?= $dId ?>"
+                   data-penid="<?= $penId ?>" data-detailid="<?= $dId ?>"
+                   <?= !empty($d['is_turunan']) ? 'checked' : '' ?>
+                   onchange="saveStandardTurunanToggle(this, <?= $dId ?>)"
+                   style="cursor:pointer;width:16px;height:16px;">
+            <span id="label_turunan_<?= $dId ?>" style="<?= !empty($d['is_turunan']) ? 'color:#1d4ed8;font-weight:800;' : 'color:#64748b;' ?>">
+              <?= !empty($d['is_turunan']) ? 'Standar Turunan' : 'Standar Biasa' ?>
+            </span>
+          </label>
         </div>
       </div>
 
@@ -510,6 +537,35 @@ function saveStandardField(input) {
   }, 500);
 }
 
+function saveStandardTurunanToggle(input, detailId) {
+  var isChecked = input.checked;
+  var penId = input.dataset.penid;
+  var val = isChecked ? '1' : '0';
+  
+  var lbl = document.getElementById('label_turunan_' + detailId);
+  if (lbl) {
+    lbl.textContent = isChecked ? 'Standar Turunan' : 'Standar Biasa';
+    lbl.style.color = isChecked ? '#1d4ed8' : '#64748b';
+    lbl.style.fontWeight = isChecked ? '800' : '600';
+  }
+  var badge = document.getElementById('badgeTurunan_' + detailId);
+  if (badge) {
+    badge.style.display = isChecked ? 'inline-block' : 'none';
+  }
+
+  var body = new URLSearchParams();
+  body.append('penetapan_id', penId);
+  body.append('detail_id', detailId);
+  body.append('field', 'is_turunan');
+  body.append('value', val);
+
+  fetch(BASE + '/penetapan/save-draft-detail', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString()
+  });
+}
+
 // Tambah Standar Baru Manual
 function addNewStandard(penId) {
   var select = document.getElementById('selectKriteriaForNew');
@@ -624,9 +680,14 @@ function handleExcelUpload(input) {
           matchedKId = kriteriaList[sIdx % kriteriaList.length].id;
         }
 
+        var isSheetTurunan = sNameLower.includes('turunan');
         var processedRows = (sheet.rows || []).map(function(r, rIdx) {
+          var isRowTurunan = (typeof r.is_turunan !== 'undefined' && (r.is_turunan == 1 || r.is_turunan === true))
+            ? 1 
+            : (isSheetTurunan ? 1 : 0);
           return {
             _checked: true,
+            is_turunan: isRowTurunan,
             no: r.no ? String(r.no).trim() : String(rIdx + 1),
             kode: r.kode ? String(r.kode).trim() : ('STD-' + String(rIdx + 1).padStart(2, '0')),
             aturan: r.aturan || '',
@@ -722,12 +783,14 @@ function saveActiveSheetInputs() {
 
   sheet.rows.forEach(function(r, idx) {
     var chk = document.getElementById('ex_chk_' + idx);
+    var turunanChk = document.getElementById('ex_turunan_' + idx);
     var aturanEl = document.getElementById('ex_aturan_' + idx);
     var targetEl = document.getElementById('ex_target_' + idx);
     var indEl = document.getElementById('ex_indikator_' + idx);
     var kodeEl = document.getElementById('ex_kode_' + idx);
 
     if (chk) r._checked = chk.checked;
+    if (turunanChk) r.is_turunan = turunanChk.checked ? 1 : 0;
     if (aturanEl) r.aturan = aturanEl.value;
     if (targetEl) r.pernyataan_standar = targetEl.value;
     if (indEl) r.indikator = indEl.value;
@@ -768,17 +831,28 @@ function renderActiveSheet() {
   var html = '';
   sheet.rows.forEach(function(r, idx) {
     var isChecked = r._checked !== false;
+    var isTurunan = (r.is_turunan == 1 || r.is_turunan === true);
 
     var kBadgeHtml = '<input type="hidden" class="excel-row-kriteria" id="ex_krit_' + idx + '" value="' + (currentKObj ? currentKObj.id : '') + '">' +
       '<div class="excel-kriteria-badge" style="background:#e0f2fe;border:1px solid #bae6fd;color:#0369a1;font-size:11.5px;font-weight:700;padding:6px 10px;border-radius:8px;line-height:1.4;">' +
         '✓ ' + currentKLabel +
       '</div>';
 
+    var turunanBadgeHtml = isTurunan
+      ? '<span id="ex_turunan_badge_' + idx + '" style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;">Turunan</span>'
+      : '<span id="ex_turunan_badge_' + idx + '" style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;background:#f8fafc;color:#64748b;border:1px solid #e2e8f0;">Biasa</span>';
+
     html += '<tr id="ex_row_' + idx + '" style="border-bottom:1px solid #e2e8f0;background:' + (isChecked ? (idx % 2 === 0 ? '#fff' : '#fafbfc') : '#f8fafc') + ';opacity:' + (isChecked ? '1' : '0.5') + ';">';
     html += '<td style="padding:10px 12px;text-align:center;vertical-align:top;">' +
             '<input type="checkbox" id="ex_chk_' + idx + '" class="excel-row-checkbox" ' + (isChecked ? 'checked' : '') + ' onchange="onExcelRowCheckChange(' + idx + ', this.checked)" style="cursor:pointer;width:16px;height:16px;">' +
             '</td>';
     html += '<td style="padding:10px 12px;font-weight:700;color:#64748b;vertical-align:top;">' + escHtml(String(r.no || (idx + 1))) + '</td>';
+    html += '<td style="padding:10px 12px;text-align:center;vertical-align:top;background:' + (isTurunan ? '#f0f7ff' : 'transparent') + ';" id="ex_turunan_td_' + idx + '">' +
+            '<label style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;margin:0;">' +
+            '<input type="checkbox" id="ex_turunan_' + idx + '" class="excel-row-turunan" ' + (isTurunan ? 'checked' : '') + ' onchange="onExcelRowTurunanChange(' + idx + ', this.checked)" style="cursor:pointer;width:16px;height:16px;">' +
+            turunanBadgeHtml +
+            '</label>' +
+            '</td>';
     html += '<td style="padding:10px 12px;vertical-align:top;"><textarea class="form-control" id="ex_aturan_' + idx + '" rows="2" style="font-size:12px;width:100%;">' + escHtml(r.aturan || '') + '</textarea></td>';
     html += '<td style="padding:10px 12px;vertical-align:top;"><textarea class="form-control" id="ex_target_' + idx + '" rows="2" style="font-size:12px;width:100%;">' + escHtml(r.pernyataan_standar || '') + '</textarea></td>';
     html += '<td style="padding:10px 12px;vertical-align:top;"><textarea class="form-control" id="ex_indikator_' + idx + '" rows="2" style="font-size:12px;width:100%;">' + escHtml(r.indikator || '') + '</textarea></td>';
@@ -789,6 +863,7 @@ function renderActiveSheet() {
 
   tbody.innerHTML = html;
   updateExcelSelectionCounts();
+  updateExcelTurunanHeaderCheck();
 }
 
 function onExcelRowCheckChange(idx, checked) {
@@ -821,6 +896,77 @@ function toggleSelectAllExcelRows(checked) {
   });
   updateExcelSelectionCounts();
   renderExcelSheetTabs();
+}
+
+function onExcelRowTurunanChange(idx, checked) {
+  if (!window.EXCEL_SHEETS || !window.EXCEL_SHEETS[window.EXCEL_ACTIVE_SHEET_IDX]) return;
+  var sheet = window.EXCEL_SHEETS[window.EXCEL_ACTIVE_SHEET_IDX];
+  if (sheet.rows[idx]) {
+    sheet.rows[idx].is_turunan = checked ? 1 : 0;
+  }
+  var badge = document.getElementById('ex_turunan_badge_' + idx);
+  var td = document.getElementById('ex_turunan_td_' + idx);
+  if (badge) {
+    if (checked) {
+      badge.textContent = 'Turunan';
+      badge.style.background = '#eff6ff';
+      badge.style.color = '#1d4ed8';
+      badge.style.borderColor = '#bfdbfe';
+      badge.style.fontWeight = '700';
+    } else {
+      badge.textContent = 'Biasa';
+      badge.style.background = '#f8fafc';
+      badge.style.color = '#64748b';
+      badge.style.borderColor = '#e2e8f0';
+      badge.style.fontWeight = '600';
+    }
+  }
+  if (td) {
+    td.style.background = checked ? '#f0f7ff' : '#fff';
+  }
+  updateExcelTurunanHeaderCheck();
+}
+
+function toggleSelectAllExcelTurunan(checked) {
+  if (!window.EXCEL_SHEETS || !window.EXCEL_SHEETS[window.EXCEL_ACTIVE_SHEET_IDX]) return;
+  var sheet = window.EXCEL_SHEETS[window.EXCEL_ACTIVE_SHEET_IDX];
+  sheet.rows.forEach(function(r, idx) {
+    r.is_turunan = checked ? 1 : 0;
+    var chk = document.getElementById('ex_turunan_' + idx);
+    if (chk) chk.checked = checked;
+    var badge = document.getElementById('ex_turunan_badge_' + idx);
+    var td = document.getElementById('ex_turunan_td_' + idx);
+    if (badge) {
+      if (checked) {
+        badge.textContent = 'Turunan';
+        badge.style.background = '#eff6ff';
+        badge.style.color = '#1d4ed8';
+        badge.style.borderColor = '#bfdbfe';
+        badge.style.fontWeight = '700';
+      } else {
+        badge.textContent = 'Biasa';
+        badge.style.background = '#f8fafc';
+        badge.style.color = '#64748b';
+        badge.style.borderColor = '#e2e8f0';
+        badge.style.fontWeight = '600';
+      }
+    }
+    if (td) {
+      td.style.background = checked ? '#f0f7ff' : '#fff';
+    }
+  });
+}
+
+function updateExcelTurunanHeaderCheck() {
+  if (!window.EXCEL_SHEETS || !window.EXCEL_SHEETS[window.EXCEL_ACTIVE_SHEET_IDX]) return;
+  var sheet = window.EXCEL_SHEETS[window.EXCEL_ACTIVE_SHEET_IDX];
+  var turunanCount = sheet.rows.filter(function(r) { return r.is_turunan == 1; }).length;
+  var total = sheet.rows.length;
+  var headerCheck = document.getElementById('excelSelectAllTurunanCheck');
+  if (headerCheck) {
+    headerCheck.checked = turunanCount === total && total > 0;
+    headerCheck.indeterminate = turunanCount > 0 && turunanCount < total;
+  }
 }
 
 function applyGlobalKriteriaToExcelRows(selectedKId) {
@@ -893,7 +1039,8 @@ function applySelectedExcelRows(applyAllSheets, penId) {
         kode: r.kode || ('STD-' + String(idx + 1).padStart(2, '0')),
         aturan: r.aturan || '',
         pernyataan_standar: r.pernyataan_standar || '',
-        indikator: r.indikator || ''
+        indikator: r.indikator || '',
+        is_turunan: (r.is_turunan == 1 || r.is_turunan === true) ? 1 : 0
       });
     });
   });

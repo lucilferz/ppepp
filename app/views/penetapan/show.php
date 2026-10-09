@@ -203,6 +203,11 @@ foreach ($details as $d) {
         <span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;background:#0f172a;color:#fff;">
           <?= htmlspecialchars($kode) ?>
         </span>
+        <?php if (!empty($d['is_turunan'])): ?>
+        <span style="font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:12px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;">
+          Standar Turunan
+        </span>
+        <?php endif; ?>
         <span style="font-size:13.5px;font-weight:700;color:#0f172a;">
           <?= htmlspecialchars($d['kriteria_nama']) ?>
         </span>
@@ -283,9 +288,16 @@ foreach ($details as $d) {
         ?>
         <tr class="standard-table-row" data-kid="<?= $kId ?>" style="border-bottom:1px solid #f1f5f9;">
           <td style="padding:10px 14px;vertical-align:top;">
-            <span style="font-weight:700;color:#0f172a;font-size:11.5px;background:#f1f5f9;padding:2px 6px;border-radius:4px;">
-              <?= htmlspecialchars($kode) ?>
-            </span>
+            <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
+              <span style="font-weight:700;color:#0f172a;font-size:11.5px;background:#f1f5f9;padding:2px 6px;border-radius:4px;">
+                <?= htmlspecialchars($kode) ?>
+              </span>
+              <?php if (!empty($d['is_turunan'])): ?>
+              <span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;">
+                Turunan
+              </span>
+              <?php endif; ?>
+            </div>
           </td>
           <td style="padding:10px 14px;font-weight:600;color:#1e293b;vertical-align:top;">
             <?= htmlspecialchars($d['kriteria_nama']) ?>
