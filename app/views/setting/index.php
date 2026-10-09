@@ -179,7 +179,7 @@ $hasApiKey = !empty($user['gemini_api_key']);
       <div class="divider"></div>
 
       <div style="background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:12.5px;color:var(--text-muted);margin-bottom:12px;">
-        <strong style="color:var(--text-main);">📊 Cek Kuota & Rate Limit:</strong><br>
+        <strong style="color:var(--text-main);">Cek Kuota & Rate Limit:</strong><br>
         Anda dapat memantau penggunaan RPM (Requests Per Minute) dan RPD (Requests Per Day) untuk setiap model di: <br>
         <a href="https://aistudio.google.com/app/rate-limit?timeRange=last-28-days" target="_blank" class="btn btn-outline btn-sm mt-1" style="margin-top:6px;display:inline-flex;align-items:center;gap:6px;">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14" height="14">

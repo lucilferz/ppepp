@@ -94,17 +94,17 @@ $breadcrumbs = [
     $st = $proj['status'] ?? 'aktif';
 
     $statusMeta = match($st) {
-      'aktif'    => ['label' => 'Aktif', 'badgeBg' => '#22c55e', 'headerGrad' => 'linear-gradient(135deg,#0f172a,#1a237e)', 'cardBorder' => 'var(--border)'],
-      'nonaktif' => ['label' => 'Nonaktif / Tersembunyi', 'badgeBg' => '#eab308', 'headerGrad' => 'linear-gradient(135deg,#451a03,#78350f)', 'cardBorder' => '#fef08a'],
-      'arsip'    => ['label' => 'Arsip', 'badgeBg' => '#64748b', 'headerGrad' => 'linear-gradient(135deg,#334155,#475569)', 'cardBorder' => '#cbd5e1'],
-      'selesai'  => ['label' => 'Selesai', 'badgeBg' => '#3b82f6', 'headerGrad' => 'linear-gradient(135deg,#1e3a8a,#2563eb)', 'cardBorder' => '#bfdbfe'],
-      default    => ['label' => ucfirst($st), 'badgeBg' => '#64748b', 'headerGrad' => 'linear-gradient(135deg,#0f172a,#1a237e)', 'cardBorder' => 'var(--border)'],
+      'aktif'    => ['label' => 'Aktif', 'badgeBg' => 'var(--success)', 'headerGrad' => 'linear-gradient(135deg,#112338,#173B67)', 'cardBorder' => 'var(--border)'],
+      'nonaktif' => ['label' => 'Nonaktif / Tersembunyi', 'badgeBg' => 'var(--warning)', 'headerGrad' => 'linear-gradient(135deg,#451a03,#78350f)', 'cardBorder' => '#fef08a'],
+      'arsip'    => ['label' => 'Arsip', 'badgeBg' => 'var(--text-muted)', 'headerGrad' => 'linear-gradient(135deg,#334155,#475569)', 'cardBorder' => '#cbd5e1'],
+      'selesai'  => ['label' => 'Selesai', 'badgeBg' => 'var(--info)', 'headerGrad' => 'linear-gradient(135deg,#1e3a8a,#2563eb)', 'cardBorder' => '#bfdbfe'],
+      default    => ['label' => ucfirst($st), 'badgeBg' => 'var(--text-muted)', 'headerGrad' => 'linear-gradient(135deg,#112338,#173B67)', 'cardBorder' => 'var(--border)'],
     };
   ?>
   <div class="project-card" data-status="<?= htmlspecialchars($st) ?>"
-       style="background:#fff;border:1.5px solid <?= $statusMeta['cardBorder'] ?>;border-radius:16px;overflow:hidden;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.05);<?= $st === 'nonaktif' ? 'opacity:0.92;' : '' ?>"
-       onmouseover="this.style.borderColor='#3f51b5';this.style.boxShadow='0 6px 24px rgba(26,35,126,0.12)';"
-       onmouseout="this.style.borderColor='<?= $statusMeta['cardBorder'] ?>';this.style.boxShadow='0 2px 8px rgba(0,0,0,0.05)';">
+       style="background:#fff;border:1.5px solid <?= $statusMeta['cardBorder'] ?>;border-radius:12px;overflow:hidden;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.05);<?= $st === 'nonaktif' ? 'opacity:0.92;' : '' ?>"
+       onmouseover="this.style.borderColor='var(--primary)';this.style.boxShadow='0 4px 14px rgba(23,59,103,0.1)';"
+       onmouseout="this.style.borderColor='<?= $statusMeta['cardBorder'] ?>';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)';">
     <!-- Card Header -->
     <div style="padding:20px 22px;background:<?= $statusMeta['headerGrad'] ?>;color:#fff;position:relative;">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
@@ -119,7 +119,7 @@ $breadcrumbs = [
             <?= htmlspecialchars($proj['judul']) ?>
           </div>
         </div>
-        <span style="font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:<?= $statusMeta['badgeBg'] ?>;color:#fff;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.2);">
+        <span style="font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:<?= $statusMeta['badgeBg'] ?>;color:#fff;flex-shrink:0;">
           <?= $statusMeta['label'] ?>
         </span>
       </div>
@@ -172,9 +172,8 @@ $breadcrumbs = [
 
     <!-- Action Buttons -->
     <div style="padding:14px 20px 18px;display:flex;gap:8px;border-top:1px solid var(--border);margin-top:10px;">
-      <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>"
-         style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;background:linear-gradient(135deg,#1a237e,#3f51b5);color:#fff;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.18s;"
-         onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='none'">
+      <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>" class="btn btn-primary"
+         style="flex:1;justify-content:center;gap:6px;padding:9px 14px;font-size:13px;font-weight:700;text-decoration:none;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         Buka Project
       </a>
@@ -185,7 +184,7 @@ $breadcrumbs = [
         <input type="hidden" name="status" value="nonaktif">
         <input type="hidden" name="return_url" value="<?= BASE_URL ?>/ppepp">
         <button type="submit" class="btn btn-outline"
-                style="padding:9px 12px;background:#fefce8;color:#a16207;border-color:#fef08a;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"
+                style="padding:9px 12px;background:#fefce8;color:#a16207;border-color:#fef08a;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"
                 title="Sembunyikan / Nonaktifkan Project">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg>
           Hide
@@ -196,24 +195,24 @@ $breadcrumbs = [
         <input type="hidden" name="status" value="aktif">
         <input type="hidden" name="return_url" value="<?= BASE_URL ?>/ppepp">
         <button type="submit" class="btn btn-outline"
-                style="padding:9px 12px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"
+                style="padding:9px 12px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"
                 title="Aktifkan Project Kembali">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Aktifkan
         </button>
       </form>
       <?php endif; ?>
-      <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>/edit"
-         style="padding:9px 12px;background:#f1f5f9;color:#475569;border-radius:9px;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:4px;"
+      <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>/edit" class="btn btn-outline"
+         style="padding:9px 12px;border-radius:8px;font-size:13px;display:flex;align-items:center;gap:4px;"
          title="Edit Informasi Project">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
       </a>
 
       <!-- Hapus Project Permanen Button -->
       <form method="POST" action="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>/destroy" style="margin:0;"
-            onsubmit="return confirm('⚠️ KONFIRMASI HAPUS PERMANEN:\n\nApakah Anda YAKIN ingin menghapus project \'<?= htmlspecialchars(addslashes($proj['judul'])) ?>\' (TA <?= htmlspecialchars(addslashes($proj['ta_nama'])) ?>)?\n\nSELURUH DATA 5 TAHAP PPEPP (Penetapan, Pelaksanaan, Evaluasi, Pengendalian, & Peningkatan) di dalamnya akan TERHAPUS TOTAL & PERMANEN!');">
-        <button type="submit" class="btn"
-                style="padding:9px 12px;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"
+            onsubmit="return confirm('KONFIRMASI HAPUS PERMANEN:\n\nApakah Anda YAKIN ingin menghapus project \'<?= htmlspecialchars(addslashes($proj['judul'])) ?>\' (TA <?= htmlspecialchars(addslashes($proj['ta_nama'])) ?>)?\n\nSELURUH DATA 5 TAHAP PPEPP (Penetapan, Pelaksanaan, Evaluasi, Pengendalian, & Peningkatan) di dalamnya akan TERHAPUS TOTAL & PERMANEN!');">
+        <button type="submit" class="btn btn-danger"
+                style="padding:9px 12px;border-radius:8px;font-size:13px;display:flex;align-items:center;gap:4px;"
                 title="Hapus Project Permanen Beserta Seluruh Isinya">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
         </button>
@@ -293,15 +292,15 @@ function confirmDeleteProject(id, title, taName) {
 
 <!-- Modal Buat Project Baru -->
 <div class="modal-overlay" id="modalBuatProject">
-  <div class="modal-card" style="max-width:560px;width:100%;max-height:90vh;border-radius:18px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.3);padding:0;border:none;display:flex;flex-direction:column;background:#fff;">
+  <div class="modal-card" style="max-width:560px;width:100%;max-height:90vh;border-radius:12px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.2);padding:0;border:1px solid var(--border);display:flex;flex-direction:column;background:#fff;">
     <!-- Header Banner (Fixed at top) -->
-    <div style="background:linear-gradient(135deg, #1e293b 0%, #1e1b4b 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;">
+    <div style="background:var(--primary);color:#fff;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;">
       <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:38px;height:38px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">
-          📁
+        <div style="width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
         </div>
         <div>
-          <h3 style="font-size:16px;font-weight:800;margin:0;color:#fff;letter-spacing:-0.3px;">Buat Project PPEPP Baru</h3>
+          <h3 style="font-size:16px;font-weight:700;margin:0;color:#fff;letter-spacing:-0.3px;">Buat Project PPEPP Baru</h3>
           <p style="font-size:11.5px;margin:2px 0 0;color:rgba(255,255,255,0.75);">Siklus penjaminan mutu 5 tahap per Tahun Ajaran</p>
         </div>
       </div>
@@ -312,14 +311,15 @@ function confirmDeleteProject(id, title, taName) {
     <form method="POST" action="<?= BASE_URL ?>/ppepp/store" style="display:flex;flex-direction:column;overflow:hidden;flex:1;margin:0;">
       <div class="modal-body" style="padding:20px 24px;background:#fff;overflow-y:auto;flex:1;">
         <!-- Banner Info Singkat -->
-        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:12px;color:#475569;margin-bottom:16px;line-height:1.4;">
-          💡 <strong>Petunjuk:</strong> Pilih <strong>Tahun Ajaran</strong> untuk project baru. Seluruh data 5 tahap PPEPP akan terikat otomatis ke Tahun Ajaran ini.
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:12px;color:#475569;margin-bottom:16px;line-height:1.4;display:flex;align-items:flex-start;gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div><strong>Petunjuk:</strong> Pilih <strong>Tahun Ajaran</strong> untuk project baru. Seluruh data 5 tahap PPEPP akan terikat otomatis ke Tahun Ajaran ini.</div>
         </div>
 
         <!-- Pilihan Tahun Ajaran (Scrollable list if many) -->
         <div class="form-group" style="margin-bottom:16px;">
-          <label style="font-size:12.5px;font-weight:800;color:#1e293b;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
-            <span>📅 Pilih Tahun Ajaran</span>
+          <label style="font-size:12.5px;font-weight:700;color:#1e293b;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+            <span>Pilih Tahun Ajaran</span>
             <span style="color:#dc2626;">*</span>
           </label>
 
@@ -329,14 +329,14 @@ function confirmDeleteProject(id, title, taName) {
               $alreadyUsed = in_array((int)$ta['id'], $usedTaIds ?? [], true);
             ?>
             <label class="ta-option-card"
-                   style="border:1.5px solid <?= $alreadyUsed ? '#f1f5f9' : '#e2e8f0' ?>;border-radius:10px;padding:9px 12px;cursor:<?= $alreadyUsed ? 'not-allowed' : 'pointer' ?>;transition:all 0.15s;background:<?= $alreadyUsed ? '#f8fafc' : '#ffffff' ?>;<?= $alreadyUsed ? 'opacity:0.55;' : '' ?>"
+                   style="border:1.5px solid <?= $alreadyUsed ? '#f1f5f9' : '#e2e8f0' ?>;border-radius:8px;padding:9px 12px;cursor:<?= $alreadyUsed ? 'not-allowed' : 'pointer' ?>;transition:all 0.15s;background:<?= $alreadyUsed ? '#f8fafc' : '#ffffff' ?>;<?= $alreadyUsed ? 'opacity:0.55;' : '' ?>"
                    <?= !$alreadyUsed ? 'onclick="selectTahunAjaran(this)"' : '' ?>>
               <div style="display:flex;align-items:center;gap:8px;">
-                <input type="radio" name="tahun_ajaran_id" value="<?= $ta['id'] ?>" <?= $alreadyUsed ? 'disabled' : '' ?> style="accent-color:#2563eb;width:15px;height:15px;">
+                <input type="radio" name="tahun_ajaran_id" value="<?= $ta['id'] ?>" <?= $alreadyUsed ? 'disabled' : '' ?> style="accent-color:var(--primary);width:15px;height:15px;">
                 <div>
-                  <div style="font-size:13px;font-weight:800;color:<?= $alreadyUsed ? '#64748b' : '#0f172a' ?>;"><?= htmlspecialchars($ta['nama']) ?></div>
+                  <div style="font-size:13px;font-weight:700;color:<?= $alreadyUsed ? '#64748b' : '#0f172a' ?>;"><?= htmlspecialchars($ta['nama']) ?></div>
                   <?php if ($alreadyUsed): ?>
-                  <div style="font-size:9.5px;color:#dc2626;font-weight:700;margin-top:1px;">✓ Sudah Dibuat</div>
+                  <div style="font-size:9.5px;color:#dc2626;font-weight:600;margin-top:1px;">Sudah Dibuat</div>
                   <?php endif; ?>
                 </div>
               </div>
@@ -345,50 +345,50 @@ function confirmDeleteProject(id, title, taName) {
 
             <!-- Opsi Tambah TA Baru -->
             <label class="ta-option-card"
-                   style="border:1.5px dashed #3b82f6;border-radius:10px;padding:9px 12px;cursor:pointer;background:#eff6ff;transition:all 0.15s;"
+                   style="border:1.5px dashed var(--primary);border-radius:8px;padding:9px 12px;cursor:pointer;background:#f8fafc;transition:all 0.15s;"
                    onclick="showNewTaInput(this)">
               <div style="display:flex;align-items:center;gap:8px;">
-                <input type="radio" name="tahun_ajaran_id" value="0" id="radioNewTa" style="accent-color:#2563eb;width:15px;height:15px;">
-                <div style="font-size:12.5px;font-weight:800;color:#1d4ed8;">+ TA Baru...</div>
+                <input type="radio" name="tahun_ajaran_id" value="0" id="radioNewTa" style="accent-color:var(--primary);width:15px;height:15px;">
+                <div style="font-size:12.5px;font-weight:700;color:var(--primary);">+ TA Baru...</div>
               </div>
             </label>
           </div>
 
           <input type="hidden" name="new_ta" value="0" id="newTaFlag">
-          <div id="newTaGroup" style="display:none;margin-top:10px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:10px 12px;">
+          <div id="newTaGroup" style="display:none;margin-top:10px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:10px 12px;">
             <label style="font-size:11.5px;font-weight:700;color:#0369a1;margin-bottom:4px;display:block;">Tuliskan Nama Tahun Ajaran Baru:</label>
             <input type="text" name="new_ta_nama" id="newTaNama" class="form-control" placeholder="Contoh: 2027/2028"
-                   style="font-size:13px;font-weight:800;padding:8px 12px;border-radius:6px;border:1px solid #7dd3fc;" oninput="document.getElementById('newTaFlag').value='1'">
+                   style="font-size:13px;font-weight:700;padding:8px 12px;border-radius:6px;border:1px solid #7dd3fc;" oninput="document.getElementById('newTaFlag').value='1'">
           </div>
         </div>
 
         <!-- Judul Project -->
         <div class="form-group" style="margin-bottom:12px;">
           <label for="judul" style="font-size:12.5px;font-weight:700;color:#1e293b;margin-bottom:4px;display:block;">
-            📝 Judul Project <span style="font-size:11px;font-weight:500;color:#64748b;">(Opsional - Otomatis jika dikosongkan)</span>
+            Judul Project <span style="font-size:11px;font-weight:500;color:#64748b;">(Opsional - Otomatis jika dikosongkan)</span>
           </label>
           <input type="text" id="judul" name="judul" class="form-control"
                  placeholder="Contoh: PPEPP 2025/2026 Program Studi Sistem Informasi"
-                 style="padding:8px 12px;border-radius:8px;border:1px solid #cbd5e1;font-size:13px;">
+                 style="padding:8px 12px;border-radius:6px;border:1px solid #cbd5e1;font-size:13px;">
         </div>
 
         <!-- Deskripsi -->
         <div class="form-group" style="margin-bottom:4px;">
           <label for="deskripsi" style="font-size:12.5px;font-weight:700;color:#1e293b;margin-bottom:4px;display:block;">
-            📄 Deskripsi / Catatan Tambahan <span style="font-size:11px;font-weight:500;color:#64748b;">(Opsional)</span>
+            Deskripsi / Catatan Tambahan <span style="font-size:11px;font-weight:500;color:#64748b;">(Opsional)</span>
           </label>
           <textarea name="deskripsi" id="deskripsi" class="form-control" rows="2"
                     placeholder="Tuliskan catatan singkat project ini..."
-                    style="padding:8px 12px;border-radius:8px;border:1px solid #cbd5e1;font-size:12.5px;resize:vertical;"></textarea>
+                    style="padding:8px 12px;border-radius:6px;border:1px solid #cbd5e1;font-size:12.5px;resize:vertical;"></textarea>
         </div>
       </div>
 
       <!-- Footer (Fixed at bottom) -->
       <div class="modal-footer" style="padding:14px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;">
-        <button type="button" class="btn btn-outline" data-modal-close="modalBuatProject" style="padding:9px 18px;font-size:13px;font-weight:700;border-radius:8px;">
+        <button type="button" class="btn btn-outline" data-modal-close="modalBuatProject" style="padding:9px 18px;font-size:13px;font-weight:600;border-radius:6px;">
           Batal
         </button>
-        <button type="submit" class="btn btn-primary" style="padding:9px 20px;font-size:13px;font-weight:800;border-radius:8px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;color:#fff;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 4px 12px rgba(37,99,235,0.3);">
+        <button type="submit" class="btn btn-primary" style="padding:9px 20px;font-size:13px;font-weight:700;border-radius:6px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><path d="M12 5v14M5 12h14"/></svg>
           Buat Project PPEPP
         </button>
@@ -399,20 +399,20 @@ function confirmDeleteProject(id, title, taName) {
 
 <!-- Modal Konfirmasi Hapus Project Permanen -->
 <div class="modal-overlay" id="modalDeleteProjectConfirm">
-  <div class="modal-card" style="max-width:480px;border-radius:18px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.3);padding:0;">
-    <div style="background:linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);color:#fff;padding:22px 24px;display:flex;align-items:center;gap:14px;">
-      <div style="width:44px;height:44px;background:rgba(255,255,255,0.22);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">
-        🗑️
+  <div class="modal-card" style="max-width:480px;border-radius:12px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.2);padding:0;border:1px solid var(--border);">
+    <div style="background:#dc2626;color:#fff;padding:20px 24px;display:flex;align-items:center;gap:14px;">
+      <div style="width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
       </div>
       <div>
-        <h3 style="font-size:17px;font-weight:800;margin:0 0 2px;color:#fff;">Hapus Project Permanen</h3>
+        <h3 style="font-size:16px;font-weight:700;margin:0 0 2px;color:#fff;">Hapus Project Permanen</h3>
         <p style="font-size:12px;margin:0;opacity:0.9;color:#fff;">Konfirmasi Penghapusan Project PPEPP</p>
       </div>
     </div>
     <form id="formDeleteProjectConfirm" method="POST" action="">
       <div class="modal-body" style="padding:22px 24px;background:#fff;">
-        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:14px 16px;color:#991b1b;font-size:13px;line-height:1.6;margin-bottom:16px;">
-          ⚠️ <strong>PERHATIAN SANGAT PENTING:</strong><br>
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;color:#991b1b;font-size:13px;line-height:1.6;margin-bottom:16px;">
+          <strong>PERHATIAN SANGAT PENTING:</strong><br>
           Anda akan menghapus project <strong id="delProjectTitle" style="color:#7f1d1d;">-</strong> secara <strong>PERMANEN</strong>.
           <br><br>
           Seluruh data 5 tahap PPEPP di dalamnya (<strong>Penetapan, Pelaksanaan, Evaluasi, Pengendalian, & Peningkatan</strong>) beserta berkas upload akan <strong>TERHAPUS TOTAL & TIDAK DAPAT DI-RECOVERY KEMBALI</strong>.
@@ -420,11 +420,12 @@ function confirmDeleteProject(id, title, taName) {
         <p style="font-size:13px;color:#475569;margin:0;">Apakah Anda yakin ingin melanjutkan penghapusan ini?</p>
       </div>
       <div class="modal-footer" style="padding:16px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;gap:10px;justify-content:flex-end;">
-        <button type="button" class="btn btn-outline" data-modal-close="modalDeleteProjectConfirm" style="padding:9px 18px;font-weight:600;border-radius:10px;">
+        <button type="button" class="btn btn-outline" data-modal-close="modalDeleteProjectConfirm" style="padding:9px 18px;font-weight:600;border-radius:6px;">
           Batal
         </button>
-        <button type="submit" class="btn btn-danger" style="padding:9px 20px;font-weight:800;border-radius:10px;background:#dc2626;color:#fff;border:none;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
-          🗑️ Ya, Hapus Project &amp; Seluruh Isinya
+        <button type="submit" class="btn btn-danger" style="padding:9px 20px;font-weight:700;border-radius:6px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          Ya, Hapus Project &amp; Seluruh Isinya
         </button>
       </div>
     </form>

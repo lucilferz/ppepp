@@ -33,21 +33,21 @@ $pctRtl = $cntPerluRtl > 0 ? round(($cntRtlSelesai / $cntPerluRtl) * 100) : 100;
 ?>
 
 <!-- Header Banner -->
-<div style="background:linear-gradient(135deg,#0f172a 0%,#431407 50%,#7c2d12 100%);border-radius:16px;padding:26px 30px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;box-shadow:0 10px 30px rgba(124,45,18,0.25);">
+<div style="background:#112338;border:1px solid #1e3a5f;border-radius:12px;padding:24px 28px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-space-between;gap:20px;flex-wrap:wrap;">
   <div>
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.6);margin-bottom:6px;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:6px;">
       Pengendalian Standar &amp; Rencana Tindak Lanjut (Tahap P • PPEPP)
     </div>
-    <h2 style="font-size:24px;font-weight:900;color:#fff;margin-bottom:4px;letter-spacing:-0.4px;">
+    <h2 style="font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-0.3px;">
       <?= htmlspecialchars($pengendalian['judul']) ?>
     </h2>
-    <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;">
-      <span>Penetapan Acuan: <strong><?= htmlspecialchars($penetapan['judul'] ?? '—') ?></strong></span>
+    <div style="font-size:13px;color:#cbd5e1;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;">
+      <span>Penetapan Acuan: <strong style="color:#fff;"><?= htmlspecialchars($penetapan['judul'] ?? '—') ?></strong></span>
       <span>•</span>
-      <span>Tahun Ajaran: <strong><?= htmlspecialchars($penetapan['ta_nama'] ?? '—') ?></strong></span>
+      <span>Tahun Ajaran: <strong style="color:#fff;"><?= htmlspecialchars($penetapan['ta_nama'] ?? '—') ?></strong></span>
       <?php if (!empty($evaluasi['judul'])): ?>
       <span>•</span>
-      <span style="color:#a7f3d0;">Evaluasi Terhubung: <?= htmlspecialchars($evaluasi['judul']) ?> ✓</span>
+      <span style="color:#34d399;font-weight:600;">Evaluasi Terhubung: <?= htmlspecialchars($evaluasi['judul']) ?></span>
       <?php endif; ?>
     </div>
   </div>
@@ -56,52 +56,52 @@ $pctRtl = $cntPerluRtl > 0 ? round(($cntRtlSelesai / $cntPerluRtl) * 100) : 100;
     <?php if ($cntPerluRtl > 0): ?>
     <button type="button" onclick="generateAllAIRtl()" id="btnGenerateAllAI"
             class="btn btn-primary"
-            style="background:linear-gradient(135deg,#ea580c,#c2410c);border:none;font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(234,88,12,0.4);cursor:pointer;padding:10px 18px;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-      ✨ Generate Semua RTL AI (1-Klik)
+            style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;cursor:pointer;padding:9px 16px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Generate Semua RTL AI
     </button>
     <?php endif; ?>
     <a href="<?= BASE_URL ?>/pengendalian/<?= $pgId ?>" class="btn btn-outline"
-       style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.25);color:#fff;font-size:12.5px;">
+       style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#fff;font-size:12.5px;">
       Lihat Hasil ↗
     </a>
     <a href="<?= BASE_URL ?>/ppepp<?= !empty($pengendalian['ppepp_project_id']) ? '/' . $pengendalian['ppepp_project_id'] : '' ?>" class="btn btn-outline"
-       style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);color:#fff;font-size:12.5px;">
-      ← Kembali ke Project Library
+       style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:#fff;font-size:12.5px;">
+      Kembali ke Project Library
     </a>
   </div>
 </div>
 
 <?php if (!empty($flash['message'])): ?>
-<div style="margin-bottom:16px;padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:600;<?= $flash['type']==='success' ? 'background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;' : 'background:#fef2f2;border:1px solid #fecaca;color:#991b1b;' ?>">
-  <?= $flash['type']==='success' ? '✓' : '✕' ?> <?= htmlspecialchars($flash['message']) ?>
+<div style="margin-bottom:16px;padding:12px 16px;border-radius:8px;font-size:13.5px;font-weight:600;<?= $flash['type']==='success' ? 'background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;' : 'background:#fef2f2;border:1px solid #fecaca;color:#991b1b;' ?>">
+  <?= $flash['type']==='success' ? 'Sukses: ' : 'Peringatan: ' ?> <?= htmlspecialchars($flash['message']) ?>
 </div>
 <?php endif; ?>
 
 <!-- Summary Cards -->
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:24px;">
-  <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;">
     <div style="font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Total Standar Penetapan</div>
-    <div style="font-size:26px;font-weight:900;color:#1e293b;margin-top:4px;" id="statTotal"><?= $totalStandar ?></div>
+    <div style="font-size:26px;font-weight:800;color:#0f172a;margin-top:4px;" id="statTotal"><?= $totalStandar ?></div>
     <div style="font-size:11.5px;color:#94a3b8;margin-top:2px;">Dari dokumen penetapan acuan</div>
   </div>
 
-  <div style="background:#fff;border:1.5px solid #a7f3d0;border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-    <div style="font-size:11.5px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:0.5px;">✓ Standar Terpenuhi</div>
-    <div style="font-size:26px;font-weight:900;color:#065f46;margin-top:4px;" id="statTerpenuhi"><?= $cntTerpenuhi ?></div>
-    <div style="font-size:11.5px;color:#059669;margin-top:2px;">Tidak memerlukan form RTL</div>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-left:4px solid var(--success);border-radius:10px;padding:16px 20px;">
+    <div style="font-size:11.5px;font-weight:700;color:var(--success);text-transform:uppercase;letter-spacing:0.5px;">Standar Terpenuhi</div>
+    <div style="font-size:26px;font-weight:800;color:#065f46;margin-top:4px;" id="statTerpenuhi"><?= $cntTerpenuhi ?></div>
+    <div style="font-size:11.5px;color:var(--success);margin-top:2px;">Tidak memerlukan form RTL</div>
   </div>
 
-  <div style="background:#fff;border:1.5px solid #fed7aa;border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-    <div style="font-size:11.5px;font-weight:700;color:#ea580c;text-transform:uppercase;letter-spacing:0.5px;">⚠️ Belum Terpenuhi (Perlu RTL)</div>
-    <div style="font-size:26px;font-weight:900;color:#9a3412;margin-top:4px;" id="statPerluRtl"><?= $cntPerluRtl ?></div>
-    <div style="font-size:11.5px;color:#c2410c;margin-top:2px;">Memerlukan tindakan koreksi</div>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-left:4px solid var(--warning);border-radius:10px;padding:16px 20px;">
+    <div style="font-size:11.5px;font-weight:700;color:var(--warning);text-transform:uppercase;letter-spacing:0.5px;">Belum Terpenuhi (Perlu RTL)</div>
+    <div style="font-size:26px;font-weight:800;color:#92400e;margin-top:4px;" id="statPerluRtl"><?= $cntPerluRtl ?></div>
+    <div style="font-size:11.5px;color:var(--warning);margin-top:2px;">Memerlukan tindakan koreksi</div>
   </div>
 
-  <div style="background:#fff;border:1.5px solid #c7d2fe;border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-    <div style="font-size:11.5px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:0.5px;">Progress Perumusan RTL</div>
-    <div style="font-size:26px;font-weight:900;color:#3730a3;margin-top:4px;" id="statPctText"><?= $pctRtl ?>%</div>
-    <div style="font-size:11.5px;color:#4f46e5;margin-top:2px;"><span id="statRtlCount"><?= $cntRtlSelesai ?></span> dari <?= $cntPerluRtl ?> RTL terisi</div>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-left:4px solid var(--primary);border-radius:10px;padding:16px 20px;">
+    <div style="font-size:11.5px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;">Progress Perumusan RTL</div>
+    <div style="font-size:26px;font-weight:800;color:var(--primary);margin-top:4px;" id="statPctText"><?= $pctRtl ?>%</div>
+    <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;"><span id="statRtlCount"><?= $cntRtlSelesai ?></span> dari <?= $cntPerluRtl ?> RTL terisi</div>
   </div>
 </div>
 
@@ -130,106 +130,106 @@ $pctRtl = $cntPerluRtl > 0 ? round(($cntRtlSelesai / $cntPerluRtl) * 100) : 100;
     <?php if ($isTerpenuhi): ?>
     <!-- KONDISI A: STANDAR SUDAH TERPENUHI (TIDAK PERLU RTL) -->
     <div class="standar-card terpenuhi" id="card_pg_<?= $pdId ?>"
-         style="background:#f0fdf4;border:1.5px solid #a7f3d0;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
-      <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+         style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;overflow:hidden;">
+      <div style="padding:14px 18px;display:flex;align-items:center;justify-space-between;gap:12px;flex-wrap:wrap;">
         <div style="display:flex;align-items:flex-start;gap:12px;flex:1;">
-          <div style="padding:5px 12px;background:#059669;color:#fff;border-radius:8px;font-weight:900;font-size:13px;flex-shrink:0;">
+          <div style="padding:4px 10px;background:var(--success);color:#fff;border-radius:6px;font-weight:700;font-size:12px;flex-shrink:0;">
             <?= htmlspecialchars($displayKode) ?>
           </div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;">
-              <h4 style="font-size:16px;font-weight:800;color:#065f46;margin:0 0 4px;"><?= htmlspecialchars($d['kriteria_nama']) ?></h4>
-              <span style="font-size:11px;font-weight:700;color:#059669;background:#ecfdf5;padding:2px 8px;border-radius:6px;">
+              <h4 style="font-size:15px;font-weight:700;color:#065f46;margin:0 0 4px;"><?= htmlspecialchars($d['kriteria_nama']) ?></h4>
+              <span style="font-size:11px;font-weight:600;color:#059669;background:#ecfdf5;padding:2px 8px;border-radius:4px;">
                 Indikator #<?= $idx + 1 ?>
               </span>
             </div>
             <?php if (!empty($d['target_capaian'])): ?>
-            <div style="font-size:13.5px;color:#334155;line-height:1.5;">
-              <strong>🎯 Pernyataan Standar:</strong> <?= htmlspecialchars($d['target_capaian']) ?>
+            <div style="font-size:13px;color:#334155;line-height:1.5;">
+              <strong>Pernyataan Standar:</strong> <?= htmlspecialchars($d['target_capaian']) ?>
             </div>
             <?php endif; ?>
             <?php if (!empty($d['indikator'])): ?>
-            <div style="font-size:13.5px;color:#047857;line-height:1.5;margin-top:2px;">
-              <strong>📊 Target / Indikator:</strong> <?= htmlspecialchars($d['indikator']) ?>
+            <div style="font-size:13px;color:#047857;line-height:1.5;margin-top:2px;">
+              <strong>Target / Indikator:</strong> <?= htmlspecialchars($d['indikator']) ?>
             </div>
             <?php endif; ?>
           </div>
         </div>
 
         <div style="display:flex;align-items:center;gap:8px;">
-          <span style="font-size:12.5px;font-weight:800;padding:5px 14px;border-radius:20px;background:#059669;color:#fff;display:inline-flex;align-items:center;gap:6px;">
-            ✓ Standar Terpenuhi (Tercapai Penuh)
+          <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:6px;background:#059669;color:#fff;display:inline-flex;align-items:center;gap:6px;">
+            Standar Terpenuhi (Tercapai Penuh)
           </span>
         </div>
       </div>
-      <div style="padding:10px 20px 14px;background:#fff;border-top:1px dashed #a7f3d0;font-size:13px;color:#065f46;">
-        💡 <strong>Keterangan:</strong> Indikator kriteria ini telah terpenuhi pada tahap Evaluasi dan tidak memerlukan form tindakan koreksi / RTL.
+      <div style="padding:8px 18px 12px;background:#fff;border-top:1px dashed #a7f3d0;font-size:12.5px;color:#065f46;">
+        <strong>Keterangan:</strong> Indikator kriteria ini telah terpenuhi pada tahap Evaluasi dan tidak memerlukan form tindakan koreksi / RTL.
       </div>
     </div>
 
     <?php else: ?>
     <!-- KONDISI B: STANDAR BELUM TERPENUHI (WAJIB MENGISI RTL & KOREKSI) -->
     <div class="standar-card belum-terpenuhi" id="card_pg_<?= $pdId ?>"
-         style="background:#fff;border:1.5px solid #fed7aa;border-radius:16px;overflow:hidden;box-shadow:0 4px 16px rgba(234,88,12,0.06);">
+         style="background:#fff;border:1px solid #fed7aa;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
       
       <!-- Card Header -->
-      <div style="padding:16px 22px;background:#fff7ed;border-bottom:1.5px solid #fed7aa;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+      <div style="padding:14px 18px;background:#fff7ed;border-bottom:1px solid #fed7aa;display:flex;align-items:center;justify-space-between;gap:14px;flex-wrap:wrap;">
         <div style="display:flex;align-items:flex-start;gap:12px;flex:1;">
-          <div style="padding:5px 12px;background:#ea580c;color:#fff;border-radius:8px;font-weight:900;font-size:13px;flex-shrink:0;">
+          <div style="padding:4px 10px;background:var(--warning);color:#fff;border-radius:6px;font-weight:700;font-size:12px;flex-shrink:0;">
             <?= htmlspecialchars($displayKode) ?>
           </div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;">
-              <h4 style="font-size:16px;font-weight:800;color:#9a3412;margin:0 0 4px;"><?= htmlspecialchars($d['kriteria_nama']) ?></h4>
-              <span style="font-size:11px;font-weight:700;color:#ea580c;background:#fff7ed;padding:2px 8px;border-radius:6px;border:1px solid #fed7aa;">
+              <h4 style="font-size:15px;font-weight:700;color:#9a3412;margin:0 0 4px;"><?= htmlspecialchars($d['kriteria_nama']) ?></h4>
+              <span style="font-size:11px;font-weight:600;color:#ea580c;background:#fff7ed;padding:2px 8px;border-radius:4px;border:1px solid #fed7aa;">
                 Indikator #<?= $idx + 1 ?>
               </span>
             </div>
-            <div style="font-size:13px;color:#c2410c;"><?= htmlspecialchars($d['kriteria_deskripsi'] ?? '') ?></div>
+            <div style="font-size:12.5px;color:#c2410c;"><?= htmlspecialchars($d['kriteria_deskripsi'] ?? '') ?></div>
           </div>
         </div>
 
         <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-size:12.5px;font-weight:800;padding:5px 14px;border-radius:20px;background:#fee2e2;color:#991b1b;">
-            ⚠️ <?= $stCapaian === 'sebagian' ? 'Tercapai Sebagian' : 'Belum Tercapai' ?> (Wajib RTL)
+          <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:6px;background:#fee2e2;color:#991b1b;border:1px solid #fecaca;">
+            <?= $stCapaian === 'sebagian' ? 'Tercapai Sebagian' : 'Belum Tercapai' ?> (Wajib RTL)
           </span>
 
           <!-- Tombol AI Single RTL -->
           <button type="button" onclick="generateSingleAIRtl(<?= $pdId ?>, <?= $kid ?>)" id="btn_ai_<?= $pdId ?>"
-                  style="background:#fff;border:1.5px solid #ea580c;color:#ea580c;padding:7px 14px;border-radius:9px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            ✨ Generate RTL AI
+                  style="background:#fff;border:1px solid #ea580c;color:#ea580c;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Generate RTL AI
           </button>
         </div>
       </div>
 
       <!-- Card Body -->
-      <div style="padding:22px;">
+      <div style="padding:20px;">
         
         <!-- Info Target Standar & Indikator dari Penetapan -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:16px;">
           <?php if (!empty($d['strategi'])): ?>
-          <div style="background:#f8faff;border-left:4px solid #4f46e5;padding:10px 14px;border-radius:0 10px 10px 0;">
-            <div style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:#4f46e5;margin-bottom:3px;letter-spacing:0.5px;">📌 Aturan / Dasar Hukum:</div>
-            <div style="font-size:14.5px;color:#1e293b;line-height:1.6;font-weight:500;"><?= htmlspecialchars($d['strategi']) ?></div>
+          <div style="background:#fff;border-left:3px solid var(--primary);border:1px solid #e2e8f0;border-left-width:3px;padding:10px 14px;border-radius:0 6px 6px 0;">
+            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--primary);margin-bottom:2px;letter-spacing:0.5px;">Aturan / Dasar Hukum:</div>
+            <div style="font-size:13.5px;color:var(--text);line-height:1.5;"><?= htmlspecialchars($d['strategi']) ?></div>
           </div>
           <?php endif; ?>
 
-          <div style="background:#f0fdf4;border-left:4px solid #059669;padding:10px 14px;border-radius:0 10px 10px 0;">
-            <div style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:#065f46;margin-bottom:3px;letter-spacing:0.5px;">🎯 Pernyataan Standar:</div>
-            <div style="font-size:14.5px;color:#1e293b;line-height:1.6;font-weight:500;"><?= htmlspecialchars($d['target_capaian'] ?: '—') ?></div>
+          <div style="background:#fff;border-left:3px solid var(--success);border:1px solid #e2e8f0;border-left-width:3px;padding:10px 14px;border-radius:0 6px 6px 0;">
+            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--success);margin-bottom:2px;letter-spacing:0.5px;">Pernyataan Standar:</div>
+            <div style="font-size:13.5px;color:var(--text);line-height:1.5;"><?= htmlspecialchars($d['target_capaian'] ?: '—') ?></div>
           </div>
 
-          <div style="background:#fffbeb;border-left:4px solid #d97706;padding:10px 14px;border-radius:0 10px 10px 0;">
-            <div style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:#92400e;margin-bottom:3px;letter-spacing:0.5px;">📊 Target / Indikator:</div>
-            <div style="font-size:14.5px;color:#1e293b;line-height:1.6;font-weight:500;"><?= htmlspecialchars($d['indikator'] ?: '—') ?></div>
+          <div style="background:#fff;border-left:3px solid var(--warning);border:1px solid #e2e8f0;border-left-width:3px;padding:10px 14px;border-radius:0 6px 6px 0;">
+            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--warning);margin-bottom:2px;letter-spacing:0.5px;">Target / Indikator:</div>
+            <div style="font-size:13.5px;color:var(--text);line-height:1.5;"><?= htmlspecialchars($d['indikator'] ?: '—') ?></div>
           </div>
         </div>
 
         <!-- Hasil Evaluasi Indikator (Ditarik Otomatis dari Modul Evaluasi) -->
-        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;margin-bottom:18px;">
-          <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#991b1b;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
-            <span>📝 Hasil Analisis Evaluasi (dari Modul Evaluasi):</span>
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px 14px;margin-bottom:18px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#991b1b;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
+            <span>Hasil Analisis Evaluasi (dari Modul Evaluasi):</span>
           </div>
           <div style="font-size:12.5px;color:#7f1d1d;line-height:1.5;white-space:pre-wrap;"><?= !empty($d['evaluasi_teks']) ? htmlspecialchars($d['evaluasi_teks']) : (!empty($d['analisis_gap']) ? htmlspecialchars($d['analisis_gap']) : '<span style="font-style:italic;color:#991b1b;">Belum ada catatan evaluasi dari tahap sebelumnya</span>') ?></div>
         </div>
@@ -240,8 +240,8 @@ $pctRtl = $cntPerluRtl > 0 ? round(($cntRtlSelesai / $cntPerluRtl) * 100) : 100;
           <!-- 1. Akar Masalah -->
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-              <label style="font-size:12.5px;font-weight:800;color:#1e293b;">
-                🔍 1. Analisis Akar Masalah / Penyebab Ketidaktercapaian:
+              <label style="font-size:12.5px;font-weight:700;color:var(--text);">
+                1. Analisis Akar Masalah / Penyebab Ketidaktercapaian:
               </label>
               <span id="saveStatus_akar_<?= $pdId ?>" style="font-size:11px;color:#94a3b8;"></span>
             </div>
@@ -254,8 +254,8 @@ $pctRtl = $cntPerluRtl > 0 ? round(($cntRtlSelesai / $cntPerluRtl) * 100) : 100;
           <!-- 2. Rencana Tindakan Koreksi (RTL) -->
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-              <label style="font-size:12.5px;font-weight:800;color:#1e293b;">
-                🛠️ 2. Rencana Tindakan Koreksi (RTL Konkret): <span style="color:#ef4444;">*</span>
+              <label style="font-size:12.5px;font-weight:700;color:var(--text);">
+                2. Rencana Tindakan Koreksi (RTL Konkret): <span style="color:var(--danger);">*</span>
               </label>
               <span id="saveStatus_rtl_<?= $pdId ?>" style="font-size:11px;color:#94a3b8;"></span>
             </div>
@@ -266,10 +266,10 @@ $pctRtl = $cntPerluRtl > 0 ? round(($cntRtlSelesai / $cntPerluRtl) * 100) : 100;
           </div>
 
           <!-- 3. Usulan Koreksi Standar untuk Penetapan Berikutnya -->
-          <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;">
+          <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 14px;">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-              <label style="font-size:12.5px;font-weight:800;color:#92400e;">
-                🔄 3. Usulan Koreksi / Penyesuaian Standar untuk Penetapan Berikutnya:
+              <label style="font-size:12.5px;font-weight:700;color:#92400e;">
+                3. Usulan Koreksi / Penyesuaian Standar untuk Penetapan Berikutnya:
               </label>
               <span id="saveStatus_koreksi_<?= $pdId ?>" style="font-size:11px;color:#94a3b8;"></span>
             </div>
@@ -292,11 +292,11 @@ $pctRtl = $cntPerluRtl > 0 ? round(($cntRtlSelesai / $cntPerluRtl) * 100) : 100;
 </div>
 
 <!-- SECTION 2: UPLOAD BERKAS NOTULENSI RAPAT RTM & BERKAS KOREKSI STANDAR -->
-<div style="background:#fff;border:1.5px solid #fed7aa;border-radius:16px;padding:24px 28px;margin-bottom:30px;box-shadow:0 4px 16px rgba(234,88,12,0.06);">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1.5px solid #ffedd5;padding-bottom:14px;">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:24px 28px;margin-bottom:30px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid #e2e8f0;padding-bottom:14px;">
     <div>
-      <h3 style="font-size:18px;font-weight:900;color:#1e293b;margin:0 0 4px;display:flex;align-items:center;gap:8px;">
-        <span>📁 2. Upload Berkas Notulensi Rapat RTM &amp; Berkas Koreksi Standar</span>
+      <h3 style="font-size:18px;font-weight:800;color:var(--text);margin:0 0 4px;display:flex;align-items:center;gap:8px;">
+        <span>2. Upload Berkas Notulensi Rapat RTM &amp; Berkas Koreksi Standar</span>
       </h3>
       <p style="font-size:13px;color:#64748b;margin:0;">
         Unggah berkas Notulensi Rapat Tinjauan Manajemen (RTM), Berita Acara Pengendalian, atau Draft SK/Revisi Standar SPMI yang menjadi rujukan perbaikan standar pada siklus Penetapan berikutnya.

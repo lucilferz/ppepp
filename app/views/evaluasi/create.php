@@ -14,8 +14,8 @@ $breadcrumbs = [
     <p class="page-desc">Pilih penetapan sebagai acuan, lalu isi hasil evaluasi per kriteria</p>
   </div>
   <a href="<?= BASE_URL ?>/ppepp<?= !empty($projectId) ? '/' . $projectId : '' ?>" class="btn btn-outline">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-    ← Kembali ke Project Library
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15" height="15"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Kembali ke Project Library
   </a>
 </div>
 
@@ -31,24 +31,24 @@ $breadcrumbs = [
       <input type="hidden" name="project_id" value="<?= (int)($projectId ?? 0) ?>">
 
       <?php if (!empty($selectedProject)): ?>
-      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;margin-bottom:18px;display:flex;align-items:center;justify-space-between;gap:12px;">
+      <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:12px 16px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
         <div>
-          <span style="font-size:11px;color:#1d4ed8;font-weight:800;text-transform:uppercase;">📌 Folder Project PPEPP</span>
-          <div style="font-size:14px;font-weight:800;color:#1e3a8a;"><?= htmlspecialchars($selectedProject['judul']) ?></div>
-          <div style="font-size:12px;color:#3b82f6;">Acuan Penetapan difilter khusus untuk Project dan Tahun Ajaran ini.</div>
+          <span style="font-size:11px;color:#166534;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Folder Project PPEPP</span>
+          <div style="font-size:14px;font-weight:700;color:#14532D;"><?= htmlspecialchars($selectedProject['judul']) ?></div>
+          <div style="font-size:12px;color:#166534;">Acuan Penetapan difilter khusus untuk Project dan Tahun Ajaran ini.</div>
         </div>
-        <span style="font-size:12px;color:#1d4ed8;font-weight:700;background:#fff;padding:4px 12px;border-radius:14px;border:1px solid #bfdbfe;white-space:nowrap;">
-          📅 T.A. <?= htmlspecialchars($selectedProject['ta_nama']) ?>
+        <span style="font-size:12px;color:#166534;font-weight:600;background:#fff;padding:4px 12px;border-radius:6px;border:1px solid #BBF7D0;white-space:nowrap;">
+          T.A. <?= htmlspecialchars($selectedProject['ta_nama']) ?>
         </span>
       </div>
       <?php endif; ?>
 
       <div class="form-group">
-        <label for="penetapan_id">Penetapan Acuan <span style="color:#ef4444;">*</span></label>
+        <label for="penetapan_id">Penetapan Acuan <span style="color:var(--danger);">*</span></label>
         <?php if (empty($penetapans)): ?>
-        <div style="background:#fef9e7;border:1.5px solid #f59e0b;border-radius:10px;padding:14px 18px;font-size:13px;color:#92400e;">
+        <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:14px 18px;font-size:13px;color:#92400E;">
           <strong>Belum ada Penetapan.</strong>
-          <a href="<?= BASE_URL ?>/penetapan/create" style="color:#1a237e;text-decoration:underline;">Buat penetapan terlebih dahulu →</a>
+          <a href="<?= BASE_URL ?>/penetapan/create" style="color:var(--primary);text-decoration:underline;">Buat penetapan terlebih dahulu →</a>
         </div>
         <?php else: ?>
         <select id="penetapan_id" name="penetapan_id" class="form-control" required onchange="fillJudul(this)">
@@ -64,7 +64,7 @@ $breadcrumbs = [
           <?php endforeach; ?>
         </select>
         <?php endif; ?>
-        <div id="penetapanInfo" style="display:none;margin-top:8px;padding:10px 14px;background:#f0f4ff;border-radius:8px;font-size:13px;color:#1a237e;"></div>
+        <div id="penetapanInfo" style="display:none;margin-top:8px;padding:10px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;font-size:13px;color:var(--text);"></div>
       </div>
 
       <div class="form-group">

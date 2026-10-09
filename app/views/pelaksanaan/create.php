@@ -11,9 +11,10 @@ $breadcrumbs = [
   <div>
     <h2>Buat Pelaksanaan Baru</h2>
     <p class="page-desc">Pilih penetapan sebagai acuan</p>
+  </div>
   <a href="<?= BASE_URL ?>/ppepp<?= !empty($projectId) ? '/' . $projectId : '' ?>" class="btn btn-outline">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-    ← Kembali ke Project Library
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15" height="15"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Kembali ke Project Library
   </a>
 </div>
 
@@ -37,14 +38,14 @@ $breadcrumbs = [
   <input type="hidden" name="project_id" value="<?= (int)($projectId ?? 0) ?>">
 
   <?php if (!empty($selectedProject)): ?>
-  <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;justify-space-between;gap:12px;">
+  <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
     <div>
-      <span style="font-size:11px;color:#047857;font-weight:800;text-transform:uppercase;">📌 Folder Project PPEPP</span>
-      <div style="font-size:14px;font-weight:800;color:#064e3b;"><?= htmlspecialchars($selectedProject['judul']) ?></div>
-      <div style="font-size:12px;color:#059669;">Acuan Penetapan difilter khusus untuk Project dan Tahun Ajaran ini.</div>
+      <span style="font-size:11px;color:#166534;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Folder Project PPEPP</span>
+      <div style="font-size:14px;font-weight:700;color:#14532D;"><?= htmlspecialchars($selectedProject['judul']) ?></div>
+      <div style="font-size:12px;color:#166534;">Acuan Penetapan difilter khusus untuk Project dan Tahun Ajaran ini.</div>
     </div>
-    <span style="font-size:12px;color:#047857;font-weight:700;background:#fff;padding:4px 12px;border-radius:14px;border:1px solid #a7f3d0;white-space:nowrap;">
-      📅 T.A. <?= htmlspecialchars($selectedProject['ta_nama']) ?>
+    <span style="font-size:12px;color:#166534;font-weight:600;background:#fff;padding:4px 12px;border-radius:6px;border:1px solid #BBF7D0;white-space:nowrap;">
+      T.A. <?= htmlspecialchars($selectedProject['ta_nama']) ?>
     </span>
   </div>
   <?php endif; ?>
@@ -88,18 +89,18 @@ $breadcrumbs = [
             <?php foreach ($penetapans as $idx => $p): 
               $isFirst = ($idx === 0);
             ?>
-            <label style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:<?= $isFirst ? '#eef2ff' : '#f8faff' ?>;border:1.5px solid <?= $isFirst ? '#3f51b5' : '#e2e8f0' ?>;border-radius:10px;cursor:pointer;transition:all 0.18s;" class="penetapan-option">
+            <label style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:<?= $isFirst ? '#F8FAFC' : '#fff' ?>;border:1.5px solid <?= $isFirst ? 'var(--primary)' : '#e2e8f0' ?>;border-radius:8px;cursor:pointer;transition:all 0.15s;" class="penetapan-option">
               <input type="radio" name="penetapan_id" value="<?= $p['id'] ?>" <?= $isFirst ? 'checked' : '' ?> required
                      onchange="selectPenetapan(<?= $p['id'] ?>, this)"
-                     style="margin-top:2px;flex-shrink:0;accent-color:#3f51b5;">
+                     style="margin-top:2px;flex-shrink:0;accent-color:var(--primary);">
               <div style="flex:1;min-width:0;">
-                <div style="font-size:13.5px;font-weight:700;color:#1e293b;"><?= htmlspecialchars($p['judul']) ?></div>
+                <div style="font-size:13.5px;font-weight:600;color:var(--text);"><?= htmlspecialchars($p['judul']) ?></div>
                 <div style="display:flex;gap:7px;margin-top:6px;flex-wrap:wrap;">
                   <span class="badge badge-primary"><?= htmlspecialchars($p['ta_nama']) ?></span>
                   <?php if ($p['semester']): ?>
                   <span class="badge badge-gray"><?= htmlspecialchars($p['semester']) ?></span>
                   <?php endif; ?>
-                  <span class="badge <?= $p['status'] === 'final' ? 'badge-success' : 'badge-warning' ?>"><?= $p['status'] === 'final' ? 'Final ✓' : 'Draft' ?></span>
+                  <span class="badge <?= $p['status'] === 'final' ? 'badge-success' : 'badge-warning' ?>"><?= $p['status'] === 'final' ? 'Final' : 'Draft' ?></span>
                 </div>
               </div>
             </label>
@@ -109,7 +110,7 @@ $breadcrumbs = [
       </div>
 
       <!-- Preview Kriteria -->
-      <div class="card" id="previewCard" style="display:none;">
+      <div class="card" id="previewCard" style="display:none;margin-top:16px;">
         <div class="card-header">
           <div class="card-title">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
@@ -124,13 +125,13 @@ $breadcrumbs = [
   </div>
 
   <!-- Actions -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding:16px 22px;background:#fff;border-radius:14px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(26,35,126,0.07);">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:24px;padding:16px 20px;background:#fff;border-radius:8px;border:1px solid #e2e8f0;">
     <a href="<?= BASE_URL ?>/pelaksanaan" class="btn btn-outline">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg>
       Batal
     </a>
-    <button type="submit" class="btn btn-primary btn-lg">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+    <button type="submit" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
       Buat Pelaksanaan
     </button>
   </div>
@@ -151,12 +152,12 @@ function selectPenetapan(id, radio) {
   // Highlight selected
   document.querySelectorAll('.penetapan-option').forEach(function(el) {
     el.style.borderColor = '#e2e8f0';
-    el.style.background  = '#f8faff';
+    el.style.background  = '#fff';
   });
   var selected = radio.closest('.penetapan-option');
   if (selected) {
-    selected.style.borderColor = '#3f51b5';
-    selected.style.background  = '#eef2ff';
+    selected.style.borderColor = 'var(--primary)';
+    selected.style.background  = '#F8FAFC';
   }
 }
 

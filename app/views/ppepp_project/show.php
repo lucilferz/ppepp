@@ -38,19 +38,19 @@ foreach ($allKriteria ?? [] as $ak) {
 </div>
 
 <!-- Project Header Banner -->
-<div style="background:linear-gradient(135deg,#0f172a 0%,#1a237e 60%,#283593 100%);border-radius:16px;padding:28px 32px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;">
+<div style="background:linear-gradient(135deg,#112338 0%,#173B67 100%);border-radius:12px;padding:26px 30px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;">
   <div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.6);">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.6);">
         Project PPEPP
       </div>
       <?php
       $projStatus = $project['status'] ?? 'aktif';
       $badgeStyle = match($projStatus) {
-          'aktif'    => 'background:rgba(34,197,94,0.25);color:#86efac;border:1px solid rgba(134,239,172,0.4);',
-          'nonaktif' => 'background:rgba(234,179,8,0.25);color:#fde047;border:1px solid rgba(253,224,71,0.4);',
-          'arsip'    => 'background:rgba(148,163,184,0.25);color:#cbd5e1;border:1px solid rgba(203,213,225,0.4);',
-          'selesai'  => 'background:rgba(59,130,246,0.25);color:#93c5fd;border:1px solid rgba(147,197,253,0.4);',
+          'aktif'    => 'background:rgba(35,132,91,0.25);color:#86efac;border:1px solid rgba(134,239,172,0.4);',
+          'nonaktif' => 'background:rgba(183,121,31,0.25);color:#fde047;border:1px solid rgba(253,224,71,0.4);',
+          'arsip'    => 'background:rgba(100,116,139,0.25);color:#cbd5e1;border:1px solid rgba(203,213,225,0.4);',
+          'selesai'  => 'background:rgba(37,99,235,0.25);color:#93c5fd;border:1px solid rgba(147,197,253,0.4);',
           default    => 'background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);',
       };
       $badgeLabel = match($projStatus) {
@@ -65,7 +65,7 @@ foreach ($allKriteria ?? [] as $ak) {
         ● <?= $badgeLabel ?>
       </span>
     </div>
-    <h2 style="font-size:28px;font-weight:900;color:#fff;margin-bottom:4px;letter-spacing:-0.5px;">
+    <h2 style="font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-0.5px;">
       Tahun Ajaran <?= htmlspecialchars($project['ta_nama']) ?>
     </h2>
     <p style="font-size:14px;color:rgba(255,255,255,0.7);"><?= htmlspecialchars($project['judul'] ?? '') ?></p>
@@ -85,22 +85,23 @@ foreach ($allKriteria ?? [] as $ak) {
     </div>
   </div>
   <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
-    <a href="<?= BASE_URL ?>/laporan?project_id=<?= $project['id'] ?>" class="btn btn-outline" style="background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);color:#fff;font-weight:800;display:flex;align-items:center;gap:6px;">
+    <a href="<?= BASE_URL ?>/laporan?project_id=<?= $project['id'] ?>" class="btn btn-outline" style="background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);color:#fff;font-weight:700;display:flex;align-items:center;gap:6px;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-      📊 Buka Laporan Eksekutif
+      Buka Laporan Eksekutif
     </a>
     <div style="display:flex;gap:8px;">
-      <a href="<?= BASE_URL ?>/ppepp/<?= $project['id'] ?>/hidden" class="btn btn-outline" style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.3);color:#fff;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px;flex:1;justify-content:center;" title="Kelola Dokumen yang Disembunyikan (Hide)">
-        📁 Tersembunyi (<?= (int)($totalHiddenCount ?? 0) ?>)
+      <a href="<?= BASE_URL ?>/ppepp/<?= $project['id'] ?>/hidden" class="btn btn-outline" style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.3);color:#fff;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:5px;flex:1;justify-content:center;" title="Kelola Dokumen yang Disembunyikan (Hide)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Tersembunyi (<?= (int)($totalHiddenCount ?? 0) ?>)
       </a>
       <a href="<?= BASE_URL ?>/ppepp/<?= $project['id'] ?>/edit" class="btn btn-outline" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:#fff;font-size:12.5px;" title="Edit Informasi Project">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         Edit
       </a>
       <form method="POST" action="<?= BASE_URL ?>/ppepp/<?= $project['id'] ?>/destroy" style="margin:0;"
-            onsubmit="return confirm('⚠️ KONFIRMASI HAPUS PERMANEN:\n\nApakah Anda YAKIN ingin menghapus project \'<?= htmlspecialchars(addslashes($project['judul'])) ?>\' (TA <?= htmlspecialchars(addslashes($project['ta_nama'])) ?>)?\n\nSELURUH DATA 5 TAHAP PPEPP (Penetapan, Pelaksanaan, Evaluasi, Pengendalian, & Peningkatan) di dalamnya akan TERHAPUS TOTAL & PERMANEN!');">
-        <button type="submit" class="btn"
-                style="background:rgba(239,68,68,0.25);border:1px solid rgba(248,113,113,0.5);color:#fca5a5;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px;cursor:pointer;padding:8px 12px;border-radius:9px;"
+            onsubmit="return confirm('KONFIRMASI HAPUS PERMANEN:\n\nApakah Anda YAKIN ingin menghapus project \'<?= htmlspecialchars(addslashes($project['judul'])) ?>\' (TA <?= htmlspecialchars(addslashes($project['ta_nama'])) ?>)?\n\nSELURUH DATA 5 TAHAP PPEPP (Penetapan, Pelaksanaan, Evaluasi, Pengendalian, & Peningkatan) di dalamnya akan TERHAPUS TOTAL & PERMANEN!');">
+        <button type="submit" class="btn btn-danger"
+                style="font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px;cursor:pointer;padding:8px 12px;border-radius:8px;"
                 title="Hapus Project Permanen Beserta Seluruh Isinya">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
           Hapus
@@ -117,19 +118,20 @@ foreach ($allKriteria ?? [] as $ak) {
 <?php endif; ?>
 
 <!-- FILTER CONTROL BAR DOKUMEN & TAHAP PROJECT -->
-<div class="card mb-4" style="border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,0.04);border:1.5px solid #cbd5e1;padding:20px 24px;margin-bottom:24px;background:#fff;">
+<div class="card mb-4" style="border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);border:1px solid var(--border);padding:20px 24px;margin-bottom:24px;background:#fff;">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px;border-bottom:1px solid #f1f5f9;padding-bottom:12px;">
     <div style="display:flex;align-items:center;gap:10px;">
-      <div style="width:34px;height:34px;background:linear-gradient(135deg,#1a237e,#3f51b5);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px rgba(26,35,126,0.2);">
-        🔍
+      <div style="width:34px;height:34px;background:var(--primary);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </div>
       <div>
-        <h3 style="font-size:16px;font-weight:800;color:#1e293b;margin:0 0 2px;">Filter Dokumen Project Ini</h3>
-        <p style="font-size:12px;color:#64748b;margin:0;">Filter tampilan dokumen berdasarkan <strong>Tahap PPEPP</strong>, <strong>Kriteria SPMI</strong>, atau <strong>Status Dokumen</strong>.</p>
+        <h3 style="font-size:15px;font-weight:700;color:var(--text-main);margin:0 0 2px;">Filter Dokumen Project Ini</h3>
+        <p style="font-size:12px;color:var(--text-muted);margin:0;">Filter tampilan dokumen berdasarkan <strong>Tahap PPEPP</strong>, <strong>Kriteria SPMI</strong>, atau <strong>Status Dokumen</strong>.</p>
       </div>
     </div>
-    <button type="button" onclick="resetProjectFilters()" class="btn btn-sm btn-outline" style="font-size:12px;color:#ef4444;border-color:#fecaca;font-weight:700;">
-      🔄 Reset Filter
+    <button type="button" onclick="resetProjectFilters()" class="btn btn-sm btn-outline" style="font-size:12px;color:var(--danger);border-color:#fecaca;font-weight:600;display:inline-flex;align-items:center;gap:4px;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+      Reset Filter
     </button>
   </div>
 
@@ -137,7 +139,7 @@ foreach ($allKriteria ?? [] as $ak) {
     
     <!-- 1. Filter Tahap PPEPP -->
     <div>
-      <label style="font-size:12px;font-weight:700;color:#1e293b;margin:0 0 5px;display:block;">Tahap PPEPP:</label>
+      <label style="font-size:12px;font-weight:700;color:var(--text-main);margin:0 0 5px;display:block;">Tahap PPEPP:</label>
       <select id="filterStageSelect" onchange="applyProjectFilters()" class="form-control" style="font-size:13px;">
         <option value="all">Semua Tahap (5 Tahap)</option>
         <option value="penetapan">P1 — Penetapan Standar</option>
@@ -150,7 +152,7 @@ foreach ($allKriteria ?? [] as $ak) {
 
     <!-- 2. Filter Kriteria -->
     <div>
-      <label style="font-size:12px;font-weight:700;color:#1e293b;margin:0 0 5px;display:block;">Kriteria SPMI / Prodi:</label>
+      <label style="font-size:12px;font-weight:700;color:var(--text-main);margin:0 0 5px;display:block;">Kriteria SPMI / Prodi:</label>
       <select id="filterKriteriaSelect" onchange="applyProjectFilters()" class="form-control" style="font-size:13px;">
         <option value="all">Semua Kriteria</option>
         <?php foreach ($allKriteria ?? [] as $ak): ?>
@@ -163,12 +165,12 @@ foreach ($allKriteria ?? [] as $ak) {
 
     <!-- 3. Filter Status Dokumen -->
     <div>
-      <label style="font-size:12px;font-weight:800;color:#1e293b;margin:0 0 5px;display:block;">⚡ Status Dokumen:</label>
-      <select id="filterStatusSelect" onchange="applyProjectFilters()" class="form-control" style="font-size:13px;font-weight:700;border-color:#a5b4fc;background:#f8faff;">
-        <option value="all">✨ Semua Status</option>
-        <option value="draft">🟡 Draft Saja</option>
-        <option value="final">🟢 Final Saja</option>
-        <option value="nonaktif">⚠️ Nonaktif Saja</option>
+      <label style="font-size:12px;font-weight:700;color:var(--text-main);margin:0 0 5px;display:block;">Status Dokumen:</label>
+      <select id="filterStatusSelect" onchange="applyProjectFilters()" class="form-control" style="font-size:13px;">
+        <option value="all">Semua Status</option>
+        <option value="draft">Draft Saja</option>
+        <option value="final">Final Saja</option>
+        <option value="nonaktif">Nonaktif Saja</option>
       </select>
     </div>
 
@@ -256,8 +258,8 @@ foreach ($allKriteria ?? [] as $ak) {
                 $totalK = count($allKriteria ?? []);
                 if (count($rawKids) >= $totalK && $totalK > 3):
             ?>
-              <span onclick="filterByKriteriaId('all')" style="cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;padding:2.5px 9px;border-radius:6px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;box-shadow:0 1px 2px rgba(29,78,216,0.08);transition:all 0.15s;" title="Klik untuk filter semua kriteria">
-                🎯 Semua Kriteria (<?= count($rawKids) ?>)
+              <span onclick="filterByKriteriaId('all')" style="cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2.5px 9px;border-radius:6px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;transition:all 0.15s;" title="Klik untuk filter semua kriteria">
+                Semua Kriteria (<?= count($rawKids) ?>)
               </span>
             <?php else: ?>
               <?php foreach ($rawKids as $kid): 
@@ -354,21 +356,21 @@ foreach ($allKriteria ?? [] as $ak) {
 
 <!-- Banner Dokumen Tersembunyi jika ada -->
 <?php if (($totalHiddenCount ?? 0) > 0): ?>
-<div style="background:#f8fafc;border:1.5px solid #cbd5e1;border-radius:14px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;">
+<div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;">
   <div style="display:flex;align-items:center;gap:12px;">
-    <div style="width:38px;height:38px;background:#e2e8f0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">
-      📁
+    <div style="width:38px;height:38px;background:#e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
     </div>
     <div>
-      <div style="font-size:14px;font-weight:800;color:#1e293b;">
+      <div style="font-size:14px;font-weight:700;color:var(--text-main);">
         Terdapat <?= (int)$totalHiddenCount ?> Dokumen yang Sedang Disembunyikan (Hide)
       </div>
-      <div style="font-size:12.5px;color:#64748b;">
+      <div style="font-size:12.5px;color:var(--text-muted);">
         Dokumen yang di-hide tidak muncul di daftar di atas. Anda dapat mengaktifkannya kembali kapan saja.
       </div>
     </div>
   </div>
-  <a href="<?= BASE_URL ?>/ppepp/<?= $project['id'] ?>/hidden" class="btn btn-outline" style="font-size:13px;font-weight:700;background:#fff;border-color:#94a3b8;color:#1e293b;display:flex;align-items:center;gap:6px;">
+  <a href="<?= BASE_URL ?>/ppepp/<?= $project['id'] ?>/hidden" class="btn btn-outline" style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;">
     Buka Halaman Dokumen Tersembunyi →
   </a>
 </div>
@@ -521,20 +523,20 @@ function resetProjectFilters() {
 
 <!-- Modal Konfirmasi Hapus Project Permanen -->
 <div class="modal-overlay" id="modalDeleteProjectShow">
-  <div class="modal-card" style="max-width:480px;border-radius:18px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.3);padding:0;">
-    <div style="background:linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);color:#fff;padding:22px 24px;display:flex;align-items:center;gap:14px;">
-      <div style="width:44px;height:44px;background:rgba(255,255,255,0.22);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">
-        🗑️
+  <div class="modal-card" style="max-width:480px;border-radius:12px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.2);padding:0;border:1px solid var(--border);">
+    <div style="background:#dc2626;color:#fff;padding:20px 24px;display:flex;align-items:center;gap:14px;">
+      <div style="width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
       </div>
       <div>
-        <h3 style="font-size:17px;font-weight:800;margin:0 0 2px;color:#fff;">Hapus Project Permanen</h3>
+        <h3 style="font-size:16px;font-weight:700;margin:0 0 2px;color:#fff;">Hapus Project Permanen</h3>
         <p style="font-size:12px;margin:0;opacity:0.9;color:#fff;">Konfirmasi Penghapusan Project PPEPP</p>
       </div>
     </div>
     <form method="POST" action="<?= BASE_URL ?>/ppepp/<?= $project['id'] ?>/destroy">
       <div class="modal-body" style="padding:22px 24px;background:#fff;">
-        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:14px 16px;color:#991b1b;font-size:13px;line-height:1.6;margin-bottom:16px;">
-          ⚠️ <strong>PERHATIAN SANGAT PENTING:</strong><br>
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;color:#991b1b;font-size:13px;line-height:1.6;margin-bottom:16px;">
+          <strong>PERHATIAN SANGAT PENTING:</strong><br>
           Anda akan menghapus project <strong style="color:#7f1d1d;"><?= htmlspecialchars($project['judul']) ?> (TA <?= htmlspecialchars($project['ta_nama']) ?>)</strong> secara <strong>PERMANEN</strong>.
           <br><br>
           Seluruh data 5 tahap PPEPP di dalamnya (<strong>Penetapan, Pelaksanaan, Evaluasi, Pengendalian, & Peningkatan</strong>) beserta berkas upload akan <strong>TERHAPUS TOTAL & TIDAK DAPAT DI-RECOVERY KEMBALI</strong>.
@@ -542,11 +544,12 @@ function resetProjectFilters() {
         <p style="font-size:13px;color:#475569;margin:0;">Apakah Anda yakin ingin melanjutkan penghapusan ini?</p>
       </div>
       <div class="modal-footer" style="padding:16px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;gap:10px;justify-content:flex-end;">
-        <button type="button" class="btn btn-outline" data-modal-close="modalDeleteProjectShow" style="padding:9px 18px;font-weight:600;border-radius:10px;">
+        <button type="button" class="btn btn-outline" data-modal-close="modalDeleteProjectShow" style="padding:9px 18px;font-weight:600;border-radius:6px;">
           Batal
         </button>
-        <button type="submit" class="btn btn-danger" style="padding:9px 20px;font-weight:800;border-radius:10px;background:#dc2626;color:#fff;border:none;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
-          🗑️ Ya, Hapus Project &amp; Seluruh Isinya
+        <button type="submit" class="btn btn-danger" style="padding:9px 20px;font-weight:700;border-radius:6px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          Ya, Hapus Project &amp; Seluruh Isinya
         </button>
       </div>
     </form>

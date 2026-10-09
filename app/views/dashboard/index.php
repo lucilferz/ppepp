@@ -4,29 +4,31 @@ $breadcrumbs = [['label' => 'Dashboard']];
 ?>
 
 <!-- Greeting Banner -->
-<div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 1px 4px rgba(26,35,126,0.05);">
-  <div style="display:flex;align-items:center;gap:18px;">
-    <div style="width:52px;height:52px;border-radius:14px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-      <svg width="26" height="26" fill="none" stroke="var(--primary-light)" stroke-width="1.8" viewBox="0 0 24 24">
-        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+<div class="card mb-4" style="background:#fff;padding:20px 24px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="width:44px;height:44px;border-radius:var(--radius-sm);background:var(--primary-subtle);border:1px solid #D3E0F0;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="22" height="22" fill="none" stroke="var(--primary)" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:2px;font-weight:500;">Selamat datang,</p>
+        <h2 style="font-size:17px;font-weight:700;color:var(--text-main);margin-bottom:2px;letter-spacing:-0.01em;">
+          <?= htmlspecialchars($user['nama_prodi']) ?>
+        </h2>
+        <p style="font-size:12.5px;color:var(--text-muted);">Platform PPEPP — Penjaminan Mutu &amp; Laporan Evaluasi Diri (LED)</p>
+      </div>
+    </div>
+    <?php if (!empty($tahunAktif) && is_array($tahunAktif) && !empty($tahunAktif['nama'])): ?>
+    <div style="display:inline-flex;align-items:center;gap:7px;background:#F8FAFC;border:1px solid var(--border);padding:6px 14px;border-radius:var(--radius-sm);font-size:12.5px;font-weight:600;color:var(--text-main);flex-shrink:0;">
+      <svg width="14" height="14" fill="none" stroke="var(--primary)" stroke-width="2" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
       </svg>
+      Tahun Ajaran Aktif: <?= htmlspecialchars($tahunAktif['nama']) ?>
     </div>
-    <div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:3px;font-weight:500;">Selamat datang</p>
-      <h2 style="font-size:18px;font-weight:800;color:var(--text-main);margin-bottom:2px;letter-spacing:-0.3px;">
-        <?= htmlspecialchars($user['nama_prodi']) ?>
-      </h2>
-      <p style="font-size:13px;color:var(--text-muted);">Platform PPEPP — Penyusunan Laporan Evaluasi Diri (LED)</p>
-    </div>
+    <?php endif; ?>
   </div>
-  <?php if (!empty($tahunAktif) && is_array($tahunAktif) && !empty($tahunAktif['nama'])): ?>
-  <div style="display:inline-flex;align-items:center;gap:7px;background:var(--bg);border:1.5px solid var(--border);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;color:var(--text-main);flex-shrink:0;">
-    <svg width="14" height="14" fill="none" stroke="var(--primary-light)" stroke-width="2" viewBox="0 0 24 24">
-      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-    </svg>
-    <?= htmlspecialchars($tahunAktif['nama']) ?>
-  </div>
-  <?php endif; ?>
 </div>
 
 <!-- Stats Grid -->
@@ -86,33 +88,33 @@ $breadcrumbs = [['label' => 'Dashboard']];
 </div>
 
 <!-- BANNER SIKLUS BELUM DIKERJAKAN -->
-<div class="card" style="border-color:#fca5a5;background:#fef2f2;margin-bottom:20px;">
-  <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 20px;">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <div style="width:40px;height:40px;background:#ef4444;color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24">
+<div class="card" style="border-color:var(--danger-border);background:var(--danger-bg);margin-bottom:20px;">
+  <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 20px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:36px;height:36px;background:var(--danger);color:#fff;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24">
           <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
           <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
         </svg>
       </div>
       <div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
-          <h3 style="font-size:14px;font-weight:700;color:#0f172a;margin:0;">Dokumen &amp; Tahap Belum Dikerjakan</h3>
-          <span class="badge" style="background:#ef4444;color:#fff;font-weight:700;font-size:11px;padding:2px 8px;border-radius:20px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+          <h3 style="font-size:14px;font-weight:700;color:var(--text-main);margin:0;">Dokumen &amp; Tahap Belum Dikerjakan</h3>
+          <span class="badge badge-warning" style="font-weight:700;font-size:11px;">
             <?= count($incompleteItems ?? []) ?> item
           </span>
         </div>
-        <p style="font-size:12.5px;color:#64748b;margin:0;">Halaman khusus untuk memfilter dan langsung mengerjakan dokumen yang masih kosong atau draft.</p>
+        <p style="font-size:12.5px;color:var(--text-muted);margin:0;">Pantau dan langsung tindak lanjuti dokumen tahap PPEPP yang masih draft atau belum dibuat.</p>
       </div>
     </div>
-    <a href="<?= BASE_URL ?>/pending" class="btn btn-danger btn-sm" style="white-space:nowrap;">
+    <a href="<?= BASE_URL ?>/pending" class="btn btn-outline btn-sm" style="border-color:var(--danger);color:var(--danger);background:#FFFFFF;font-weight:600;">
       Lihat Dokumen Belum Dikerjakan
     </a>
   </div>
 </div>
 
 <!-- Content Grid -->
-<div class="grid-2" style="gap:24px;">
+<div class="grid-2" style="gap:20px;">
   <!-- Penetapan Terbaru -->
   <div class="card">
     <div class="card-header">
@@ -127,7 +129,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
     </div>
     <div class="card-body" style="padding:0;">
       <?php if (empty($recentPenetapan)): ?>
-      <div class="empty-state" style="padding:40px 24px;">
+      <div class="empty-state" style="padding:36px 20px;">
         <div class="empty-icon">
           <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
@@ -145,15 +147,15 @@ $breadcrumbs = [['label' => 'Dashboard']];
             <?php foreach ($recentPenetapan as $p): ?>
             <tr>
               <td>
-                <div style="font-weight:600;font-size:14px;"><?= htmlspecialchars($p['judul']) ?></div>
+                <div style="font-weight:600;font-size:13.5px;"><?= htmlspecialchars($p['judul']) ?></div>
                 <div style="font-size:12px;color:var(--text-muted);"><?= htmlspecialchars($p['tahun_ajaran_nama']) ?></div>
               </td>
-              <td>
+              <td style="width:110px;">
                 <span class="badge <?= $p['status'] === 'final' ? 'badge-success' : 'badge-warning' ?> badge-dot">
                   <?= ucfirst($p['status']) ?>
                 </span>
               </td>
-              <td>
+              <td style="width:80px;text-align:right;">
                 <a href="<?= BASE_URL ?>/penetapan/<?= $p['id'] ?>" class="btn btn-outline btn-sm">Detail</a>
               </td>
             </tr>
@@ -189,9 +191,9 @@ $breadcrumbs = [['label' => 'Dashboard']];
       $ppProjects = $ppStmt->fetchAll(PDO::FETCH_ASSOC);
       ?>
       <?php if (empty($ppProjects)): ?>
-      <div style="text-align:center;padding:32px 16px;">
-        <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:14px;">Belum ada project PPEPP. Buat project untuk memulai siklus penjaminan mutu.</p>
-        <a href="<?= BASE_URL ?>/ppepp" class="btn btn-primary">+ Buat Project PPEPP</a>
+      <div style="text-align:center;padding:28px 16px;">
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">Belum ada project PPEPP. Buat project untuk memulai siklus penjaminan mutu.</p>
+        <a href="<?= BASE_URL ?>/ppepp" class="btn btn-primary btn-sm">+ Buat Project PPEPP</a>
       </div>
       <?php else: ?>
       <div style="display:flex;flex-direction:column;gap:10px;">
@@ -205,25 +207,25 @@ $breadcrumbs = [['label' => 'Dashboard']];
           }
           $pct = (int)(($stepsStarted / 5) * 100);
         ?>
-        <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:10px;background:#f8faff;border:1.5px solid #e2e8f0;">
-          <div style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a237e,#3f51b5);flex-shrink:0;">
-            <svg fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" width="18" height="18">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);background:#FFFFFF;border:1px solid var(--border);">
+          <div style="width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;background:var(--primary-subtle);border:1px solid #D3E0F0;color:var(--primary);flex-shrink:0;">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16">
               <path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/>
             </svg>
           </div>
           <div style="flex:1;min-width:0;">
-            <div style="font-size:14px;font-weight:700;color:var(--text-main);"><?= htmlspecialchars($proj['ta_nama']) ?></div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:5px;">
-              <div style="flex:1;height:5px;background:#e2e8f0;border-radius:99px;overflow:hidden;">
-                <div style="height:100%;width:<?= $pct ?>%;background:linear-gradient(90deg,#1a237e,#3f51b5);border-radius:99px;"></div>
+            <div style="font-size:13.5px;font-weight:600;color:var(--text-main);"><?= htmlspecialchars($proj['ta_nama']) ?></div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+              <div style="flex:1;height:5px;background:#E2E8F0;border-radius:99px;overflow:hidden;">
+                <div style="height:100%;width:<?= $pct ?>%;background:var(--primary);border-radius:99px;"></div>
               </div>
-              <span style="font-size:11px;font-weight:700;color:#64748b;"><?= $stepsStarted ?>/5</span>
+              <span style="font-size:11.5px;font-weight:600;color:var(--text-muted);"><?= $stepsStarted ?>/5</span>
             </div>
           </div>
           <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>" class="btn btn-outline btn-sm">Buka</a>
         </div>
         <?php endforeach; ?>
-        <a href="<?= BASE_URL ?>/ppepp" style="font-size:12px;text-align:center;color:var(--primary);text-decoration:none;padding:6px;">
+        <a href="<?= BASE_URL ?>/ppepp" style="font-size:12px;text-align:center;color:var(--primary);text-decoration:none;padding:4px;font-weight:600;">
           Lihat semua project →
         </a>
       </div>
@@ -232,29 +234,26 @@ $breadcrumbs = [['label' => 'Dashboard']];
   </div>
 </div>
 
-
-
 <!-- ============================================================
-
      SEKSI KELOLA KRITERIA PROGRAM STUDI (CRUD KRITERIA)
      ============================================================ -->
 <div class="card mt-4" id="seksiKriteria">
   <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
     <div>
-      <h3 class="card-title" style="display:flex;align-items:center;gap:8px;">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20">
+      <h3 class="card-title">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
         </svg>
         Kelola Kriteria Program Studi
       </h3>
       <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
-        Daftar kriteria yang digunakan sebagai standar penetapan & pelaksanaan di <strong><?= htmlspecialchars($user['nama_prodi']) ?></strong>
+        Daftar kriteria yang digunakan sebagai standar penetapan &amp; pelaksanaan di <strong><?= htmlspecialchars($user['nama_prodi']) ?></strong>
       </p>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <span class="badge badge-primary" style="font-weight:700;"><?= count($kriteria ?? []) ?> kriteria</span>
+      <span class="badge badge-primary"><?= count($kriteria ?? []) ?> kriteria</span>
       <button type="button" class="btn btn-primary btn-sm" data-modal-open="modalTambahKriteria">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14" height="14">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
         </svg>
         + Tambah Kriteria
@@ -271,7 +270,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
     </div>
     <h3>Belum ada kriteria</h3>
     <p>Tambahkan kriteria pertama untuk prodi Anda</p>
-    <button type="button" class="btn btn-primary" data-modal-open="modalTambahKriteria">Tambah Kriteria Pertama</button>
+    <button type="button" class="btn btn-primary btn-sm" data-modal-open="modalTambahKriteria">Tambah Kriteria Pertama</button>
   </div>
   <?php else: ?>
   <div class="table-wrap">
@@ -279,10 +278,10 @@ $breadcrumbs = [['label' => 'Dashboard']];
       <thead>
         <tr>
           <th style="width:70px;text-align:center;">Urutan</th>
-          <th style="width:80px;">Kode</th>
+          <th style="width:90px;">Kode</th>
           <th>Nama Kriteria</th>
           <th>Deskripsi</th>
-          <th style="width:100px;">Status</th>
+          <th style="width:90px;">Status</th>
           <th style="width:170px;text-align:right;">Aksi</th>
         </tr>
       </thead>
@@ -292,7 +291,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
           <td class="td-muted" style="text-align:center;font-weight:600;"><?= $k['urutan'] ?: '-' ?></td>
           <td>
             <?php if (!empty($k['kode'])): ?>
-            <span style="display:inline-flex;align-items:center;justify-content:center;padding:4px 10px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:8px;font-weight:800;font-size:12px;">
+            <span class="badge badge-primary" style="font-weight:700;">
               <?= htmlspecialchars($k['kode']) ?>
             </span>
             <?php else: ?>
@@ -303,7 +302,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
             <div style="font-weight:600;color:var(--text-main);"><?= htmlspecialchars($k['nama']) ?></div>
           </td>
           <td class="td-muted" style="max-width:320px;">
-            <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;">
+            <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px;">
               <?= $k['deskripsi'] ? htmlspecialchars($k['deskripsi']) : '<span style="color:#cbd5e1;">—</span>' ?>
             </div>
           </td>
@@ -330,7 +329,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
                 Edit
               </button>
               <?php if ($k['aktif']): ?>
-              <button type="button" class="btn btn-danger btn-sm"
+              <button type="button" class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger-border);"
                 data-delete-kriteria="<?= $k['id'] ?>"
                 data-nama="<?= htmlspecialchars($k['nama'], ENT_QUOTES) ?>">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="13" height="13">
@@ -356,7 +355,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
   <div class="modal">
     <div class="modal-header">
       <h3>
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
         </svg>
         Tambah Kriteria Baru
@@ -392,7 +391,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
       <div class="modal-footer">
         <button type="button" class="btn btn-outline" data-modal-close="modalTambahKriteria">Batal</button>
         <button type="submit" class="btn btn-primary">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15" height="15">
             <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
           </svg>
           Simpan Kriteria
@@ -409,7 +408,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
   <div class="modal">
     <div class="modal-header">
       <h3>
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18">
           <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
           <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
         </svg>
@@ -442,7 +441,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
       <div class="modal-footer">
         <button type="button" class="btn btn-outline" data-modal-close="modalEditKriteria">Batal</button>
         <button type="submit" class="btn btn-primary">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15" height="15">
             <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
             <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
           </svg>
@@ -460,7 +459,7 @@ $breadcrumbs = [['label' => 'Dashboard']];
   <div class="modal" style="max-width:420px;">
     <div class="modal-header">
       <h3 style="color:var(--danger);">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18">
           <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
           <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
         </svg>
@@ -469,11 +468,11 @@ $breadcrumbs = [['label' => 'Dashboard']];
       <button type="button" class="modal-close" data-modal-close="modalDeleteKriteria">✕</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:14px;color:var(--text-main);">
+      <p style="font-size:13.5px;color:var(--text-main);">
         Apakah Anda yakin ingin menonaktifkan kriteria
         <strong id="deleteKriteriaName"></strong>?
       </p>
-      <p style="font-size:13px;color:var(--text-muted);margin-top:10px;">
+      <p style="font-size:12.5px;color:var(--text-muted);margin-top:8px;">
         Kriteria yang dinonaktifkan tidak akan muncul pada pilihan form penetapan baru, namun data historis tetap tersimpan dengan aman.
       </p>
     </div>

@@ -7,32 +7,42 @@
 
 /* ---- CSS Variables ---- */
 :root {
-  --primary:        #1a3a5c;
-  --primary-dark:   #0f2540;
-  --primary-light:  #2563a8;
-  --accent:         #e8a020;
-  --accent-light:   #f5c060;
-  --accent-dark:    #c8860a;
-  --success:        #22a06b;
-  --warning:        #e8a020;
-  --danger:         #c0392b;
-  --info:           #2980b9;
-  --bg:             #f4f6f9;
-  --sidebar-bg:     #1a3a5c;
-  --sidebar-text:   rgba(255,255,255,0.85);
-  --sidebar-active: rgba(255,255,255,0.15);
-  --card-bg:        #ffffff;
-  --border:         #e0e6ef;
-  --text-main:      #1e2d3d;
-  --text-muted:     #6b7c93;
-  --text-light:     #a0aec0;
-  --radius:         12px;
-  --radius-sm:      8px;
-  --shadow:         0 2px 12px rgba(26,58,92,0.10);
-  --shadow-lg:      0 8px 32px rgba(26,58,92,0.16);
-  --transition:     0.2s ease;
-  --sidebar-width:  260px;
-  --header-height:  64px;
+  --primary:        #173B67;
+  --primary-hover:  #112D50;
+  --primary-dark:   #0c1829;
+  --primary-light:  #2563EB;
+  --primary-subtle: #F0F5FA;
+  --accent:         #B7791F;
+  --accent-light:   #FDE68A;
+  --accent-dark:    #854D0E;
+  --success:        #23845B;
+  --success-bg:     #ECFDF5;
+  --warning:        #B7791F;
+  --warning-bg:     #FFFBEB;
+  --danger:         #B42318;
+  --danger-bg:      #FEF2F2;
+  --info:           #2563EB;
+  --info-bg:        #EFF6FF;
+  --bg:             #F7F8FA;
+  --sidebar-bg:     #112338;
+  --sidebar-text:   rgba(255,255,255,0.75);
+  --sidebar-active: rgba(255,255,255,0.12);
+  --card-bg:        #FFFFFF;
+  --border:         #E2E8F0;
+  --border-subtle:  #F1F5F9;
+  --text-main:      #1F2937;
+  --text-muted:     #64748B;
+  --text-light:     #94A3B8;
+  --radius:         8px;
+  --radius-sm:      6px;
+  --radius-lg:      10px;
+  --shadow-xs:      0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm:      0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow:         0 4px 6px -1px rgba(0,0,0,0.04), 0 2px 4px -2px rgba(0,0,0,0.03);
+  --shadow-lg:      0 10px 15px -3px rgba(0,0,0,0.06), 0 4px 6px -4px rgba(0,0,0,0.03);
+  --transition:     0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --sidebar-width:  256px;
+  --header-height:  58px;
 }
 
 /* ---- Reset & Base ---- */

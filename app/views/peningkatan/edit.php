@@ -31,87 +31,76 @@ $totalStandar = count($details);
 ?>
 
 <!-- Header Banner -->
-<div
-  style="background:linear-gradient(135deg,#0f172a 0%,#064e3b 50%,#047857 100%);border-radius:16px;padding:26px 30px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;box-shadow:0 10px 30px rgba(5,150,105,0.25);">
+<div style="background:#112338;border:1px solid #1e3a5f;border-radius:12px;padding:24px 28px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-space-between;gap:20px;flex-wrap:wrap;">
   <div>
-    <div
-      style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.6);margin-bottom:6px;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:6px;">
       Peningkatan Standar Mutu SPMI (Tahap P Ketiga • PPEPP)
     </div>
-    <h2 style="font-size:24px;font-weight:900;color:#fff;margin-bottom:4px;letter-spacing:-0.4px;">
+    <h2 style="font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-0.3px;">
       <?= htmlspecialchars($peningkatan['judul']) ?>
     </h2>
-    <div
-      style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;">
-      <span>Penetapan Acuan: <strong><?= htmlspecialchars($penetapan['judul'] ?? '—') ?></strong></span>
+    <div style="font-size:13px;color:#cbd5e1;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;">
+      <span>Penetapan Acuan: <strong style="color:#fff;"><?= htmlspecialchars($penetapan['judul'] ?? '—') ?></strong></span>
       <span>•</span>
-      <span>Tahun Ajaran: <strong><?= htmlspecialchars($penetapan['ta_nama'] ?? '—') ?></strong></span>
+      <span>Tahun Ajaran: <strong style="color:#fff;"><?= htmlspecialchars($penetapan['ta_nama'] ?? '—') ?></strong></span>
     </div>
   </div>
 
   <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
     <?php if ($cntTerpenuhi > 0): ?>
       <button type="button" onclick="generateAllAIPeningkatan()" id="btnGenerateAllAI" class="btn btn-primary"
-        style="background:linear-gradient(135deg,#10b981,#059669);border:none;font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(16,185,129,0.4);cursor:pointer;padding:10px 18px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+        style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;cursor:pointer;padding:9px 16px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
         </svg>
-        ✨ Generate Semua AI Peningkatan (1-Klik)
+        Generate Semua AI Peningkatan
       </button>
     <?php endif; ?>
     <a href="<?= BASE_URL ?>/peningkatan/<?= $pkId ?>" class="btn btn-outline"
-      style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.25);color:#fff;font-size:12.5px;">
+      style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#fff;font-size:12.5px;">
       Lihat Hasil ↗
     </a>
     <a href="<?= BASE_URL ?>/ppepp<?= !empty($peningkatan['ppepp_project_id']) ? '/' . $peningkatan['ppepp_project_id'] : '' ?>" class="btn btn-outline"
-      style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);color:#fff;font-size:12.5px;">
-      ← Kembali ke Project Library
+      style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:#fff;font-size:12.5px;">
+      Kembali ke Project Library
     </a>
   </div>
 </div>
 
 <?php if (!empty($flash['message'])): ?>
-  <div
-    style="margin-bottom:16px;padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:600;<?= $flash['type'] === 'success' ? 'background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;' : 'background:#fef2f2;border:1px solid #fecaca;color:#991b1b;' ?>">
-    <?= $flash['type'] === 'success' ? '✓' : '✕' ?>   <?= htmlspecialchars($flash['message']) ?>
+  <div style="margin-bottom:16px;padding:12px 16px;border-radius:8px;font-size:13.5px;font-weight:600;<?= $flash['type'] === 'success' ? 'background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;' : 'background:#fef2f2;border:1px solid #fecaca;color:#991b1b;' ?>">
+    <?= $flash['type'] === 'success' ? 'Sukses: ' : 'Peringatan: ' ?> <?= htmlspecialchars($flash['message']) ?>
   </div>
 <?php endif; ?>
 
 <!-- Summary Cards -->
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:24px;">
-  <div
-    style="background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-    <div style="font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Total
-      Standar Penetapan</div>
-    <div style="font-size:26px;font-weight:900;color:#1e293b;margin-top:4px;" id="statTotal"><?= $totalStandar ?></div>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;">
+    <div style="font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Total Standar Penetapan</div>
+    <div style="font-size:26px;font-weight:800;color:#0f172a;margin-top:4px;" id="statTotal"><?= $totalStandar ?></div>
     <div style="font-size:11.5px;color:#94a3b8;margin-top:2px;">Dari siklus tahun berjalan</div>
   </div>
 
-  <div
-    style="background:#fff;border:1.5px solid #a7f3d0;border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-    <div style="font-size:11.5px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:0.5px;">✓ Standar
-      Terpenuhi (Masuk Peningkatan)</div>
-    <div style="font-size:26px;font-weight:900;color:#065f46;margin-top:4px;" id="statTerpenuhi"><?= $cntTerpenuhi ?>
-    </div>
-    <div style="font-size:11.5px;color:#059669;margin-top:2px;">Dianalisis &amp; dinaikkan targetnya</div>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-left:4px solid var(--success);border-radius:10px;padding:16px 20px;">
+    <div style="font-size:11.5px;font-weight:700;color:var(--success);text-transform:uppercase;letter-spacing:0.5px;">Standar Terpenuhi (Masuk Peningkatan)</div>
+    <div style="font-size:26px;font-weight:800;color:#065f46;margin-top:4px;" id="statTerpenuhi"><?= $cntTerpenuhi ?></div>
+    <div style="font-size:11.5px;color:var(--success);margin-top:2px;">Dianalisis &amp; dinaikkan targetnya</div>
   </div>
 
-  <div
-    style="background:#fff;border:1.5px solid #fed7aa;border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-    <div style="font-size:11.5px;font-weight:700;color:#ea580c;text-transform:uppercase;letter-spacing:0.5px;">⚠️
-      Standar Belum Terpenuhi (Pengendalian)</div>
-    <div style="font-size:26px;font-weight:900;color:#9a3412;margin-top:4px;" id="statBelum"><?= $cntBelum ?></div>
-    <div style="font-size:11.5px;color:#c2410c;margin-top:2px;">Tetap masuk tahun depan tanpa ubah target</div>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-left:4px solid var(--warning);border-radius:10px;padding:16px 20px;">
+    <div style="font-size:11.5px;font-weight:700;color:var(--warning);text-transform:uppercase;letter-spacing:0.5px;">Standar Belum Terpenuhi (Pengendalian)</div>
+    <div style="font-size:26px;font-weight:800;color:#92400e;margin-top:4px;" id="statBelum"><?= $cntBelum ?></div>
+    <div style="font-size:11.5px;color:var(--warning);margin-top:2px;">Tetap masuk tahun depan tanpa ubah target</div>
   </div>
 </div>
 
 <!-- SECTION 1: ANALISIS & PENINGKATAN STANDAR TERPENUHI -->
 <div style="margin-bottom:36px;">
   <div style="margin-bottom:16px;">
-    <h3 style="font-size:18px;font-weight:900;color:#1e293b;margin:0 0 2px;display:flex;align-items:center;gap:8px;">
-      <span>🚀 1. Analisis &amp; Peningkatan Standar yang Telah Terpenuhi</span>
+    <h3 style="font-size:18px;font-weight:800;color:var(--text);margin:0 0 2px;display:flex;align-items:center;gap:8px;">
+      1. Analisis &amp; Peningkatan Standar yang Telah Terpenuhi
     </h3>
-    <p style="font-size:13px;color:#64748b;margin:0;">
+    <p style="font-size:13px;color:var(--text-muted);margin:0;">
       Hanya standar yang telah terpenuhi atau melebihi target yang dianalisis untuk ditingkatkan. Target &amp; indikator
       baru di bawah ini akan <strong>otomatis masuk ke Penetapan tahun berikutnya</strong> sebagai hasil peningkatan
       mutu.
@@ -120,7 +109,7 @@ $totalStandar = count($details);
 
   <?php if (empty($standarTerpenuhi)): ?>
     <div
-      style="background:#fef9e7;border:1.5px solid #f59e0b;border-radius:12px;padding:20px;color:#92400e;font-size:13.5px;text-align:center;">
+      style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:20px;color:#92400E;font-size:13.5px;text-align:center;">
       <strong>Belum ada standar yang berstatus Terpenuhi / Tercapai Penuh pada siklus ini.</strong><br>
       Seluruh standar saat ini berada pada tahap Pengendalian untuk tindakan koreksi.
     </div>
@@ -133,21 +122,21 @@ $totalStandar = count($details);
         $displayKode = !empty($d['kriteria_kode']) ? $d['kriteria_kode'] : 'STD-' . ($idx + 1);
         ?>
         <div class="standar-pk-card" id="card_pk_<?= $pdId ?>"
-          style="background:#fff;border:1.5px solid #a7f3d0;border-radius:16px;overflow:hidden;box-shadow:0 4px 16px rgba(5,150,105,0.06);">
+          style="background:#fff;border:1px solid #bbf7d0;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(5,150,105,0.04);">
 
           <!-- Card Header -->
           <div
-            style="padding:16px 22px;background:#f0fdf4;border-bottom:1.5px solid #a7f3d0;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+            style="padding:14px 18px;background:#f0fdf4;border-bottom:1px solid #bbf7d0;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
             <div style="display:flex;align-items:center;gap:12px;">
-              <div style="padding:5px 12px;background:#059669;color:#fff;border-radius:8px;font-weight:800;font-size:12px;">
+              <div style="padding:4px 10px;background:var(--success);color:#fff;border-radius:6px;font-weight:700;font-size:12px;">
                 <?= htmlspecialchars($displayKode) ?>
               </div>
               <div>
                 <div style="display:flex;align-items:center;gap:8px;">
-                  <h4 style="font-size:15px;font-weight:800;color:#065f46;margin:0;">
+                  <h4 style="font-size:15px;font-weight:700;color:#065f46;margin:0;">
                     <?= htmlspecialchars($d['kriteria_nama']) ?></h4>
                   <span
-                    style="font-size:11px;font-weight:700;color:#059669;background:#d1fae5;padding:2px 8px;border-radius:6px;">
+                    style="font-size:11px;font-weight:600;color:#059669;background:#d1fae5;padding:2px 8px;border-radius:4px;">
                     Indikator #<?= $idx + 1 ?>
                   </span>
                 </div>
@@ -157,50 +146,50 @@ $totalStandar = count($details);
 
             <div style="display:flex;align-items:center;gap:10px;">
               <span
-                style="font-size:11.5px;font-weight:800;padding:4px 12px;border-radius:20px;background:#d1fae5;color:#065f46;">
-                ✓ Status: Terpenuhi Penuh (Layak Ditingkatkan)
+                style="font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:6px;background:#d1fae5;color:#065f46;">
+                Status: Terpenuhi Penuh (Layak Ditingkatkan)
               </span>
 
               <!-- Tombol AI Single Peningkatan -->
               <button type="button" onclick="generateSingleAIPeningkatan(<?= $pdId ?>, <?= $kid ?>)"
                 id="btn_ai_pk_<?= $pdId ?>"
-                style="background:#fff;border:1.5px solid #059669;color:#059669;padding:7px 14px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                style="background:#fff;border:1px solid #059669;color:#059669;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                 </svg>
-                ✨ Generate Peningkatan AI
+                Generate Peningkatan AI
               </button>
             </div>
           </div>
 
           <!-- Card Body -->
-          <div style="padding:22px;">
+          <div style="padding:20px;">
 
             <!-- Target Standar Lama vs Capaian Saat Ini -->
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:18px;">
               <?php if (!empty($d['strategi'])): ?>
-                <div style="background:#f8faff;border-left:4px solid #4f46e5;padding:10px 14px;border-radius:0 8px 8px 0;">
+                <div style="background:#fff;border-left:3px solid var(--primary);border:1px solid #e2e8f0;border-left-width:3px;padding:10px 14px;border-radius:0 6px 6px 0;">
                   <div
-                    style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:#4f46e5;margin-bottom:2px;letter-spacing:0.5px;">
-                    📌 Aturan / Dasar Hukum:</div>
-                  <div style="font-size:14.5px;color:#1e293b;line-height:1.6;font-weight:500;">
+                    style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--primary);margin-bottom:2px;letter-spacing:0.5px;">
+                    Aturan / Dasar Hukum:</div>
+                  <div style="font-size:13.5px;color:var(--text);line-height:1.5;">
                     <?= htmlspecialchars($d['strategi']) ?></div>
                 </div>
               <?php endif; ?>
 
-              <div style="background:#f8fafc;border-left:4px solid #64748b;padding:10px 14px;border-radius:0 8px 8px 0;">
+              <div style="background:#fff;border-left:3px solid #64748b;border:1px solid #e2e8f0;border-left-width:3px;padding:10px 14px;border-radius:0 6px 6px 0;">
                 <div
-                  style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:#64748b;margin-bottom:2px;letter-spacing:0.5px;">
-                  🎯 Pernyataan Standar Lama:</div>
-                <div style="font-size:14.5px;color:#1e293b;line-height:1.6;font-weight:500;">
+                  style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:#64748b;margin-bottom:2px;letter-spacing:0.5px;">
+                  Pernyataan Standar Lama:</div>
+                <div style="font-size:13.5px;color:var(--text);line-height:1.5;">
                   <?= htmlspecialchars($d['target_capaian'] ?: '—') ?></div>
               </div>
 
-              <div style="background:#f0fdf4;border-left:4px solid #059669;padding:10px 14px;border-radius:0 8px 8px 0;">
+              <div style="background:#fff;border-left:3px solid var(--success);border:1px solid #e2e8f0;border-left-width:3px;padding:10px 14px;border-radius:0 6px 6px 0;">
                 <div
-                  style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:#065f46;margin-bottom:2px;letter-spacing:0.5px;">
-                  📊 Target / Indikator Lama:</div>
-                <div style="font-size:14.5px;color:#1e293b;line-height:1.6;font-weight:500;">
+                  style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--success);margin-bottom:2px;letter-spacing:0.5px;">
+                  Target / Indikator Lama:</div>
+                <div style="font-size:13.5px;color:var(--text);line-height:1.5;">
                   <?= htmlspecialchars($d['indikator'] ?: '—') ?></div>
               </div>
             </div>
@@ -211,8 +200,8 @@ $totalStandar = count($details);
               <!-- 1. Alasan Peningkatan -->
               <div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-                  <label style="font-size:12.5px;font-weight:800;color:#1e293b;">
-                    🔍 1. Analisis Potensi &amp; Alasan Peningkatan Mutu Standar:
+                  <label style="font-size:12.5px;font-weight:700;color:var(--text);">
+                    1. Analisis Potensi &amp; Alasan Peningkatan Mutu Standar:
                   </label>
                   <span id="saveStatus_alasan_<?= $pdId ?>" style="font-size:11px;color:#94a3b8;"></span>
                 </div>
@@ -223,28 +212,27 @@ $totalStandar = count($details);
               </div>
 
               <!-- 2. Target Standar Baru (Ditingkatkan) -> Masuk ke Penetapan Tahun Depan -->
-              <div style="background:#ecfdf5;border:1.5px solid #a7f3d0;border-radius:12px;padding:14px 16px;">
+              <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 16px;">
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-                  <label style="font-size:13px;font-weight:800;color:#065f46;">
-                    🎯 2. Pernyataan Standar / Target Baru (Ditingkatkan): <span style="color:#ef4444;">*</span>
+                  <label style="font-size:13px;font-weight:700;color:#065f46;">
+                    2. Pernyataan Standar / Target Baru (Ditingkatkan): <span style="color:var(--danger);">*</span>
                   </label>
                   <span id="saveStatus_target_<?= $pdId ?>" style="font-size:11px;color:#94a3b8;"></span>
                 </div>
                 <div style="font-size:11.5px;color:#047857;margin-bottom:6px;">
-                  Rumusan target baru yang lebih tinggi. Nilai ini akan <strong>menjadi target standar di Penetapan tahun
-                    depan</strong>.
+                  Rumusan target baru yang lebih tinggi. Nilai ini akan <strong>menjadi target standar di Penetapan tahun depan</strong>.
                 </div>
                 <textarea id="target_baru_<?= $pdId ?>" class="form-control" rows="2"
                   placeholder="Contoh: Meningkatkan rata-rata persentase kelulusan tepat waktu menjadi minimal 90%..."
                   onchange="savePkField(<?= $pdId ?>, <?= $kid ?>, 'target_baru', this.value)"
-                  style="font-size:12.5px;line-height:1.5;background:#fff;font-weight:600;"><?= htmlspecialchars($d['target_baru'] ?? '') ?></textarea>
+                  style="font-size:12.5px;line-height:1.5;background:#fff;"><?= htmlspecialchars($d['target_baru'] ?? '') ?></textarea>
               </div>
 
               <!-- 3. Indikator Baru (Ditingkatkan) -> Masuk ke Penetapan Tahun Depan -->
-              <div style="background:#f0fdf4;border:1px solid #a7f3d0;border-radius:12px;padding:14px 16px;">
+              <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 16px;">
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-                  <label style="font-size:13px;font-weight:800;color:#065f46;">
-                    📊 3. Indikator Ketercapaian Baru (Ditingkatkan): <span style="color:#ef4444;">*</span>
+                  <label style="font-size:13px;font-weight:700;color:#065f46;">
+                    3. Indikator Ketercapaian Baru (Ditingkatkan): <span style="color:var(--danger);">*</span>
                   </label>
                   <span id="saveStatus_indikator_<?= $pdId ?>" style="font-size:11px;color:#94a3b8;"></span>
                 </div>
@@ -257,8 +245,7 @@ $totalStandar = count($details);
               <!-- 4. Program / Strategi Baru & Status -->
               <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;align-items:end;">
                 <div>
-                  <label style="font-size:12px;font-weight:700;color:#334155;margin-bottom:4px;display:block;">📈 Program
-                    Kerja / Strategi Pencapaian Baru:</label>
+                  <label style="font-size:12px;font-weight:700;color:#334155;margin-bottom:4px;display:block;">Program Kerja / Strategi Pencapaian Baru:</label>
                   <input type="text" id="strategi_baru_<?= $pdId ?>" class="form-control"
                     value="<?= htmlspecialchars($d['strategi_baru'] ?? '') ?>"
                     placeholder="Misal: Workshop kurikulum berbasis OBE &amp; bimbingan intensif"
@@ -266,8 +253,7 @@ $totalStandar = count($details);
                 </div>
 
                 <div>
-                  <label style="font-size:12px;font-weight:700;color:#334155;margin-bottom:4px;display:block;">🏷️ Estimasi
-                    Kenaikan Target:</label>
+                  <label style="font-size:12px;font-weight:700;color:#334155;margin-bottom:4px;display:block;">Estimasi Kenaikan Target:</label>
                   <input type="text" id="nilai_kenaikan_<?= $pdId ?>" class="form-control"
                     value="<?= htmlspecialchars($d['nilai_kenaikan'] ?? '') ?>" placeholder="Misal: Naik 10-15%"
                     onchange="savePkField(<?= $pdId ?>, <?= $kid ?>, 'nilai_kenaikan', this.value)" style="font-size:12px;">
@@ -285,14 +271,14 @@ $totalStandar = count($details);
 
 <!-- SECTION 2: RANGKUMAN STANDAR BELUM TERPENUHI (DARI PENGENDALIAN) -->
 <div
-  style="background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:22px 26px;margin-bottom:32px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px 24px;margin-bottom:32px;">
   <div
     style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px;">
     <div>
-      <h3 style="font-size:16px;font-weight:900;color:#1e293b;margin:0 0 2px;">
-        ℹ️ 2. Standar Belum Terpenuhi (Dari Tahap Pengendalian)
+      <h3 style="font-size:16px;font-weight:800;color:var(--text);margin:0 0 2px;">
+        2. Standar Belum Terpenuhi (Dari Tahap Pengendalian)
       </h3>
-      <p style="font-size:12.5px;color:#64748b;margin:0;">
+      <p style="font-size:12.5px;color:var(--text-muted);margin:0;">
         Standar-standar di bawah ini <strong>tidak masuk peningkatan</strong> karena belum tercapai dan sedang dalam
         pengendalian/koreksi. Saat membuat Penetapan tahun berikutnya, standar ini <strong>tetap masuk tanpa perubahan
           target (tetap dapat diedit)</strong>.
@@ -346,15 +332,13 @@ $totalStandar = count($details);
 </div>
 
 <!-- SECTION 3: UPLOAD BERKAS SK PENETAPAN STANDAR BARU / KEBIJAKAN -->
-<div
-  style="background:#fff;border:1.5px solid #a7f3d0;border-radius:16px;padding:24px 28px;margin-bottom:32px;box-shadow:0 4px 16px rgba(5,150,105,0.06);">
-  <div
-    style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1.5px solid #ecfdf5;padding-bottom:14px;">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:24px 28px;margin-bottom:32px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid #e2e8f0;padding-bottom:14px;">
     <div>
-      <h3 style="font-size:18px;font-weight:900;color:#1e293b;margin:0 0 4px;display:flex;align-items:center;gap:8px;">
-        <span>📜 3. Upload Berkas SK Penetapan Standar Baru / Kebijakan Peningkatan Mutu</span>
+      <h3 style="font-size:18px;font-weight:800;color:var(--text);margin:0 0 4px;display:flex;align-items:center;gap:8px;">
+        <span>3. Upload Berkas SK Penetapan Standar Baru / Kebijakan Peningkatan Mutu</span>
       </h3>
-      <p style="font-size:13px;color:#64748b;margin:0;">
+      <p style="font-size:13px;color:var(--text-muted);margin:0;">
         Unggah berkas Surat Keputusan (SK) Dekan/Pimpinan Fakultas terkait penetapan standar baru atau kebijakan
         peningkatan mutu yang telah disahkan.
       </p>
@@ -362,7 +346,7 @@ $totalStandar = count($details);
 
     <div>
       <button type="button" onclick="triggerUploadSk()" class="btn btn-primary"
-        style="background:#059669;border:none;font-weight:800;font-size:12.5px;display:flex;align-items:center;gap:6px;">
+        style="font-weight:600;font-size:12.5px;display:flex;align-items:center;gap:6px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
           <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
           <polyline points="17 8 12 3 7 8" />
@@ -376,34 +360,31 @@ $totalStandar = count($details);
   </div>
 
   <!-- Form Metadata SK -->
-  <div
-    style="background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;padding:14px;margin-bottom:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;align-items:end;">
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;align-items:end;">
     <div>
-      <label style="font-size:11.5px;font-weight:700;color:#065f46;margin-bottom:4px;display:block;">Nomor SK:</label>
+      <label style="font-size:11.5px;font-weight:700;color:var(--text);margin-bottom:4px;display:block;">Nomor SK:</label>
       <input type="text" id="skNomorInput" class="form-control" placeholder="Contoh: SK/045/DEK/FT/2026"
         style="font-size:12px;">
     </div>
     <div>
-      <label style="font-size:11.5px;font-weight:700;color:#065f46;margin-bottom:4px;display:block;">Judul / Perihal
-        SK:</label>
+      <label style="font-size:11.5px;font-weight:700;color:var(--text);margin-bottom:4px;display:block;">Judul / Perihal SK:</label>
       <input type="text" id="skJudulInput" class="form-control" placeholder="Contoh: SK Standar Mutu Pembelajaran 2026"
         style="font-size:12px;">
     </div>
     <div>
-      <label style="font-size:11.5px;font-weight:700;color:#065f46;margin-bottom:4px;display:block;">Tanggal Penetapan
-        SK:</label>
+      <label style="font-size:11.5px;font-weight:700;color:var(--text);margin-bottom:4px;display:block;">Tanggal Penetapan SK:</label>
       <input type="date" id="skTglInput" class="form-control" value="<?= date('Y-m-d') ?>" style="font-size:12px;">
     </div>
     <div>
       <button type="button" onclick="triggerUploadSk()" class="btn btn-outline btn-sm"
-        style="color:#059669;border-color:#059669;font-weight:700;height:35px;width:100%;">
+        style="color:var(--primary);border-color:var(--primary);font-weight:600;height:35px;width:100%;">
         Pilih File SK &amp; Upload
       </button>
     </div>
   </div>
 
   <!-- Tabel Berkas SK yang Sudah Diupload -->
-  <div style="overflow-x:auto;border:1px solid #e2e8f0;border-radius:10px;background:#fff;">
+  <div style="overflow-x:auto;border:1px solid #e2e8f0;border-radius:8px;background:#fff;">
     <table style="width:100%;border-collapse:collapse;font-size:12.5px;" id="skTable">
       <thead>
         <tr style="background:#f8fafc;border-bottom:1px solid #e2e8f0;color:#475569;font-weight:800;text-align:left;">
@@ -426,20 +407,20 @@ $totalStandar = count($details);
           <?php foreach ($berkasList as $sIdx => $sk): ?>
             <tr id="sk_row_<?= htmlspecialchars($sk['id'] ?? '') ?>" style="border-bottom:1px solid #f1f5f9;">
               <td style="padding:10px 14px;color:#94a3b8;"><?= $sIdx + 1 ?></td>
-              <td style="padding:10px 14px;font-weight:800;color:#065f46;"><?= htmlspecialchars($sk['nomor_sk'] ?? '—') ?>
+              <td style="padding:10px 14px;font-weight:700;color:var(--text);"><?= htmlspecialchars($sk['nomor_sk'] ?? '—') ?>
               </td>
-              <td style="padding:10px 14px;font-weight:700;color:#1e293b;"><?= htmlspecialchars($sk['judul_sk'] ?? '—') ?>
+              <td style="padding:10px 14px;font-weight:600;color:var(--text);"><?= htmlspecialchars($sk['judul_sk'] ?? '—') ?>
               </td>
               <td style="padding:10px 14px;color:#64748b;"><?= htmlspecialchars($sk['tanggal_sk'] ?? '—') ?></td>
               <td style="padding:10px 14px;">
                 <a href="<?= htmlspecialchars($sk['url'] ?? BASE_URL . '/' . $sk['file_path']) ?>" target="_blank"
-                  style="color:#059669;font-weight:700;text-decoration:none;">
-                  📄 <?= htmlspecialchars($sk['file_name'] ?? 'Buka SK') ?> ↗
+                  style="color:var(--primary);font-weight:600;text-decoration:none;">
+                  <?= htmlspecialchars($sk['file_name'] ?? 'Buka SK') ?> ↗
                 </a>
               </td>
               <td style="padding:10px 14px;text-align:center;">
                 <button type="button" onclick="deleteSkItem('<?= htmlspecialchars($sk['id'] ?? $sk['file_path']) ?>')"
-                  class="btn btn-outline btn-sm" style="color:#ef4444;border-color:#fca5a5;padding:4px 8px;font-size:11px;">
+                  class="btn btn-outline btn-sm" style="color:var(--danger);border-color:#fca5a5;padding:4px 8px;font-size:11px;">
                   Hapus
                 </button>
               </td>
@@ -452,18 +433,16 @@ $totalStandar = count($details);
 </div>
 
 <!-- SECTION 4: BUAT PENETAPAN BARU SIKLUS TAHUN BERIKUTNYA -->
-<div
-  style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:16px;padding:24px 28px;margin-bottom:30px;box-shadow:0 8px 24px rgba(5,150,105,0.08);">
+<div style="background:#fff;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:10px;padding:24px 28px;margin-bottom:30px;">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div>
-      <div
-        style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#059669;margin-bottom:4px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:4px;">
         Siklus Berkelanjutan (Continuous Quality Improvement)
       </div>
-      <h3 style="font-size:18px;font-weight:900;color:#064e3b;margin:0 0 4px;">
-        🚀 Buat Dokumen Penetapan Baru untuk Siklus Tahun Ajaran Berikutnya
+      <h3 style="font-size:18px;font-weight:800;color:var(--text);margin:0 0 4px;">
+        Buat Dokumen Penetapan Baru untuk Siklus Tahun Ajaran Berikutnya
       </h3>
-      <p style="font-size:13px;color:#065f46;margin:0;max-width:720px;">
+      <p style="font-size:13px;color:var(--text-muted);margin:0;max-width:720px;">
         Otomatis menggabungkan <strong><?= $cntTerpenuhi ?> standar hasil peningkatan</strong> (menggunakan target &amp;
         indikator baru) serta <strong><?= $cntBelum ?> standar dari tahap pengendalian</strong> ke dalam dokumen
         Penetapan baru.
@@ -472,7 +451,7 @@ $totalStandar = count($details);
 
     <div>
       <button type="button" onclick="openExportModal()" class="btn btn-primary"
-        style="background:#059669;border:none;font-weight:900;font-size:13.5px;padding:12px 24px;box-shadow:0 4px 14px rgba(5,150,105,0.4);">
+        style="font-weight:700;font-size:13.5px;padding:10px 20px;">
         Buat Penetapan Baru Sekarang →
       </button>
     </div>
@@ -480,19 +459,14 @@ $totalStandar = count($details);
 </div>
 
 <!-- Modal Ekspor ke Penetapan Baru -->
-<div id="exportModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.65);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(3px);padding:16px;">
-  <div style="background:#fff;border-radius:20px;max-width:540px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.25);">
+<div id="exportModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.6);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(2px);padding:16px;">
+  <div style="background:#fff;border-radius:12px;max-width:540px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.2);">
     
     <!-- Modal Header Banner -->
-    <div style="background:linear-gradient(135deg, #064e3b 0%, #065f46 100%);color:#fff;padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-shrink:0;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:40px;height:40px;background:rgba(255,255,255,0.18);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">
-          🚀
-        </div>
-        <div>
-          <h3 style="font-size:17px;font-weight:800;margin:0;color:#fff;">Mulai Siklus PPEPP Baru</h3>
-          <p style="font-size:11.5px;margin:2px 0 0;color:rgba(255,255,255,0.8);">Otomatis membuat Project &amp; Dokumen Penetapan Baru</p>
-        </div>
+    <div style="background:#112338;color:#fff;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-shrink:0;">
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin:0;color:#fff;">Mulai Siklus PPEPP Baru</h3>
+        <p style="font-size:11.5px;margin:2px 0 0;color:#cbd5e1;">Otomatis membuat Project &amp; Dokumen Penetapan Baru</p>
       </div>
       <button type="button" onclick="closeExportModal()" style="color:#fff;opacity:0.8;font-size:22px;line-height:1;background:none;border:none;cursor:pointer;padding:4px 8px;">&times;</button>
     </div>
@@ -501,13 +475,13 @@ $totalStandar = count($details);
     <form action="<?= BASE_URL ?>/peningkatan/<?= $pkId ?>/export-to-penetapan" method="POST" style="display:flex;flex-direction:column;overflow:hidden;flex:1;margin:0;">
       <div style="padding:22px 26px;overflow-y:auto;flex:1;">
         
-        <div style="background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#065f46;margin-bottom:18px;line-height:1.5;">
-          💡 <strong>Hasil Siklus:</strong> <?= $cntTerpenuhi ?> standar hasil peningkatan akan menggunakan <strong>target baru</strong>, sedangkan <?= $cntBelum ?> standar pengendalian tetap disertakan. Sistem akan <strong>otomatis membuat Project PPEPP Baru</strong> untuk tahun ajaran yang Anda pilih.
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 14px;font-size:12.5px;color:#065f46;margin-bottom:18px;line-height:1.5;">
+          <strong>Hasil Siklus:</strong> <?= $cntTerpenuhi ?> standar hasil peningkatan akan menggunakan <strong>target baru</strong>, sedangkan <?= $cntBelum ?> standar pengendalian tetap disertakan. Sistem akan <strong>otomatis membuat Project PPEPP Baru</strong> untuk tahun ajaran yang Anda pilih.
         </div>
 
         <div class="form-group" style="margin-bottom:16px;">
-          <label style="font-size:13px;font-weight:800;color:#1e293b;margin-bottom:6px;display:block;">
-            📅 Pilih Tahun Ajaran Tujuan <span style="color:#ef4444;">*</span>
+          <label style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;display:block;">
+            Pilih Tahun Ajaran Tujuan <span style="color:var(--danger);">*</span>
           </label>
           <select name="target_ta_id" id="exportTargetTaSelectEdit" class="form-control" required style="font-size:13.5px;padding:10px 14px;border-radius:10px;" onchange="handleExportTaChange(this)">
             <option value="">— Pilih Tahun Ajaran Baru —</option>

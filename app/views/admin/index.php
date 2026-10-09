@@ -23,15 +23,15 @@ $jenjangLabel = [
 <div class="page-header" style="margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
   <div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(79,70,229,0.3);">
+      <div style="width:38px;height:38px;border-radius:10px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
           <circle cx="12" cy="12" r="3"/>
           <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
         </svg>
       </div>
       <div>
-        <h2 style="font-size:22px;font-weight:900;color:#1e293b;margin:0;">Halaman Administrasi</h2>
-        <p class="page-desc" style="font-size:13px;color:#64748b;margin:2px 0 0;">
+        <h2 style="font-size:20px;font-weight:800;color:var(--text-main);margin:0;">Halaman Administrasi</h2>
+        <p class="page-desc" style="font-size:13px;color:var(--text-muted);margin:2px 0 0;">
           Kelola Manajemen Pengguna (Dosen, Kaprodi, Dekan) dan Program Studi Fakultas
         </p>
       </div>
@@ -39,11 +39,11 @@ $jenjangLabel = [
   </div>
 
   <div style="display:flex;gap:10px;">
-    <a href="<?= BASE_URL ?>/users/create" class="btn btn-primary" style="background:#4f46e5;border:none;font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;">
+    <a href="<?= BASE_URL ?>/users/create" class="btn btn-primary" style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
       + Tambah Pengguna
     </a>
-    <a href="<?= BASE_URL ?>/prodi/create" class="btn btn-outline" style="border-color:#4f46e5;color:#4f46e5;font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;">
+    <a href="<?= BASE_URL ?>/prodi/create" class="btn btn-outline" style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
       + Tambah Prodi
     </a>
@@ -52,32 +52,32 @@ $jenjangLabel = [
 
 <!-- Ringkasan Statistik -->
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px;">
-  <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-    <div style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Total Pengguna</div>
-    <div style="font-size:30px;font-weight:900;color:#1e293b;margin-top:4px;"><?= $totalUsers ?></div>
-    <div style="font-size:12px;color:#64748b;margin-top:2px;">
+  <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.02);">
+    <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Total Pengguna</div>
+    <div style="font-size:28px;font-weight:800;color:var(--text-main);margin-top:4px;"><?= $totalUsers ?></div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">
       <?= $totalDekan ?> Dekan • <?= $totalKaprodi ?> Kaprodi • <?= $totalDosen ?> Dosen
     </div>
   </div>
 
-  <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-    <div style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Program Studi</div>
-    <div style="font-size:30px;font-weight:900;color:#4f46e5;margin-top:4px;"><?= $totalProdi ?></div>
-    <div style="font-size:12px;color:#64748b;margin-top:2px;">Fakultas Ilmu Komputer</div>
+  <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.02);">
+    <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Program Studi</div>
+    <div style="font-size:28px;font-weight:800;color:var(--primary);margin-top:4px;"><?= $totalProdi ?></div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Fakultas Ilmu Komputer</div>
   </div>
 </div>
 
 <!-- Tabs Navigation -->
-<div style="display:flex;gap:10px;border-bottom:2px solid #e2e8f0;margin-bottom:24px;padding-bottom:2px;">
+<div style="display:flex;gap:10px;border-bottom:2px solid var(--border);margin-bottom:24px;padding-bottom:2px;">
   <button type="button" id="tabBtnUsers" onclick="switchAdminTab('users')"
-          style="padding:10px 20px;font-weight:800;font-size:14px;border:none;background:none;cursor:pointer;color:#4f46e5;border-bottom:3px solid #4f46e5;margin-bottom:-3px;display:flex;align-items:center;gap:8px;">
+          style="padding:10px 20px;font-weight:700;font-size:14px;border:none;background:none;cursor:pointer;color:var(--primary);border-bottom:3px solid var(--primary);margin-bottom:-3px;display:flex;align-items:center;gap:8px;">
     <span>Manajemen Pengguna</span>
-    <span style="background:#eef2ff;color:#4f46e5;font-size:11.5px;padding:2px 8px;border-radius:12px;"><?= $totalUsers ?></span>
+    <span style="background:#eef2ff;color:var(--primary);font-size:11.5px;padding:2px 8px;border-radius:12px;"><?= $totalUsers ?></span>
   </button>
   <button type="button" id="tabBtnProdi" onclick="switchAdminTab('prodi')"
-          style="padding:10px 20px;font-weight:800;font-size:14px;border:none;background:none;cursor:pointer;color:#64748b;border-bottom:3px solid transparent;margin-bottom:-3px;display:flex;align-items:center;gap:8px;">
+          style="padding:10px 20px;font-weight:700;font-size:14px;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:3px solid transparent;margin-bottom:-3px;display:flex;align-items:center;gap:8px;">
     <span>Manajemen Program Studi</span>
-    <span style="background:#f1f5f9;color:#64748b;font-size:11.5px;padding:2px 8px;border-radius:12px;"><?= $totalProdi ?></span>
+    <span style="background:#f1f5f9;color:var(--text-muted);font-size:11.5px;padding:2px 8px;border-radius:12px;"><?= $totalProdi ?></span>
   </button>
 </div>
 
@@ -156,14 +156,14 @@ $jenjangLabel = [
             </td>
             <td style="padding:12px 16px;text-align:right;">
               <div style="display:flex;justify-content:flex-end;gap:6px;">
-                <a href="<?= BASE_URL ?>/users/<?= $u['id'] ?>/edit" class="btn btn-sm btn-outline" style="font-size:12px;padding:4px 10px;font-weight:700;" title="Edit User">
-                  ✏️ Edit
+                <a href="<?= BASE_URL ?>/users/<?= $u['id'] ?>/edit" class="btn btn-sm btn-outline" style="font-size:12px;padding:4px 10px;font-weight:600;" title="Edit User">
+                  Edit
                 </a>
                 <?php if ($u['id'] != $currentUser['id']): ?>
                 <form action="<?= BASE_URL ?>/users/<?= $u['id'] ?>/delete" method="POST" style="margin:0;"
                       onsubmit="return confirm('Hapus user <?= htmlspecialchars(addslashes($u['nama_lengkap'])) ?>?')">
-                  <button type="submit" class="btn btn-sm btn-outline" style="color:#ef4444;border-color:#fca5a5;font-size:12px;padding:4px 10px;" title="Hapus User">
-                    🗑️
+                  <button type="submit" class="btn btn-sm btn-danger" style="font-size:12px;padding:4px 8px;" title="Hapus User">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
                   </button>
                 </form>
                 <?php endif; ?>
@@ -184,7 +184,7 @@ $jenjangLabel = [
       <div style="font-size:15px;font-weight:800;color:#1e293b;">
         Daftar Program Studi Fakultas
       </div>
-      <a href="<?= BASE_URL ?>/prodi/create" class="btn btn-primary btn-sm" style="background:#4f46e5;border:none;font-weight:800;">
+      <a href="<?= BASE_URL ?>/prodi/create" class="btn btn-primary btn-sm">
         + Tambah Prodi Baru
       </a>
     </div>
@@ -208,43 +208,43 @@ $jenjangLabel = [
           <tr style="border-bottom:1px solid #f1f5f9;">
             <td style="padding:12px 16px;color:#94a3b8;font-weight:700;"><?= $i + 1 ?></td>
             <td style="padding:12px 16px;">
-              <span style="font-weight:900;color:#0284c7;background:#e0f2fe;padding:4px 10px;border-radius:6px;font-size:12px;">
+              <span style="font-weight:700;color:var(--primary);background:#f1f5f9;padding:4px 10px;border-radius:6px;font-size:12px;">
                 <?= htmlspecialchars($pr['kode']) ?>
               </span>
             </td>
             <td style="padding:12px 16px;">
-              <a href="<?= BASE_URL ?>/prodi/<?= $pr['id'] ?>" style="font-weight:800;color:#1e293b;text-decoration:none;">
+              <a href="<?= BASE_URL ?>/prodi/<?= $pr['id'] ?>" style="font-weight:700;color:var(--text-main);text-decoration:none;">
                 <?= htmlspecialchars($pr['nama']) ?>
               </a>
               <?php if (!empty($pr['deskripsi'])): ?>
-              <div style="font-size:11.5px;color:#64748b;margin-top:2px;"><?= htmlspecialchars($pr['deskripsi']) ?></div>
+              <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;"><?= htmlspecialchars($pr['deskripsi']) ?></div>
               <?php endif; ?>
             </td>
-            <td style="padding:12px 16px;font-weight:700;color:#475569;">
+            <td style="padding:12px 16px;font-weight:600;color:#475569;">
               <?= $jenjangLabel[$pr['jenjang']] ?? $pr['jenjang'] ?>
             </td>
             <td style="padding:12px 16px;">
-              <span style="font-weight:700;color:<?= !empty($pr['kaprodi_nama']) ? '#6d28d9' : '#94a3b8' ?>;">
+              <span style="font-weight:600;color:<?= !empty($pr['kaprodi_nama']) ? '#6d28d9' : 'var(--text-muted)' ?>;">
                 <?= htmlspecialchars($pr['kaprodi_nama'] ?: '— Belum Ditentukan —') ?>
               </span>
             </td>
             <td style="padding:12px 16px;">
-              <span style="font-weight:800;color:#0284c7;background:#f0f9ff;padding:3px 10px;border-radius:10px;border:1px solid #bae6fd;">
-                👥 <?= (int)($pr['total_dosen'] ?? 0) ?> Dosen
+              <span style="font-weight:700;color:var(--primary);background:#f8fafc;padding:3px 10px;border-radius:8px;border:1px solid var(--border);">
+                <?= (int)($pr['total_dosen'] ?? 0) ?> Dosen
               </span>
             </td>
             <td style="padding:12px 16px;">
-              <span style="font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:12px;<?= $pr['aktif'] ? 'background:#ecfdf5;color:#059669;' : 'background:#fef2f2;color:#991b1b;' ?>">
+              <span style="font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:12px;<?= $pr['aktif'] ? 'background:#ecfdf5;color:#059669;' : 'background:#fef2f2;color:#991b1b;' ?>">
                 <?= $pr['aktif'] ? '✓ Aktif' : '✕ Nonaktif' ?>
               </span>
             </td>
             <td style="padding:12px 16px;text-align:right;">
               <div style="display:flex;justify-content:flex-end;gap:6px;">
-                <a href="<?= BASE_URL ?>/prodi/<?= $pr['id'] ?>" class="btn btn-sm btn-outline" style="font-size:12px;padding:4px 10px;font-weight:700;color:#4f46e5;border-color:#c7d2fe;" title="Kelola Dosen & Detail">
-                  🔍 Kelola
+                <a href="<?= BASE_URL ?>/prodi/<?= $pr['id'] ?>" class="btn btn-sm btn-outline" style="font-size:12px;padding:4px 10px;font-weight:600;" title="Kelola Dosen & Detail">
+                  Kelola
                 </a>
-                <a href="<?= BASE_URL ?>/prodi/<?= $pr['id'] ?>/edit" class="btn btn-sm btn-outline" style="font-size:12px;padding:4px 10px;font-weight:700;" title="Edit Prodi">
-                  ✏️ Edit
+                <a href="<?= BASE_URL ?>/prodi/<?= $pr['id'] ?>/edit" class="btn btn-sm btn-outline" style="font-size:12px;padding:4px 10px;font-weight:600;" title="Edit Prodi">
+                  Edit
                 </a>
               </div>
             </td>
@@ -266,16 +266,16 @@ function switchAdminTab(tab) {
   if (tab === 'users') {
     contentU.style.display = 'block';
     contentP.style.display = 'none';
-    btnU.style.color = '#4f46e5';
-    btnU.style.borderBottomColor = '#4f46e5';
-    btnP.style.color = '#64748b';
+    btnU.style.color = 'var(--primary)';
+    btnU.style.borderBottomColor = 'var(--primary)';
+    btnP.style.color = 'var(--text-muted)';
     btnP.style.borderBottomColor = 'transparent';
   } else {
     contentU.style.display = 'none';
     contentP.style.display = 'block';
-    btnP.style.color = '#4f46e5';
-    btnP.style.borderBottomColor = '#4f46e5';
-    btnU.style.color = '#64748b';
+    btnP.style.color = 'var(--primary)';
+    btnP.style.borderBottomColor = 'var(--primary)';
+    btnU.style.color = 'var(--text-muted)';
     btnU.style.borderBottomColor = 'transparent';
   }
 }

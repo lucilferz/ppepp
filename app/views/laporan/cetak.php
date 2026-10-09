@@ -78,7 +78,7 @@
 </head>
 <body>
 
-  <button type="button" onclick="window.print()" class="print-btn">🖨️ Cetak Dokumen / Simpan PDF</button>
+  <button type="button" onclick="window.print()" class="print-btn">Cetak Dokumen / Simpan PDF</button>
 
   <div class="header-doc">
     <h1>Laporan Matriks Siklus Penjaminan Mutu PPEPP</h1>

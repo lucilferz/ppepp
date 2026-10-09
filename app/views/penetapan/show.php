@@ -112,7 +112,7 @@ foreach ($details as $d) {
     </div>
   </div>
 
-  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;box-shadow:0 1px 3px rgba(15,23,42,0.03);border-left:4px solid #1a237e;">
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;box-shadow:0 1px 3px rgba(15,23,42,0.03);border-left:4px solid var(--primary);">
     <div style="font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Kriteria SPMI Tercover</div>
     <div style="font-size:26px;font-weight:800;color:#0f172a;line-height:1.2;margin-top:4px;">
       <?= count($kriteriaMap) ?> <span style="font-size:13px;font-weight:500;color:#64748b;">Kriteria</span>
@@ -143,7 +143,7 @@ foreach ($details as $d) {
       <svg viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" width="15" height="15" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" id="standardSearchInput" onkeyup="filterStandards()" placeholder="Cari kode, nama standar, aturan, indikator..."
              style="width:100%;padding:8px 12px 8px 34px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;outline:none;font-family:inherit;background:#f8fafc;"
-             onfocus="this.style.background='#fff';this.style.borderColor='#1a237e';" onblur="this.style.background='#f8fafc';this.style.borderColor='#cbd5e1';">
+             onfocus="this.style.background='#fff';this.style.borderColor='var(--primary)';" onblur="this.style.background='#f8fafc';this.style.borderColor='#cbd5e1';">
     </div>
 
     <!-- View Mode Switcher -->
