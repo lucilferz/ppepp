@@ -322,7 +322,9 @@ $isFirst = ($idx === 0);
       </div>
 
       <!-- Realisasi & Catatan Pelaksanaan -->
-      <div style="display:grid;grid-template-columns:220px 1fr;gap:12px;margin-top:8px;">
+      <?php $hasTurunan = !empty($det['is_turunan']); ?>
+      <div style="display:grid;grid-template-columns:<?= $hasTurunan ? '220px 1fr' : '1fr' ?>;gap:12px;margin-top:8px;">
+        <?php if ($hasTurunan): ?>
         <div>
           <label style="font-size:11px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">
             Realisasi Angka (Kuantitatif):
@@ -333,6 +335,7 @@ $isFirst = ($idx === 0);
                  onchange="saveCatatanPelaksanaan(<?= $pdId ?>, <?= $kid ?>, <?= $p['id'] ?>)"
                  style="font-size:12.5px;padding:7px 10px;border-radius:6px;border:1px solid #cbd5e1;">
         </div>
+        <?php endif; ?>
         <div>
           <label style="font-size:11px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">
             Catatan Realisasi Pelaksanaan:

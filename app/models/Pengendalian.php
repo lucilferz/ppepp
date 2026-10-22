@@ -35,7 +35,7 @@ class Pengendalian extends Model
     public function findWithDetails(int $id, int $userId): ?array
     {
         $pg = $this->find($id);
-        if (!$pg || $pg['user_id'] != $userId) return null;
+        if (!$pg || ($pg['user_id'] != $userId && !TugasDokumen::canAccessDocument($userId, 'pengendalian', $pg['ppepp_project_id'] ?? null, (int)$id))) return null;
 
         $db = $this->getDb();
 

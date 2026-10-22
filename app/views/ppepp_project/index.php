@@ -7,52 +7,61 @@ $breadcrumbs = [
 ?>
 
 <!-- Page Header -->
-<div class="page-header" style="margin-bottom:24px;">
+<div class="page-header">
   <div>
-    <h2 style="font-size:20px;font-weight:800;color:var(--text-main);">Project PPEPP per Tahun Ajaran</h2>
-    <p class="page-desc">Setiap Tahun Ajaran adalah satu siklus PPEPP lengkap (Penetapan → Pelaksanaan → Evaluasi → Pengendalian → Peningkatan)</p>
+    <h2>Project PPEPP per Tahun Ajaran</h2>
+    <p class="page-desc">Setiap Tahun Ajaran merupakan satu siklus PPEPP lengkap (Penetapan &rarr; Pelaksanaan &rarr; Evaluasi &rarr; Pengendalian &rarr; Peningkatan)</p>
   </div>
-  <div style="display:flex;gap:10px;flex-wrap:wrap;">
-    <a href="<?= BASE_URL ?>/pending" class="btn btn-outline" style="font-weight:600;font-size:13px;border-color:#fca5a5;color:#dc2626;background:#fef2f2;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Dokumen Belum Dikerjakan
+  <div class="page-actions">
+    <a href="<?= BASE_URL ?>/pending" class="btn btn-outline btn-sm">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      Tugas Belum Selesai
     </a>
-    <button type="button" class="btn btn-primary" data-modal-open="modalBuatProject">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+    <button type="button" class="btn btn-primary btn-sm" data-modal-open="modalBuatProject">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+      </svg>
       + Buat Project PPEPP Baru
     </button>
   </div>
 </div>
 
 <?php if (!empty($flash['message'])): ?>
-<div class="alert alert-<?= $flash['type']==='success' ? 'success' : 'error' ?>" style="margin-bottom:16px;">
-  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="17" height="17">
+<div class="alert alert-<?= $flash['type']==='success' ? 'success' : 'error' ?>">
+  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16">
     <?php if ($flash['type']==='success'): ?>
       <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
     <?php else: ?>
       <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
     <?php endif; ?>
   </svg>
-  <?= htmlspecialchars($flash['message']) ?>
+  <div><?= htmlspecialchars($flash['message']) ?></div>
 </div>
 <?php endif; ?>
 
 <?php if (empty($projects)): ?>
 <!-- Empty State -->
-<div style="text-align:center;padding:64px 24px;">
-  <div style="width:72px;height:72px;background:linear-gradient(135deg,#e0e7ff,#c7d2fe);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#3f51b5" stroke-width="1.5" width="36" height="36"><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><path d="M3 7l9 6 9-6"/></svg>
+<div class="card" style="padding:60px 24px;text-align:center;">
+  <div class="empty-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+    </svg>
   </div>
-  <h3 style="font-size:18px;font-weight:700;color:var(--text-main);margin-bottom:8px;">Belum Ada Project PPEPP</h3>
-  <p style="font-size:14px;color:var(--text-muted);max-width:400px;margin:0 auto 24px;">Buat project PPEPP pertama untuk memulai siklus penjaminan mutu. Setiap project mewakili satu Tahun Ajaran.</p>
+  <h3 style="font-size:16px;font-weight:700;color:var(--text-main);margin-bottom:4px;">Belum Ada Project PPEPP</h3>
+  <p style="font-size:13px;color:var(--text-muted);max-width:440px;margin:0 auto 20px;">
+    Inisiasi project PPEPP pertama untuk memulai siklus penjaminan mutu. Setiap project mewakili satu Tahun Ajaran.
+  </p>
   <button type="button" class="btn btn-primary" data-modal-open="modalBuatProject">
     + Buat Project PPEPP Pertama
   </button>
+</div>
 <?php else: ?>
-<!-- Filter Tabs -->
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
-  <button type="button" class="btn btn-sm btn-filter active" onclick="filterProjects('all', this)"
-          style="padding:7px 16px;border-radius:20px;font-weight:700;font-size:13px;background:#1e293b;color:#fff;border:none;cursor:pointer;">
+
+<!-- Filter Tabs (Linear / shadcn style) -->
+<div class="tabs-segmented">
+  <button type="button" class="btn-filter active" onclick="filterProjects('all', this)">
     Semua (<?= count($projects) ?>)
   </button>
   <?php
@@ -61,161 +70,152 @@ $breadcrumbs = [
     $countArsip    = count(array_filter($projects, fn($p) => ($p['status'] ?? '') === 'arsip'));
     $countSelesai  = count(array_filter($projects, fn($p) => ($p['status'] ?? '') === 'selesai'));
   ?>
-  <button type="button" class="btn btn-sm btn-filter" onclick="filterProjects('aktif', this)"
-          style="padding:7px 16px;border-radius:20px;font-weight:700;font-size:13px;background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;cursor:pointer;">
+  <button type="button" class="btn-filter" onclick="filterProjects('aktif', this)">
     Aktif (<?= $countAktif ?>)
   </button>
-  <?php if ($countNonaktif > 0): ?>
-  <button type="button" class="btn btn-sm btn-filter" onclick="filterProjects('nonaktif', this)"
-          style="padding:7px 16px;border-radius:20px;font-weight:700;font-size:13px;background:#f1f5f9;color:#854d0e;border:1px solid #fde047;cursor:pointer;">
-    Nonaktif / Tersembunyi (<?= $countNonaktif ?>)
-  </button>
-  <?php endif; ?>
   <?php if ($countSelesai > 0): ?>
-  <button type="button" class="btn btn-sm btn-filter" onclick="filterProjects('selesai', this)"
-          style="padding:7px 16px;border-radius:20px;font-weight:700;font-size:13px;background:#f1f5f9;color:#1e40af;border:1px solid #bfdbfe;cursor:pointer;">
+  <button type="button" class="btn-filter" onclick="filterProjects('selesai', this)">
     Selesai (<?= $countSelesai ?>)
   </button>
   <?php endif; ?>
+  <?php if ($countNonaktif > 0): ?>
+  <button type="button" class="btn-filter" onclick="filterProjects('nonaktif', this)">
+    Tersembunyi (<?= $countNonaktif ?>)
+  </button>
+  <?php endif; ?>
   <?php if ($countArsip > 0): ?>
-  <button type="button" class="btn btn-sm btn-filter" onclick="filterProjects('arsip', this)"
-          style="padding:7px 16px;border-radius:20px;font-weight:700;font-size:13px;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;cursor:pointer;">
+  <button type="button" class="btn-filter" onclick="filterProjects('arsip', this)">
     Arsip (<?= $countArsip ?>)
   </button>
   <?php endif; ?>
 </div>
 
 <!-- Grid Project Cards -->
-<div id="projectGridContainer" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px;">
+<div id="projectGridContainer" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(330px, 1fr));gap:18px;">
   <?php foreach ($projects as $proj): ?>
   <?php
     $pct = $proj['progress_pct'];
     $started = $proj['steps_started'];
     $st = $proj['status'] ?? 'aktif';
 
-    $statusMeta = match($st) {
-      'aktif'    => ['label' => 'Aktif', 'badgeBg' => '#22c55e', 'headerGrad' => 'linear-gradient(135deg,#0f172a,#1a237e)', 'cardBorder' => 'var(--border)'],
-      'nonaktif' => ['label' => 'Nonaktif / Tersembunyi', 'badgeBg' => '#eab308', 'headerGrad' => 'linear-gradient(135deg,#451a03,#78350f)', 'cardBorder' => '#fef08a'],
-      'arsip'    => ['label' => 'Arsip', 'badgeBg' => '#64748b', 'headerGrad' => 'linear-gradient(135deg,#334155,#475569)', 'cardBorder' => '#cbd5e1'],
-      'selesai'  => ['label' => 'Selesai', 'badgeBg' => '#3b82f6', 'headerGrad' => 'linear-gradient(135deg,#1e3a8a,#2563eb)', 'cardBorder' => '#bfdbfe'],
-      default    => ['label' => ucfirst($st), 'badgeBg' => '#64748b', 'headerGrad' => 'linear-gradient(135deg,#0f172a,#1a237e)', 'cardBorder' => 'var(--border)'],
+    $statusBadge = match($st) {
+      'aktif'    => ['label' => 'Aktif', 'class' => 'badge-success'],
+      'nonaktif' => ['label' => 'Tersembunyi', 'class' => 'badge-warning'],
+      'arsip'    => ['label' => 'Arsip', 'class' => 'badge-neutral'],
+      'selesai'  => ['label' => 'Selesai', 'class' => 'badge-info'],
+      default    => ['label' => ucfirst($st), 'class' => 'badge-neutral'],
     };
   ?>
-  <div class="project-card" data-status="<?= htmlspecialchars($st) ?>"
-       style="background:#fff;border:1.5px solid <?= $statusMeta['cardBorder'] ?>;border-radius:16px;overflow:hidden;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.05);<?= $st === 'nonaktif' ? 'opacity:0.92;' : '' ?>"
-       onmouseover="this.style.borderColor='#3f51b5';this.style.boxShadow='0 6px 24px rgba(26,35,126,0.12)';"
-       onmouseout="this.style.borderColor='<?= $statusMeta['cardBorder'] ?>';this.style.boxShadow='0 2px 8px rgba(0,0,0,0.05)';">
-    <!-- Card Header -->
-    <div style="padding:20px 22px;background:<?= $statusMeta['headerGrad'] ?>;color:#fff;position:relative;">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+  <div class="card project-card" data-project-status="<?= htmlspecialchars($st) ?>" data-status="<?= htmlspecialchars($st) ?>"
+       style="display:flex;flex-direction:column;justify-content:space-between;">
+    <div>
+      <!-- Card Header -->
+      <div class="card-header" style="background:var(--surface);">
         <div>
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.6);margin-bottom:4px;">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);">
             Tahun Ajaran
           </div>
-          <div style="font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.5px;">
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-main);margin:2px 0 0;">
             <?= htmlspecialchars($proj['ta_nama']) ?>
-          </div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:3px;">
+          </h3>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">
             <?= htmlspecialchars($proj['judul']) ?>
           </div>
         </div>
-        <span style="font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:<?= $statusMeta['badgeBg'] ?>;color:#fff;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.2);">
-          <?= $statusMeta['label'] ?>
+        <span class="badge <?= $statusBadge['class'] ?> badge-dot">
+          <?= $statusBadge['label'] ?>
         </span>
       </div>
 
-      <!-- Progress Bar -->
-      <div style="margin-top:16px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-          <span style="font-size:11px;color:rgba(255,255,255,0.7);">Progres Siklus</span>
-          <span style="font-size:11px;font-weight:700;color:#fbbf24;"><?= $started ?>/5 tahap</span>
+      <!-- Card Body: Progress Bar & 5 Step Mini Grid -->
+      <div class="card-body" style="padding:16px 20px;">
+        <!-- Cycle Progress -->
+        <div style="margin-bottom:14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;font-size:12px;">
+            <span style="color:var(--text-muted);font-weight:500;">Progres Siklus Mutu</span>
+            <span style="color:var(--primary);font-weight:700;"><?= $started ?>/5 Tahap (<?= $pct ?>%)</span>
+          </div>
+          <div style="height:6px;background:var(--border-subtle);border-radius:var(--radius-pill);overflow:hidden;">
+            <div style="height:100%;width:<?= $pct ?>%;background:var(--primary);border-radius:var(--radius-pill);transition:width 0.3s ease;"></div>
+          </div>
         </div>
-        <div style="height:6px;background:rgba(255,255,255,0.15);border-radius:99px;overflow:hidden;">
-          <div style="height:100%;width:<?= $pct ?>%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:99px;transition:width 0.5s;"></div>
+
+        <!-- 5-Step PPEPP Status Mini Grid -->
+        <div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:4px;margin-top:10px;">
+          <?php
+          $steps = [
+            ['P','Penetapan','penetapan'],
+            ['P','Pelaksanaan','pelaksanaan'],
+            ['E','Evaluasi','evaluasi'],
+            ['P','Pengendalian','pengendalian'],
+            ['P','Peningkatan','peningkatan'],
+          ];
+          foreach ($steps as [$ltr, $nama, $key]):
+            $s = $proj['stats'][$key] ?? ['total'=>0,'final'=>0];
+            $t = (int)$s['total'];
+            $f = (int)$s['final'];
+            if ($f > 0) { $bg = 'var(--success-bg)'; $color = 'var(--success-text)'; $bdr = 'var(--success-border)'; }
+            elseif ($t > 0) { $bg = 'var(--warning-bg)'; $color = 'var(--warning-text)'; $bdr = 'var(--warning-border)'; }
+            else { $bg = 'var(--surface-hover)'; $color = 'var(--text-muted)'; $bdr = 'var(--border)'; }
+          ?>
+          <div style="text-align:center;padding:6px 2px;background:<?= $bg ?>;border:1px solid <?= $bdr ?>;border-radius:var(--radius-sm);" title="<?= $nama ?>: <?= $t ?> dokumen (<?= $f ?> final)">
+            <div style="font-size:11px;font-weight:700;color:<?= $color ?>;"><?= $ltr ?></div>
+            <div style="font-size:9.5px;font-weight:600;color:<?= $color ?>;margin-top:1px;"><?= $t > 0 ? $t : '&mdash;' ?></div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:4px;margin-top:3px;">
+          <?php foreach ($steps as [$ltr, $nama, $key]): ?>
+          <div style="text-align:center;font-size:9px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+            <?= $nama ?>
+          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
 
-    <!-- 5 Step PPEPP Status -->
-    <div style="padding:14px 20px;display:flex;gap:6px;">
-      <?php
-      $steps = [
-        ['P','Penetapan','penetapan'],
-        ['P','Pelaksanaan','pelaksanaan'],
-        ['E','Evaluasi','evaluasi'],
-        ['P','Pengendalian','pengendalian'],
-        ['P','Peningkatan','peningkatan'],
-      ];
-      foreach ($steps as [$ltr, $nama, $key]):
-        $s = $proj['stats'][$key] ?? ['total'=>0,'final'=>0];
-        $t = (int)$s['total'];
-        $f = (int)$s['final'];
-        if ($f > 0) { $stepBg = '#ecfdf5'; $stepColor = '#059669'; $stepBorder = '#a7f3d0'; }
-        elseif ($t > 0) { $stepBg = '#fffbeb'; $stepColor = '#d97706'; $stepBorder = '#fde68a'; }
-        else { $stepBg = '#f8fafc'; $stepColor = '#94a3b8'; $stepBorder = '#e2e8f0'; }
-      ?>
-      <div style="flex:1;text-align:center;padding:8px 4px;background:<?= $stepBg ?>;border:1px solid <?= $stepBorder ?>;border-radius:8px;">
-        <div style="font-size:12px;font-weight:800;color:<?= $stepColor ?>;"><?= $ltr ?></div>
-        <div style="font-size:9px;color:<?= $stepColor ?>;font-weight:600;margin-top:1px;"><?= $t > 0 ? $t : '—' ?></div>
-      </div>
-      <?php endforeach; ?>
-    </div>
-
-    <!-- Keterangan Step -->
-    <div style="padding:0 20px 4px;display:flex;gap:6px;">
-      <?php foreach ($steps as [$ltr, $nama, $key]): ?>
-      <div style="flex:1;text-align:center;">
-        <div style="font-size:9px;color:#94a3b8;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?= $nama ?></div>
-      </div>
-      <?php endforeach; ?>
-    </div>
-
-    <!-- Action Buttons -->
-    <div style="padding:14px 20px 18px;display:flex;gap:8px;border-top:1px solid var(--border);margin-top:10px;">
-      <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>"
-         style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;background:linear-gradient(135deg,#1a237e,#3f51b5);color:#fff;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.18s;"
-         onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='none'">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    <!-- Card Footer / Actions -->
+    <div class="card-footer" style="padding:10px 16px;">
+      <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>" class="btn btn-primary btn-sm" style="flex:1;">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="13" height="13">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
         Buka Project
       </a>
-      
+
       <!-- Quick Toggle Active / Nonactive Button -->
       <?php if ($st === 'aktif'): ?>
       <form method="POST" action="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>/toggle-status" style="margin:0;">
         <input type="hidden" name="status" value="nonaktif">
         <input type="hidden" name="return_url" value="<?= BASE_URL ?>/ppepp">
-        <button type="submit" class="btn btn-outline"
-                style="padding:9px 12px;background:#fefce8;color:#a16207;border-color:#fef08a;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"
-                title="Sembunyikan / Nonaktifkan Project">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg>
-          Hide
+        <button type="submit" class="btn btn-outline btn-sm" title="Sembunyikan / Nonaktifkan Project">
+          Sembunyikan
         </button>
       </form>
       <?php else: ?>
       <form method="POST" action="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>/toggle-status" style="margin:0;">
         <input type="hidden" name="status" value="aktif">
         <input type="hidden" name="return_url" value="<?= BASE_URL ?>/ppepp">
-        <button type="submit" class="btn btn-outline"
-                style="padding:9px 12px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"
-                title="Aktifkan Project Kembali">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <button type="submit" class="btn btn-outline btn-sm" title="Aktifkan Project Kembali">
           Aktifkan
         </button>
       </form>
       <?php endif; ?>
-      <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>/edit"
-         style="padding:9px 12px;background:#f1f5f9;color:#475569;border-radius:9px;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:4px;"
-         title="Edit Informasi Project">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+
+      <a href="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>/edit" class="btn btn-outline btn-sm" title="Edit Informasi Project">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
       </a>
 
       <!-- Hapus Project Permanen Button -->
       <form method="POST" action="<?= BASE_URL ?>/ppepp/<?= $proj['id'] ?>/destroy" style="margin:0;"
-            onsubmit="return confirm('⚠️ KONFIRMASI HAPUS PERMANEN:\n\nApakah Anda YAKIN ingin menghapus project \'<?= htmlspecialchars(addslashes($proj['judul'])) ?>\' (TA <?= htmlspecialchars(addslashes($proj['ta_nama'])) ?>)?\n\nSELURUH DATA 5 TAHAP PPEPP (Penetapan, Pelaksanaan, Evaluasi, Pengendalian, & Peningkatan) di dalamnya akan TERHAPUS TOTAL & PERMANEN!');">
-        <button type="submit" class="btn"
-                style="padding:9px 12px;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"
-                title="Hapus Project Permanen Beserta Seluruh Isinya">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+            onsubmit="return confirm('KONFIRMASI HAPUS PERMANEN:\n\nApakah Anda yakin ingin menghapus project \'<?= htmlspecialchars(addslashes($proj['judul'])) ?>\' (TA <?= htmlspecialchars(addslashes($proj['ta_nama'])) ?>)?\n\nSeluruh data 5 tahap PPEPP di dalamnya akan terhapus.');">
+        <button type="submit" class="btn btn-danger btn-sm" title="Hapus Project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+            <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+          </svg>
         </button>
       </form>
     </div>
@@ -224,119 +224,73 @@ $breadcrumbs = [
 </div>
 
 <script>
-function filterProjects(status, btn) {
-  document.querySelectorAll('.btn-filter').forEach(function(b) {
-    b.style.background = '#f1f5f9';
-    b.style.color = '#334155';
-    b.style.border = '1px solid #cbd5e1';
-  });
-  btn.style.background = '#1e293b';
-  btn.style.color = '#fff';
-  btn.style.border = 'none';
-
-  var cards = document.querySelectorAll('.project-card');
-  cards.forEach(function(c) {
-    if (status === 'all' || c.dataset.status === status) {
-      c.style.display = 'block';
-    } else {
-      c.style.display = 'none';
-    }
-  });
-}
-
 function selectTahunAjaran(el) {
   document.querySelectorAll('.ta-option-card').forEach(function(c) {
-    c.style.borderColor = '#e2e8f0';
-    c.style.background = '#fff';
+    c.style.borderColor = 'var(--border)';
+    c.style.background = 'var(--surface)';
   });
-  el.style.borderColor = '#2563eb';
-  el.style.background = '#eff6ff';
+  el.style.borderColor = 'var(--primary)';
+  el.style.background = 'var(--primary-subtle)';
 
   var input = el.querySelector('input[type="radio"]');
   if (input) input.checked = true;
 
-  document.getElementById('newTaGroup').style.display = 'none';
-  document.getElementById('newTaFlag').value = '0';
+  var newTaGrp = document.getElementById('newTaGroup');
+  var newTaFlg = document.getElementById('newTaFlag');
+  if (newTaGrp) newTaGrp.style.display = 'none';
+  if (newTaFlg) newTaFlg.value = '0';
 }
 
 function showNewTaInput(el) {
   document.querySelectorAll('.ta-option-card').forEach(function(c) {
-    c.style.borderColor = '#e2e8f0';
-    c.style.background = '#fff';
+    c.style.borderColor = 'var(--border)';
+    c.style.background = 'var(--surface)';
   });
-  el.style.borderColor = '#2563eb';
-  el.style.background = '#eff6ff';
+  el.style.borderColor = 'var(--primary)';
+  el.style.background = 'var(--primary-subtle)';
 
   var input = el.querySelector('input[type="radio"]');
   if (input) input.checked = true;
 
-  document.getElementById('newTaGroup').style.display = 'block';
-  document.getElementById('newTaFlag').value = '1';
-  document.getElementById('newTaNama').focus();
-}
-
-function confirmDeleteProject(id, title, taName) {
-  var form = document.getElementById('formDeleteProjectConfirm');
-  var titleEl = document.getElementById('delProjectTitle');
-  if (form) {
-    form.action = BASE_URL + '/ppepp/' + id + '/destroy';
-  }
-  if (titleEl) {
-    titleEl.textContent = title + ' (TA ' + taName + ')';
-  }
-  if (window.openModal) {
-    window.openModal('modalDeleteProjectConfirm');
-  }
+  var newTaGrp = document.getElementById('newTaGroup');
+  var newTaFlg = document.getElementById('newTaFlag');
+  if (newTaGrp) newTaGrp.style.display = 'block';
+  if (newTaFlg) newTaFlg.value = '1';
+  var namaInput = document.getElementById('newTaNama');
+  if (namaInput) namaInput.focus();
 }
 </script>
 <?php endif; ?>
 
 <!-- Modal Buat Project Baru -->
 <div class="modal-overlay" id="modalBuatProject">
-  <div class="modal-card" style="max-width:560px;width:100%;max-height:90vh;border-radius:18px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.3);padding:0;border:none;display:flex;flex-direction:column;background:#fff;">
-    <!-- Header Banner (Fixed at top) -->
-    <div style="background:linear-gradient(135deg, #1e293b 0%, #1e1b4b 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:38px;height:38px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">
-          📁
-        </div>
-        <div>
-          <h3 style="font-size:16px;font-weight:800;margin:0;color:#fff;letter-spacing:-0.3px;">Buat Project PPEPP Baru</h3>
-          <p style="font-size:11.5px;margin:2px 0 0;color:rgba(255,255,255,0.75);">Siklus penjaminan mutu 5 tahap per Tahun Ajaran</p>
-        </div>
-      </div>
-      <button type="button" class="modal-close" data-modal-close="modalBuatProject" style="color:#fff;opacity:0.8;font-size:22px;line-height:1;background:none;border:none;cursor:pointer;padding:4px 8px;">&times;</button>
+  <div class="modal" style="max-width:540px;">
+    <div class="modal-header">
+      <h3 class="modal-title">Buat Project PPEPP Baru</h3>
+      <button type="button" class="modal-close-btn" data-modal-close="modalBuatProject">&times;</button>
     </div>
 
-    <!-- Form container filling remaining height -->
-    <form method="POST" action="<?= BASE_URL ?>/ppepp/store" style="display:flex;flex-direction:column;overflow:hidden;flex:1;margin:0;">
-      <div class="modal-body" style="padding:20px 24px;background:#fff;overflow-y:auto;flex:1;">
-        <!-- Banner Info Singkat -->
-        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:12px;color:#475569;margin-bottom:16px;line-height:1.4;">
-          💡 <strong>Petunjuk:</strong> Pilih <strong>Tahun Ajaran</strong> untuk project baru. Seluruh data 5 tahap PPEPP akan terikat otomatis ke Tahun Ajaran ini.
+    <form method="POST" action="<?= BASE_URL ?>/ppepp/store">
+      <div class="modal-body">
+        <div class="card mb-3" style="background:var(--surface-hover);padding:10px 14px;border:1px solid var(--border);font-size:12.5px;color:var(--text-muted);">
+          Pilih <strong>Tahun Ajaran</strong> untuk project baru. Seluruh data 5 tahap siklus PPEPP akan terikat otomatis ke Tahun Ajaran ini.
         </div>
 
-        <!-- Pilihan Tahun Ajaran (Scrollable list if many) -->
-        <div class="form-group" style="margin-bottom:16px;">
-          <label style="font-size:12.5px;font-weight:800;color:#1e293b;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
-            <span>📅 Pilih Tahun Ajaran</span>
-            <span style="color:#dc2626;">*</span>
-          </label>
-
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:8px;max-height:180px;overflow-y:auto;padding:2px 4px 4px 2px;">
+        <!-- Pilihan Tahun Ajaran -->
+        <div class="form-group">
+          <label class="form-label">Pilih Tahun Ajaran <span class="required-star">*</span></label>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));gap:8px;max-height:160px;overflow-y:auto;padding:2px;">
             <?php foreach ($allTa as $ta): ?>
-            <?php
-              $alreadyUsed = in_array((int)$ta['id'], $usedTaIds ?? [], true);
-            ?>
+            <?php $alreadyUsed = in_array((int)$ta['id'], $usedTaIds ?? [], true); ?>
             <label class="ta-option-card"
-                   style="border:1.5px solid <?= $alreadyUsed ? '#f1f5f9' : '#e2e8f0' ?>;border-radius:10px;padding:9px 12px;cursor:<?= $alreadyUsed ? 'not-allowed' : 'pointer' ?>;transition:all 0.15s;background:<?= $alreadyUsed ? '#f8fafc' : '#ffffff' ?>;<?= $alreadyUsed ? 'opacity:0.55;' : '' ?>"
+                   style="border:1px solid <?= $alreadyUsed ? 'var(--border-subtle)' : 'var(--border)' ?>;border-radius:var(--radius-sm);padding:8px 10px;cursor:<?= $alreadyUsed ? 'not-allowed' : 'pointer' ?>;transition:all 0.15s;background:<?= $alreadyUsed ? 'var(--surface-hover)' : 'var(--surface)' ?>;<?= $alreadyUsed ? 'opacity:0.5;' : '' ?>"
                    <?= !$alreadyUsed ? 'onclick="selectTahunAjaran(this)"' : '' ?>>
-              <div style="display:flex;align-items:center;gap:8px;">
-                <input type="radio" name="tahun_ajaran_id" value="<?= $ta['id'] ?>" <?= $alreadyUsed ? 'disabled' : '' ?> style="accent-color:#2563eb;width:15px;height:15px;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <input type="radio" name="tahun_ajaran_id" value="<?= $ta['id'] ?>" <?= $alreadyUsed ? 'disabled' : '' ?> style="accent-color:var(--primary);">
                 <div>
-                  <div style="font-size:13px;font-weight:800;color:<?= $alreadyUsed ? '#64748b' : '#0f172a' ?>;"><?= htmlspecialchars($ta['nama']) ?></div>
+                  <div style="font-size:12.5px;font-weight:600;color:var(--text-main);"><?= htmlspecialchars($ta['nama']) ?></div>
                   <?php if ($alreadyUsed): ?>
-                  <div style="font-size:9.5px;color:#dc2626;font-weight:700;margin-top:1px;">✓ Sudah Dibuat</div>
+                  <div style="font-size:9.5px;color:var(--danger);font-weight:600;">Sudah Dibuat</div>
                   <?php endif; ?>
                 </div>
               </div>
@@ -345,87 +299,45 @@ function confirmDeleteProject(id, title, taName) {
 
             <!-- Opsi Tambah TA Baru -->
             <label class="ta-option-card"
-                   style="border:1.5px dashed #3b82f6;border-radius:10px;padding:9px 12px;cursor:pointer;background:#eff6ff;transition:all 0.15s;"
+                   style="border:1px dashed var(--primary);border-radius:var(--radius-sm);padding:8px 10px;cursor:pointer;background:var(--primary-subtle);"
                    onclick="showNewTaInput(this)">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <input type="radio" name="tahun_ajaran_id" value="0" id="radioNewTa" style="accent-color:#2563eb;width:15px;height:15px;">
-                <div style="font-size:12.5px;font-weight:800;color:#1d4ed8;">+ TA Baru...</div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <input type="radio" name="tahun_ajaran_id" value="0" id="radioNewTa" style="accent-color:var(--primary);">
+                <div style="font-size:12px;font-weight:600;color:var(--primary);">+ TA Baru...</div>
               </div>
             </label>
           </div>
 
           <input type="hidden" name="new_ta" value="0" id="newTaFlag">
-          <div id="newTaGroup" style="display:none;margin-top:10px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:10px 12px;">
-            <label style="font-size:11.5px;font-weight:700;color:#0369a1;margin-bottom:4px;display:block;">Tuliskan Nama Tahun Ajaran Baru:</label>
+          <div id="newTaGroup" style="display:none;margin-top:10px;background:var(--primary-subtle);border:1px solid #C9DBF0;border-radius:var(--radius-sm);padding:10px 12px;">
+            <label class="form-label" style="font-size:11.5px;color:var(--primary);">Nama Tahun Ajaran Baru:</label>
             <input type="text" name="new_ta_nama" id="newTaNama" class="form-control" placeholder="Contoh: 2027/2028"
-                   style="font-size:13px;font-weight:800;padding:8px 12px;border-radius:6px;border:1px solid #7dd3fc;" oninput="document.getElementById('newTaFlag').value='1'">
+                   oninput="document.getElementById('newTaFlag').value='1'">
           </div>
         </div>
 
         <!-- Judul Project -->
-        <div class="form-group" style="margin-bottom:12px;">
-          <label for="judul" style="font-size:12.5px;font-weight:700;color:#1e293b;margin-bottom:4px;display:block;">
-            📝 Judul Project <span style="font-size:11px;font-weight:500;color:#64748b;">(Opsional - Otomatis jika dikosongkan)</span>
+        <div class="form-group">
+          <label for="judul" class="form-label">
+            Judul Project <span style="font-size:11px;font-weight:400;color:var(--text-muted);">(Opsional &bull; Otomatis jika kosong)</span>
           </label>
           <input type="text" id="judul" name="judul" class="form-control"
-                 placeholder="Contoh: PPEPP 2025/2026 Program Studi Sistem Informasi"
-                 style="padding:8px 12px;border-radius:8px;border:1px solid #cbd5e1;font-size:13px;">
+                 placeholder="Contoh: PPEPP 2025/2026 Program Studi Sistem Informasi">
         </div>
 
         <!-- Deskripsi -->
-        <div class="form-group" style="margin-bottom:4px;">
-          <label for="deskripsi" style="font-size:12.5px;font-weight:700;color:#1e293b;margin-bottom:4px;display:block;">
-            📄 Deskripsi / Catatan Tambahan <span style="font-size:11px;font-weight:500;color:#64748b;">(Opsional)</span>
+        <div class="form-group">
+          <label for="deskripsi" class="form-label">
+            Deskripsi / Catatan Tambahan <span style="font-size:11px;font-weight:400;color:var(--text-muted);">(Opsional)</span>
           </label>
           <textarea name="deskripsi" id="deskripsi" class="form-control" rows="2"
-                    placeholder="Tuliskan catatan singkat project ini..."
-                    style="padding:8px 12px;border-radius:8px;border:1px solid #cbd5e1;font-size:12.5px;resize:vertical;"></textarea>
+                    placeholder="Catatan ruang lingkup siklus penjaminan mutu..."></textarea>
         </div>
       </div>
 
-      <!-- Footer (Fixed at bottom) -->
-      <div class="modal-footer" style="padding:14px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;">
-        <button type="button" class="btn btn-outline" data-modal-close="modalBuatProject" style="padding:9px 18px;font-size:13px;font-weight:700;border-radius:8px;">
-          Batal
-        </button>
-        <button type="submit" class="btn btn-primary" style="padding:9px 20px;font-size:13px;font-weight:800;border-radius:8px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;color:#fff;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 4px 12px rgba(37,99,235,0.3);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><path d="M12 5v14M5 12h14"/></svg>
-          Buat Project PPEPP
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Modal Konfirmasi Hapus Project Permanen -->
-<div class="modal-overlay" id="modalDeleteProjectConfirm">
-  <div class="modal-card" style="max-width:480px;border-radius:18px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.3);padding:0;">
-    <div style="background:linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);color:#fff;padding:22px 24px;display:flex;align-items:center;gap:14px;">
-      <div style="width:44px;height:44px;background:rgba(255,255,255,0.22);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">
-        🗑️
-      </div>
-      <div>
-        <h3 style="font-size:17px;font-weight:800;margin:0 0 2px;color:#fff;">Hapus Project Permanen</h3>
-        <p style="font-size:12px;margin:0;opacity:0.9;color:#fff;">Konfirmasi Penghapusan Project PPEPP</p>
-      </div>
-    </div>
-    <form id="formDeleteProjectConfirm" method="POST" action="">
-      <div class="modal-body" style="padding:22px 24px;background:#fff;">
-        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:14px 16px;color:#991b1b;font-size:13px;line-height:1.6;margin-bottom:16px;">
-          ⚠️ <strong>PERHATIAN SANGAT PENTING:</strong><br>
-          Anda akan menghapus project <strong id="delProjectTitle" style="color:#7f1d1d;">-</strong> secara <strong>PERMANEN</strong>.
-          <br><br>
-          Seluruh data 5 tahap PPEPP di dalamnya (<strong>Penetapan, Pelaksanaan, Evaluasi, Pengendalian, & Peningkatan</strong>) beserta berkas upload akan <strong>TERHAPUS TOTAL & TIDAK DAPAT DI-RECOVERY KEMBALI</strong>.
-        </div>
-        <p style="font-size:13px;color:#475569;margin:0;">Apakah Anda yakin ingin melanjutkan penghapusan ini?</p>
-      </div>
-      <div class="modal-footer" style="padding:16px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;gap:10px;justify-content:flex-end;">
-        <button type="button" class="btn btn-outline" data-modal-close="modalDeleteProjectConfirm" style="padding:9px 18px;font-weight:600;border-radius:10px;">
-          Batal
-        </button>
-        <button type="submit" class="btn btn-danger" style="padding:9px 20px;font-weight:800;border-radius:10px;background:#dc2626;color:#fff;border:none;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
-          🗑️ Ya, Hapus Project &amp; Seluruh Isinya
-        </button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-modal-close="modalBuatProject">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan &amp; Buat Project</button>
       </div>
     </form>
   </div>

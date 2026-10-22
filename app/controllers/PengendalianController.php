@@ -47,20 +47,21 @@ class PengendalianController extends Controller
         $selectedProject = null;
 
         if ($projectId > 0) {
-            $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND pr.user_id = ? LIMIT 1");
-            $stmtPr->execute([$projectId, $user['id']]);
+            $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND (pr.user_id = ? OR EXISTS (SELECT 1 FROM tugas_dokumen td WHERE td.project_id = pr.id AND td.dosen_id = ?)) LIMIT 1");
+            $stmtPr->execute([$projectId, $user['id'], $user['id']]);
             $selectedProject = $stmtPr->fetch(PDO::FETCH_ASSOC);
 
             $stmt = $db->prepare(
                 "SELECT p.*, ta.nama AS ta_nama, ta.semester,
-                        (SELECT id FROM evaluasi WHERE penetapan_id = p.id AND user_id = ? ORDER BY created_at DESC LIMIT 1) AS evaluasi_id,
-                        (SELECT judul FROM evaluasi WHERE penetapan_id = p.id AND user_id = ? ORDER BY created_at DESC LIMIT 1) AS evaluasi_judul
+                        (SELECT id FROM evaluasi WHERE penetapan_id = p.id AND (user_id = ? OR user_id = ?) ORDER BY created_at DESC LIMIT 1) AS evaluasi_id,
+                        (SELECT judul FROM evaluasi WHERE penetapan_id = p.id AND (user_id = ? OR user_id = ?) ORDER BY created_at DESC LIMIT 1) AS evaluasi_judul
                  FROM penetapan p
                  JOIN tahun_ajaran ta ON ta.id = p.tahun_ajaran_id
-                 WHERE p.user_id = ? AND (p.ppepp_project_id = ? OR (p.ppepp_project_id IS NULL AND p.tahun_ajaran_id = (SELECT tahun_ajaran_id FROM ppepp_project WHERE id = ? AND user_id = ?)))
+                 WHERE (p.user_id = ? OR p.user_id = ? OR p.ppepp_project_id = ?) AND (p.ppepp_project_id = ? OR (p.ppepp_project_id IS NULL AND p.tahun_ajaran_id = (SELECT tahun_ajaran_id FROM ppepp_project WHERE id = ?)))
                  ORDER BY p.created_at DESC"
             );
-            $stmt->execute([$user['id'], $user['id'], $user['id'], $projectId, $projectId, $user['id']]);
+            $ownerId = $selectedProject['user_id'] ?? $user['id'];
+            $stmt->execute([$user['id'], $ownerId, $user['id'], $ownerId, $user['id'], $ownerId, $projectId, $projectId, $projectId]);
         } else {
             $stmt = $db->prepare(
                 "SELECT p.*, ta.nama AS ta_nama, ta.semester,
@@ -119,6 +120,10 @@ class PengendalianController extends Controller
             'status'           => 'draft',
         ]);
 
+        if (!empty($penetapan['ppepp_project_id'])) {
+            (new TugasDokumen())->updateDocumentId((int)$penetapan['ppepp_project_id'], 'pengendalian', $pgId);
+        }
+
         // Inisialisasi pengendalian_detail untuk setiap indikator di penetapan_detail
         $stmtK = $db->prepare("SELECT id, kriteria_id FROM penetapan_detail WHERE penetapan_id = ? ORDER BY id ASC");
         $stmtK->execute([$penetapanId]);
@@ -175,7 +180,7 @@ class PengendalianController extends Controller
         $value             = $this->post('value', '');
 
         $pg = $this->model->find($pgId);
-        if (!$pg || $pg['user_id'] != $user['id']) {
+        if (!$pg || !$this->canAccessDoc($pg, 'pengendalian')) {
             $this->json(['success' => false, 'message' => 'Pengendalian tidak ditemukan.']);
             return;
         }
@@ -533,7 +538,7 @@ class PengendalianController extends Controller
         $berkasId = $this->post('berkas_id', '');
 
         $pg = $this->model->find($pgId);
-        if (!$pg || $pg['user_id'] != $user['id']) {
+        if (!$pg || !$this->canAccessDoc($pg, 'pengendalian')) {
             $this->json(['success' => false, 'message' => 'Pengendalian tidak ditemukan.']);
             return;
         }
@@ -593,7 +598,7 @@ class PengendalianController extends Controller
         $user = $this->currentUser();
 
         $pg = $this->model->find($id);
-        if (!$pg || $pg['user_id'] != $user['id']) {
+        if (!$pg || !$this->canAccessDoc($pg, 'pengendalian')) {
             $this->flash('error', 'Pengendalian tidak ditemukan.');
             $this->redirect('/pengendalian');
             return;

@@ -1,28 +1,30 @@
 /**
- * app.js - JavaScript Utama Platform PPEPP
+ * app.js - Client-Side Interactive Engine Platform SIPMI / PPEPP
+ * Enterprise Grade, Modern UX (shadcn/ui + Linear minimalism)
  */
 
 document.addEventListener('DOMContentLoaded', function () {
 
   // ============================================================
-  // Flash Message Auto-hide
+  // Flash Message Auto-dismiss
   // ============================================================
   const alerts = document.querySelectorAll('.alert[data-autohide]');
   alerts.forEach(alert => {
     setTimeout(() => {
       alert.style.opacity = '0';
-      alert.style.transform = 'translateY(-6px)';
-      alert.style.transition = 'opacity 0.4s, transform 0.4s';
-      setTimeout(() => alert.remove(), 400);
-    }, 4000);
+      alert.style.transform = 'translateY(-4px)';
+      alert.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      setTimeout(() => alert.remove(), 300);
+    }, 4500);
   });
 
   // ============================================================
-  // Modal System
+  // Modal / Dialog System (shadcn style)
   // ============================================================
   function openModal(id) {
     const overlay = document.getElementById(id);
     if (overlay) {
+      overlay.classList.add('open');
       overlay.classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -31,32 +33,41 @@ document.addEventListener('DOMContentLoaded', function () {
   function closeModal(id) {
     const overlay = document.getElementById(id);
     if (overlay) {
+      overlay.classList.remove('open');
       overlay.classList.remove('show');
       document.body.style.overflow = '';
     }
   }
 
-  // Tombol open modal
+  // Open triggers
   document.querySelectorAll('[data-modal-open]').forEach(btn => {
-    btn.addEventListener('click', () => openModal(btn.dataset.modalOpen));
-  });
-
-  // Tombol close modal
-  document.querySelectorAll('[data-modal-close]').forEach(btn => {
-    btn.addEventListener('click', () => closeModal(btn.dataset.modalClose));
-  });
-
-  // Klik di luar modal
-  document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', e => {
-      if (e.target === overlay) closeModal(overlay.id);
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal(btn.dataset.modalOpen);
     });
   });
 
-  // ESC key
+  // Close triggers
+  document.querySelectorAll('[data-modal-close]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal(btn.dataset.modalClose);
+    });
+  });
+
+  // Click outside backdrop
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) {
+        closeModal(overlay.id);
+      }
+    });
+  });
+
+  // ESC key listener
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      document.querySelectorAll('.modal-overlay.show').forEach(m => {
+      document.querySelectorAll('.modal-overlay.open, .modal-overlay.show').forEach(m => {
         closeModal(m.id);
       });
     }
@@ -67,42 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
   window.closeModal = closeModal;
 
   // ============================================================
-  // Edit Kriteria - isi form modal dari data row
-  // ============================================================
-  document.querySelectorAll('[data-edit-kriteria]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const data = btn.dataset;
-      const form = document.getElementById('formEditKriteria');
-      if (!form) return;
-
-      form.querySelector('[name="id"]').value        = data.id;
-      form.querySelector('[name="kode"]').value      = data.kode;
-      form.querySelector('[name="nama"]').value      = data.nama;
-      form.querySelector('[name="deskripsi"]').value = data.deskripsi;
-      form.querySelector('[name="urutan"]').value    = data.urutan;
-
-      openModal('modalEditKriteria');
-    });
-  });
-
-  // ============================================================
-  // Hapus Kriteria - konfirmasi & isi id
-  // ============================================================
-  document.querySelectorAll('[data-delete-kriteria]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id   = btn.dataset.deleteKriteria;
-      const nama = btn.dataset.nama;
-      document.getElementById('deleteKriteriaId').value   = id;
-      document.getElementById('deleteKriteriaName').textContent = nama;
-      openModal('modalDeleteKriteria');
-    });
-  });
-
-  // ============================================================
-  // Accordion Kriteria di Form Penetapan
+  // Accordion (Kriteria di Form Penetapan / Standar)
   // ============================================================
   document.querySelectorAll('.ka-header').forEach(header => {
-    // If header has inline onclick handler, do not bind duplicate click listener
     if (header.hasAttribute('onclick')) return;
 
     header.addEventListener('click', () => {
@@ -128,6 +106,59 @@ document.addEventListener('DOMContentLoaded', function () {
           toggle.style.transform = 'rotate(0deg)';
         }
       }
+    });
+  });
+
+  // ============================================================
+  // Edit & Delete Kriteria Handlers
+  // ============================================================
+  document.querySelectorAll('[data-edit-kriteria]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const data = btn.dataset;
+      const form = document.getElementById('formEditKriteria') || document.querySelector('#modalEditKriteria form');
+      if (!form) return;
+
+      const inputId        = form.querySelector('[name="id"]');
+      const inputKode      = form.querySelector('[name="kode"]') || form.querySelector('#editKode');
+      const inputNama      = form.querySelector('[name="nama"]') || form.querySelector('#editNama');
+      const inputDeskripsi = form.querySelector('[name="deskripsi"]') || form.querySelector('#editDeskripsi');
+      const inputUrutan    = form.querySelector('[name="urutan"]') || form.querySelector('#editUrutan');
+
+      if (inputId) inputId.value = data.id || '';
+      if (inputKode) inputKode.value = data.kode || '';
+      if (inputNama) inputNama.value = data.nama || '';
+      if (inputDeskripsi) inputDeskripsi.value = data.deskripsi || '';
+      if (inputUrutan) inputUrutan.value = data.urutan || 0;
+
+      openModal('modalEditKriteria');
+    });
+  });
+
+  document.querySelectorAll('[data-delete-kriteria]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id   = btn.dataset.deleteKriteria;
+      const nama = btn.dataset.nama;
+      const elId = document.getElementById('deleteKriteriaId');
+      const elNm = document.getElementById('deleteKriteriaName');
+      if (elId) elId.value = id;
+      if (elNm) elNm.textContent = nama;
+      openModal('modalDeleteKriteria');
+    });
+  });
+
+  // Delete Referensi
+  document.querySelectorAll('[data-delete-ref]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id   = btn.dataset.deleteRef;
+      const nama = btn.dataset.nama;
+      const elId = document.getElementById('deleteRefId');
+      const elNm = document.getElementById('deleteRefName');
+      if (elId) elId.value = id;
+      if (elNm) elNm.textContent = nama;
+      openModal('modalDeleteRef');
     });
   });
 
@@ -171,47 +202,43 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!label) {
         label = document.createElement('p');
         label.className = 'selected-file mt-2 fw-600';
-        label.style.color = 'var(--primary-light)';
+        label.style.color = 'var(--primary)';
         dropzone.appendChild(label);
       }
-      label.textContent = '📎 ' + name;
+      label.textContent = 'Berkas terpilih: ' + name;
     }
   }
 
   // ============================================================
-  // Checkbox Kriteria untuk AI Analisis
+  // Checkbox Kriteria & AI Analisis
   // ============================================================
   document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
     cb.addEventListener('change', () => {
-      cb.closest('.checkbox-item').classList.toggle('checked', cb.checked);
+      cb.closest('.checkbox-item')?.classList.toggle('checked', cb.checked);
     });
-    // Init state
-    cb.closest('.checkbox-item').classList.toggle('checked', cb.checked);
+    cb.closest('.checkbox-item')?.classList.toggle('checked', cb.checked);
   });
 
-  // Select All / None
   const btnSelectAll  = document.getElementById('btnSelectAllKriteria');
   const btnSelectNone = document.getElementById('btnSelectNoneKriteria');
   if (btnSelectAll) {
     btnSelectAll.addEventListener('click', () => {
-      document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+      document.querySelectorAll('.checkbox-item input[type="checkbox"], input[name="kriteria_ids[]"]').forEach(cb => {
         cb.checked = true;
-        cb.closest('.checkbox-item').classList.add('checked');
+        cb.closest('.checkbox-item')?.classList.add('checked');
       });
     });
   }
   if (btnSelectNone) {
     btnSelectNone.addEventListener('click', () => {
-      document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+      document.querySelectorAll('.checkbox-item input[type="checkbox"], input[name="kriteria_ids[]"]').forEach(cb => {
         cb.checked = false;
-        cb.closest('.checkbox-item').classList.remove('checked');
+        cb.closest('.checkbox-item')?.classList.remove('checked');
       });
     });
   }
 
-  // ============================================================
   // AI Analyze Button
-  // ============================================================
   document.querySelectorAll('[data-analyze-btn]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const referensiId = btn.dataset.analyzeBtn;
@@ -219,7 +246,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const loadingEl   = document.getElementById('aiLoading_' + referensiId);
       const panelEl     = document.getElementById('aiPanel_' + referensiId);
 
-      // Kumpulkan kriteria yang dipilih
       const checkedBoxes = document.querySelectorAll('input[name="kriteria_ids[]"]:checked');
       const kriteriaIds  = Array.from(checkedBoxes).map(cb => cb.value);
       const pertanyaan   = document.getElementById('aiPertanyaan')?.value || '';
@@ -229,12 +255,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      // Tampilkan panel & loading
       if (panelEl) panelEl.style.display = 'block';
       if (loadingEl) loadingEl.style.display = 'flex';
       if (resultEl) resultEl.style.display = 'none';
       btn.disabled = true;
       btn.textContent = 'Menganalisis...';
+
+      const appBase = window.PPEPP_BASE_URL || window.BASE_URL || '';
 
       try {
         const formData = new FormData();
@@ -242,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('pertanyaan', pertanyaan);
         kriteriaIds.forEach(id => formData.append('kriteria_ids[]', id));
 
-        const response = await fetch(BASE_URL + '/penetapan/referensi/analyze', {
+        const response = await fetch(appBase + '/penetapan/referensi/analyze', {
           method: 'POST',
           body: formData,
         });
@@ -257,35 +284,33 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
           if (resultEl) {
             resultEl.style.display = 'block';
-            resultEl.innerHTML = '<span style="color:#ff8a7a;">⚠️ Error: ' + data.message + '</span>';
+            resultEl.innerHTML = '<span style="color:var(--danger);font-weight:600;">Error: ' + (data.message || 'Gagal memproses.') + '</span>';
           }
         }
       } catch (err) {
         if (resultEl) {
           resultEl.style.display = 'block';
-          resultEl.innerHTML = '<span style="color:#ff8a7a;">⚠️ Gagal terhubung ke server.</span>';
+          resultEl.innerHTML = '<span style="color:var(--danger);font-weight:600;">Gagal menghubungi server.</span>';
         }
       } finally {
         if (loadingEl) loadingEl.style.display = 'none';
         btn.disabled = false;
-        btn.textContent = '🔍 Analisis Ulang';
+        btn.textContent = 'Analisis Ulang';
       }
     });
   });
 
-  // Format teks AI (markdown sederhana)
   function formatAIText(text) {
+    if (!text) return '';
     return text
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/^#{1,3}\s+(.+)$/gm, '<strong style="color:var(--accent-light);font-size:15px;">$1</strong>')
+      .replace(/^#{1,3}\s+(.+)$/gm, '<h4 style="margin:8px 0 4px;font-size:14px;color:var(--primary);">$1</h4>')
       .replace(/^-\s+(.+)$/gm, '&bull; $1')
       .replace(/\n/g, '<br>');
   }
 
-  // ============================================================
-  // Sidebar toggle mobile
-  // ============================================================
+  // Mobile sidebar toggle
   const menuToggle = document.getElementById('menuToggle');
   const sidebar    = document.querySelector('.sidebar');
   const overlay    = document.getElementById('sidebarOverlay');
@@ -293,42 +318,104 @@ document.addEventListener('DOMContentLoaded', function () {
   if (menuToggle && sidebar) {
     menuToggle.addEventListener('click', () => {
       sidebar.classList.toggle('open');
-      if (overlay) overlay.classList.toggle('show');
+      if (overlay) overlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
     });
-    if (overlay) {
-      overlay.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('show');
-      });
-    }
   }
 
-  // ============================================================
-  // Confirm delete file referensi
-  // ============================================================
-  document.querySelectorAll('[data-delete-ref]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id   = btn.dataset.deleteRef;
-      const nama = btn.dataset.nama;
-      document.getElementById('deleteRefId').value = id;
-      document.getElementById('deleteRefName').textContent = nama;
-      openModal('modalDeleteRef');
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      if (sidebar) sidebar.classList.remove('open');
+      overlay.style.display = 'none';
     });
-  });
+  }
 
-  // ============================================================
-  // Form Penetapan - Finalize confirm
-  // ============================================================
+  // Finalize confirm
   const finalizeBtn = document.getElementById('finalizeBtn');
   if (finalizeBtn) {
     finalizeBtn.addEventListener('click', (e) => {
-      if (!confirm('Yakin ingin memfinalisasi penetapan ini? Status akan berubah menjadi FINAL dan tidak bisa diedit.')) {
+      if (!confirm('Yakin ingin memfinalisasi penetapan ini? Status akan berubah menjadi FINAL dan tidak dapat diedit.')) {
         e.preventDefault();
       }
     });
   }
 
+  // AI Warning Modal Helper
+  window.showAiWarningModal = function (msg, errorType) {
+    const modal = document.getElementById('globalAiWarningModal');
+    const header = document.getElementById('aiModalHeader');
+    const title = document.getElementById('aiModalTitle');
+    const message = document.getElementById('aiModalMessage');
+    const tips = document.getElementById('aiModalTips');
+    const btnAction = document.getElementById('aiModalBtnAction');
+
+    if (!modal) {
+      alert((msg || 'Peringatan AI') + '\n\nSilakan isi API Key Anda di Pengaturan.');
+      return;
+    }
+
+    const type = errorType || '';
+    const str = (msg || '').toLowerCase();
+
+    if (type === 'quota_exceeded' || str.includes('kuota') || str.includes('429')) {
+      if (header) header.style.background = 'var(--warning)';
+      if (title) title.textContent = 'Kuota API Key Gemini Habis';
+      if (message) message.textContent = msg || 'Batas kuota gratis atau rate limit telah tercapai.';
+      if (tips) tips.innerHTML = '<strong>Solusi:</strong><br>1. Tunggu 1–2 menit.<br>2. Ganti model AI di Pengaturan.<br>3. Gunakan API Key Gemini alternatif.';
+    } else {
+      if (header) header.style.background = 'var(--danger)';
+      if (title) title.textContent = 'API Key Gemini Diperlukan';
+      if (message) message.textContent = msg || 'Fitur AI memerlukan API Key Gemini yang aktif.';
+      if (tips) tips.innerHTML = 'Dapatkan Gemini API Key gratis di <strong>Google AI Studio</strong> (aistudio.google.com).';
+    }
+
+    openModal('globalAiWarningModal');
+  };
 });
 
-// Base URL untuk AJAX (diset dari PHP di layout)
-let BASE_URL = window.PPEPP_BASE_URL || '';
+// Helper filters for Project page
+window.filterProjects = function (status, btnEl) {
+  document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+
+  const cards = document.querySelectorAll('.project-card, [data-project-status]');
+  cards.forEach(card => {
+    const cardStatus = card.dataset.projectStatus || 'aktif';
+    if (status === 'all' || cardStatus === status) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+};
+
+// Helper for Admin Tabs
+window.switchAdminTab = function (tab) {
+  const tabBtnUsers = document.getElementById('tabBtnUsers');
+  const tabBtnProdi = document.getElementById('tabBtnProdi');
+  const sectionUsers = document.getElementById('adminSectionUsers');
+  const sectionProdi = document.getElementById('adminSectionProdi');
+
+  if (tab === 'users') {
+    if (tabBtnUsers) {
+      tabBtnUsers.style.color = 'var(--primary)';
+      tabBtnUsers.style.borderBottomColor = 'var(--primary)';
+    }
+    if (tabBtnProdi) {
+      tabBtnProdi.style.color = 'var(--text-muted)';
+      tabBtnProdi.style.borderBottomColor = 'transparent';
+    }
+    if (sectionUsers) sectionUsers.style.display = 'block';
+    if (sectionProdi) sectionProdi.style.display = 'none';
+  } else {
+    if (tabBtnProdi) {
+      tabBtnProdi.style.color = 'var(--primary)';
+      tabBtnProdi.style.borderBottomColor = 'var(--primary)';
+    }
+    if (tabBtnUsers) {
+      tabBtnUsers.style.color = 'var(--text-muted)';
+      tabBtnUsers.style.borderBottomColor = 'transparent';
+    }
+    if (sectionProdi) sectionProdi.style.display = 'block';
+    if (sectionUsers) sectionUsers.style.display = 'none';
+  }
+};

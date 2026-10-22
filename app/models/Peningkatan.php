@@ -35,7 +35,7 @@ class Peningkatan extends Model
     public function findWithDetails(int $id, int $userId): ?array
     {
         $pk = $this->find($id);
-        if (!$pk || $pk['user_id'] != $userId) return null;
+        if (!$pk || ($pk['user_id'] != $userId && !TugasDokumen::canAccessDocument($userId, 'peningkatan', $pk['ppepp_project_id'] ?? null, (int)$id))) return null;
 
         $db = $this->getDb();
 

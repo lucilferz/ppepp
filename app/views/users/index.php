@@ -118,7 +118,15 @@ $noApiKey     = count(array_filter($users, fn($u) => empty($u['gemini_api_key'])
             <?php endif; ?>
           </td>
           <td style="padding:14px 18px;text-align:center;">
-            <div style="display:flex;justify-content:center;gap:6px;">
+            <div style="display:flex;justify-content:center;gap:6px;align-items:center;">
+              <?php if ($currentUser['id'] != $u['id']): ?>
+              <form action="<?= BASE_URL ?>/users/<?= $u['id'] ?>/login-as" method="POST" style="margin:0;">
+                <button type="submit" style="display:inline-flex;align-items:center;gap:5px;background:#4f46e5;color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;" title="Login langsung ke akun <?= htmlspecialchars($u['nama_lengkap'] ?: $u['username']) ?>">
+                  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                  Login
+                </button>
+              </form>
+              <?php endif; ?>
               <a href="<?= BASE_URL ?>/users/<?= $u['id'] ?>/edit"
                  style="display:inline-flex;align-items:center;gap:5px;background:#f1f5f9;color:#334155;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;text-decoration:none;border:1px solid #e2e8f0;">
                 ✏️ Edit

@@ -45,18 +45,19 @@ class EvaluasiController extends Controller
         $selectedProject = null;
 
         if ($projectId > 0) {
-            $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND pr.user_id = ? LIMIT 1");
-            $stmtPr->execute([$projectId, $user['id']]);
+            $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND (pr.user_id = ? OR EXISTS (SELECT 1 FROM tugas_dokumen td WHERE td.project_id = pr.id AND td.dosen_id = ?)) LIMIT 1");
+            $stmtPr->execute([$projectId, $user['id'], $user['id']]);
             $selectedProject = $stmtPr->fetch(PDO::FETCH_ASSOC);
 
             $stmt = $db->prepare(
                 "SELECT p.*, ta.nama AS ta_nama, ta.semester
                  FROM penetapan p
                  JOIN tahun_ajaran ta ON ta.id = p.tahun_ajaran_id
-                 WHERE p.user_id = ? AND (p.ppepp_project_id = ? OR (p.ppepp_project_id IS NULL AND p.tahun_ajaran_id = (SELECT tahun_ajaran_id FROM ppepp_project WHERE id = ? AND user_id = ?)))
+                 WHERE (p.user_id = ? OR p.user_id = ? OR p.ppepp_project_id = ?) AND (p.ppepp_project_id = ? OR (p.ppepp_project_id IS NULL AND p.tahun_ajaran_id = (SELECT tahun_ajaran_id FROM ppepp_project WHERE id = ?)))
                  ORDER BY p.created_at DESC"
             );
-            $stmt->execute([$user['id'], $projectId, $projectId, $user['id']]);
+            $ownerId = $selectedProject['user_id'] ?? $user['id'];
+            $stmt->execute([$user['id'], $ownerId, $projectId, $projectId, $projectId]);
         } else {
             $stmt = $db->prepare(
                 "SELECT p.*, ta.nama AS ta_nama, ta.semester
@@ -98,9 +99,9 @@ class EvaluasiController extends Controller
             return;
         }
 
-        // Verifikasi penetapan milik user ini
+        // Verifikasi penetapan milik user atau ada akses penugasan
         $penetapan = $this->penetapanModel->find($penetapanId);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
             $this->flash('error', 'Penetapan tidak ditemukan.');
             $this->redirect('/evaluasi/create');
             return;
@@ -115,6 +116,10 @@ class EvaluasiController extends Controller
             'jenis'            => $jenis,
             'status'           => 'draft',
         ]);
+
+        if (!empty($penetapan['ppepp_project_id'])) {
+            (new TugasDokumen())->updateDocumentId((int)$penetapan['ppepp_project_id'], 'evaluasi', $evaluasiId);
+        }
 
         // Inisialisasi evaluasi_detail placeholder untuk setiap indikator di penetapan_detail
         $db = $this->model->getDb();
@@ -183,7 +188,7 @@ class EvaluasiController extends Controller
         $value             = $this->post('value', '');
 
         $evaluasi = $this->model->find($evaluasiId);
-        if (!$evaluasi || $evaluasi['user_id'] != $user['id']) {
+        if (!$evaluasi || !$this->canAccessDoc($evaluasi, 'evaluasi')) {
             $this->json(['success' => false, 'message' => 'Tidak ditemukan.']);
             return;
         }
@@ -392,7 +397,7 @@ class EvaluasiController extends Controller
 
         $evaluasiId = (int) $this->post('evaluasi_id', 0);
         $evaluasi   = $this->model->find($evaluasiId);
-        if (!$evaluasi || $evaluasi['user_id'] != $user['id']) {
+        if (!$evaluasi || !$this->canAccessDoc($evaluasi, 'evaluasi')) {
             $this->json(['success' => false, 'message' => 'Evaluasi tidak ditemukan.']);
             return;
         }
@@ -590,7 +595,7 @@ class EvaluasiController extends Controller
         $evaluasiId = (int) $this->post('evaluasi_id', 0);
         $evaluasi   = $this->model->find($evaluasiId);
 
-        if (!$evaluasi || $evaluasi['user_id'] != $user['id']) {
+        if (!$evaluasi || !$this->canAccessDoc($evaluasi, 'evaluasi')) {
             $this->json(['success' => false, 'message' => 'Evaluasi tidak ditemukan.']);
             return;
         }
@@ -875,7 +880,7 @@ class EvaluasiController extends Controller
         $evaluasiId = (int) $this->post('evaluasi_id', 0);
         $evaluasi   = $this->model->find($evaluasiId);
 
-        if (!$evaluasi || $evaluasi['user_id'] != $user['id']) {
+        if (!$evaluasi || !$this->canAccessDoc($evaluasi, 'evaluasi')) {
             $this->json(['success' => false, 'message' => 'Evaluasi tidak ditemukan.']);
             return;
         }
@@ -958,7 +963,7 @@ class EvaluasiController extends Controller
         $evaluasiId = (int) $this->post('evaluasi_id', 0);
 
         $evaluasi = $this->model->find($evaluasiId);
-        if (!$evaluasi || $evaluasi['user_id'] != $user['id']) {
+        if (!$evaluasi || !$this->canAccessDoc($evaluasi, 'evaluasi')) {
             $this->json(['success' => false, 'message' => 'Tidak ditemukan.']);
             return;
         }
@@ -1005,7 +1010,7 @@ class EvaluasiController extends Controller
         $user = $this->currentUser();
 
         $evaluasi = $this->model->find($id);
-        if (!$evaluasi || $evaluasi['user_id'] != $user['id']) {
+        if (!$evaluasi || !$this->canAccessDoc($evaluasi, 'evaluasi')) {
             $this->flash('error', 'Evaluasi tidak ditemukan.');
             $this->redirect('/evaluasi');
             return;

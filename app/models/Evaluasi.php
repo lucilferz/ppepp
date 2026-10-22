@@ -64,7 +64,7 @@ class Evaluasi extends Model
     public function findWithDetails(int $id, int $userId): ?array
     {
         $ev = $this->find($id);
-        if (!$ev || $ev['user_id'] != $userId) return null;
+        if (!$ev || ($ev['user_id'] != $userId && !TugasDokumen::canAccessDocument($userId, 'evaluasi', $ev['ppepp_project_id'] ?? null, (int)$id))) return null;
 
         $db = $this->getDb();
 

@@ -126,8 +126,8 @@ class PenetapanController extends Controller
         }
 
         $penetapan = $this->penetapanModel->find($penetapanId);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
-            $this->json(['success' => false, 'message' => 'Penetapan tidak ditemukan.']);
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
+            $this->json(['success' => false, 'message' => 'Penetapan tidak ditemukan atau tidak memiliki hak akses.']);
             return;
         }
 
@@ -212,12 +212,6 @@ class PenetapanController extends Controller
         $tahunAjaran = $this->penetapanModel->getTahunAjaran();
         $flash       = $this->getFlash();
 
-        if (empty($kriteria)) {
-            $this->flash('warning', 'Silakan tambahkan kriteria prodi terlebih dahulu sebelum membuat penetapan.');
-            $this->redirect('/penetapan/kriteria');
-            return;
-        }
-
         // Ambil project_id dari URL jika ada
         $projectId = (int) $this->get('project_id', $this->get('ppepp_project_id', 0));
 
@@ -236,9 +230,32 @@ class PenetapanController extends Controller
                     break;
                 }
             }
+            if (!$selectedProject) {
+                $db = $this->penetapanModel->getDb();
+                $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND (pr.user_id = ? OR EXISTS (SELECT 1 FROM tugas_dokumen td WHERE td.project_id = pr.id AND td.dosen_id = ?)) LIMIT 1");
+                $stmtPr->execute([$projectId, $user['id'], $user['id']]);
+                $selectedProject = $stmtPr->fetch(PDO::FETCH_ASSOC) ?: null;
+            }
         } elseif (count($userProjects) === 1) {
             $selectedProject = $userProjects[0];
             $projectId = (int)$selectedProject['id'];
+        }
+
+        // Jika kriteria masih kosong (misal dosen baru tanpa prodi terisi), ambil kriteria dari project owner prodi
+        if (empty($kriteria) && $projectId > 0) {
+            $db = $this->penetapanModel->getDb();
+            $stmtProdi = $db->prepare("SELECT u.prodi_id FROM ppepp_project pr JOIN users u ON u.id = pr.user_id WHERE pr.id = ?");
+            $stmtProdi->execute([$projectId]);
+            $ownerProdiId = (int)$stmtProdi->fetchColumn();
+            if ($ownerProdiId > 0) {
+                $kriteria = $this->kriteriaModel->findByProdi($ownerProdiId);
+            }
+        }
+
+        if (empty($kriteria)) {
+            $this->flash('warning', 'Silakan tambahkan kriteria prodi terlebih dahulu sebelum membuat penetapan.');
+            $this->redirect('/penetapan/kriteria');
+            return;
         }
 
         $this->render('penetapan/create_step1', compact('user', 'kriteria', 'tahunAjaran', 'flash', 'projectId', 'userProjects', 'selectedProject'));
@@ -310,6 +327,10 @@ class PenetapanController extends Controller
             'kriteria_ids'     => json_encode($kriteriaIds),
         ]);
 
+        if ($ppeppProjectId > 0) {
+            (new TugasDokumen())->updateDocumentId($ppeppProjectId, 'penetapan', $penetapanId);
+        }
+
         // Buat detail standar awal untuk setiap kriteria yang dipilih pada Langkah 1
         if (!empty($kriteriaIds)) {
             $counter = 1;
@@ -339,8 +360,8 @@ class PenetapanController extends Controller
         $user = $this->currentUser();
 
         $penetapan = $this->penetapanModel->findWithDetails((int)$id);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
-            $this->flash('error', 'Penetapan tidak ditemukan.');
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
+            $this->flash('error', 'Penetapan tidak ditemukan atau tidak memiliki hak akses.');
             $this->redirect('/penetapan');
             return;
         }
@@ -411,8 +432,8 @@ class PenetapanController extends Controller
         }
 
         $penetapan = $this->penetapanModel->find($penetapanId);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
-            $this->json(['success' => false, 'message' => 'Penetapan tidak ditemukan.']);
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
+            $this->json(['success' => false, 'message' => 'Penetapan tidak ditemukan atau tidak memiliki hak akses.']);
             return;
         }
 
@@ -451,7 +472,7 @@ class PenetapanController extends Controller
         $kriteriaId  = (int) $this->post('kriteria_id', 0);
 
         $penetapan = $this->penetapanModel->find($penetapanId);
-        if (!$penetapan || $penetapan['user_id'] != $user['id'] || !$kriteriaId) {
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan') || !$kriteriaId) {
             $this->json(['success' => false, 'message' => 'Data tidak valid.']);
             return;
         }
@@ -497,7 +518,7 @@ class PenetapanController extends Controller
         $detailId    = (int) $this->post('detail_id', 0);
 
         $penetapan = $this->penetapanModel->find($penetapanId);
-        if (!$penetapan || $penetapan['user_id'] != $user['id'] || !$detailId) {
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan') || !$detailId) {
             $this->json(['success' => false, 'message' => 'Data tidak valid.']);
             return;
         }
@@ -737,8 +758,8 @@ class PenetapanController extends Controller
         $action      = $this->post('action', 'save'); // 'save' atau 'finalize'
 
         $penetapan = $this->penetapanModel->find($penetapanId);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
-            $this->flash('error', 'Penetapan tidak ditemukan.');
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
+            $this->flash('error', 'Penetapan tidak ditemukan atau tidak memiliki hak akses.');
             $this->redirect('/penetapan');
             return;
         }
@@ -795,7 +816,7 @@ class PenetapanController extends Controller
 
         $penetapan = $this->penetapanModel->findWithDetails((int)$id);
 
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
             $this->flash('error', 'Penetapan tidak ditemukan.');
             $this->redirect('/penetapan');
             return;
@@ -817,7 +838,7 @@ class PenetapanController extends Controller
 
         $penetapan = $this->penetapanModel->findWithDetails((int)$id);
 
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
             $this->flash('error', 'Penetapan tidak ditemukan.');
             $this->redirect('/penetapan');
             return;
@@ -840,7 +861,7 @@ class PenetapanController extends Controller
         $user = $this->currentUser();
 
         $penetapan = $this->penetapanModel->find((int)$id);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
             $this->flash('error', 'Penetapan tidak ditemukan.');
             $this->redirect('/penetapan');
             return;
@@ -884,7 +905,7 @@ class PenetapanController extends Controller
         $user = $this->currentUser();
 
         $penetapan = $this->penetapanModel->find((int)$id);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
             $this->json(['success' => false, 'message' => 'Not found'], 404);
             return;
         }
@@ -1455,8 +1476,8 @@ class PenetapanController extends Controller
         $ket         = trim($this->post('keterangan', ''));
 
         $penetapan = $this->penetapanModel->find($penetapanId);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
-            $this->json(['success' => false, 'message' => 'Dokumen Penetapan tidak ditemukan.']);
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
+            $this->json(['success' => false, 'message' => 'Dokumen Penetapan tidak ditemukan atau tidak memiliki hak akses.']);
             return;
         }
 
@@ -1535,8 +1556,8 @@ class PenetapanController extends Controller
         $berkasId    = $this->post('berkas_id', '');
 
         $penetapan = $this->penetapanModel->find($penetapanId);
-        if (!$penetapan || $penetapan['user_id'] != $user['id']) {
-            $this->json(['success' => false, 'message' => 'Dokumen Penetapan tidak ditemukan.']);
+        if (!$penetapan || !$this->canAccessDoc($penetapan, 'penetapan')) {
+            $this->json(['success' => false, 'message' => 'Dokumen Penetapan tidak ditemukan atau tidak memiliki hak akses.']);
             return;
         }
 

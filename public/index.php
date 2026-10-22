@@ -39,6 +39,7 @@ require_once dirname(__DIR__) . '/app/models/Peningkatan.php';
 require_once dirname(__DIR__) . '/app/models/PpeppProject.php';
 require_once dirname(__DIR__) . '/app/models/TahunAjaran.php';
 require_once dirname(__DIR__) . '/app/models/Laporan.php';
+require_once dirname(__DIR__) . '/app/models/TugasDokumen.php';
 
 // Mulai session
 session_name(SESSION_NAME);
@@ -64,10 +65,14 @@ $router->get('/admin',              'AdminController', 'index');
 
 // User Management (kaprodi/dekan only)
 $router->get('/users',              'UserController', 'index');
+$router->get('/users/switch-back',   'UserController', 'switchBack');
+$router->post('/users/switch-back',  'UserController', 'switchBack');
 $router->get('/users/api-key',      'UserController', 'apiKey');
 $router->post('/users/api-key/save','UserController', 'saveApiKey');
 $router->get('/users/create',       'UserController', 'create');
 $router->post('/users/store',       'UserController', 'store');
+$router->post('/users/:id/login-as','UserController', 'loginAs');
+$router->get('/users/:id/login-as', 'UserController', 'loginAs');
 $router->get('/users/:id/edit',     'UserController', 'edit');
 $router->post('/users/:id/update',  'UserController', 'update');
 $router->post('/users/:id/delete',  'UserController', 'delete');
@@ -87,6 +92,11 @@ $router->post('/prodi/:id/remove-dosen',    'ProdiController', 'removeDosen');
 $router->get('/', 'DashboardController', 'index');
 $router->get('/dashboard', 'DashboardController', 'index');
 $router->get('/pending', 'DashboardController', 'pending');
+$router->post('/pending/assign', 'DashboardController', 'assignTask');
+$router->post('/pending/submit-task', 'DashboardController', 'submitTask');
+$router->post('/pending/acc-task', 'DashboardController', 'accTask');
+$router->post('/pending/revision-task', 'DashboardController', 'revisionTask');
+$router->post('/pending/cancel-task', 'DashboardController', 'cancelTask');
 
 // Kriteria (must be above /penetapan/:id)
 $router->get('/penetapan/kriteria',            'PenetapanController', 'kriteria');

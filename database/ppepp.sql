@@ -561,5 +561,35 @@ CREATE TABLE `peningkatan_dokumen` (
   CONSTRAINT `peningkatan_dokumen_ibfk_1` FOREIGN KEY (`peningkatan_id`) REFERENCES `peningkatan` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+-- Struktur tabel `tugas_dokumen`
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `tugas_dokumen`;
+CREATE TABLE `tugas_dokumen` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kaprodi_id` int NOT NULL,
+  `dosen_id` int NOT NULL,
+  `project_id` int NOT NULL,
+  `stage` enum('penetapan','pelaksanaan','evaluasi','pengendalian','peningkatan') NOT NULL,
+  `document_id` int DEFAULT NULL,
+  `judul_tugas` varchar(255) NOT NULL,
+  `instruksi` text DEFAULT NULL,
+  `deadline` date DEFAULT NULL,
+  `status` enum('assigned','submitted','revision','approved') NOT NULL DEFAULT 'assigned',
+  `catatan_dosen` text DEFAULT NULL,
+  `catatan_revisi` text DEFAULT NULL,
+  `assigned_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `submitted_at` timestamp NULL DEFAULT NULL,
+  `reviewed_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_kaprodi` (`kaprodi_id`),
+  KEY `idx_dosen` (`dosen_id`),
+  KEY `idx_project_stage` (`project_id`, `stage`),
+  KEY `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;

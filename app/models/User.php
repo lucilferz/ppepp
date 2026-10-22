@@ -151,4 +151,25 @@ class User extends Model
         if (empty($filtered)) return false;
         return $this->update($userId, $filtered);
     }
+
+    /**
+     * Ambil daftar dosen yang dapat ditugaskan (role dosen)
+     */
+    public function getDosenList(?int $excludeUserId = null): array
+    {
+        $db = $this->getDb();
+        $sql = "SELECT u.id, u.username, u.nama_lengkap, u.email, u.role, p.nama AS prodi_nama 
+                FROM users u 
+                LEFT JOIN prodi p ON u.prodi_id = p.id 
+                WHERE u.role = 'dosen'";
+        $params = [];
+        if ($excludeUserId !== null) {
+            $sql .= " AND u.id != ?";
+            $params[] = $excludeUserId;
+        }
+        $sql .= " ORDER BY u.nama_lengkap ASC";
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

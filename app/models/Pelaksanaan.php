@@ -28,7 +28,7 @@ class Pelaksanaan extends Model
     public function findWithDetail(int $id, int $userId): ?array
     {
         $pl = $this->find($id);
-        if (!$pl || $pl['user_id'] != $userId) return null;
+        if (!$pl || ($pl['user_id'] != $userId && !TugasDokumen::canAccessDocument($userId, 'pelaksanaan', $pl['ppepp_project_id'] ?? null, (int)$id))) return null;
 
         // Info penetapan
         $db = $this->getDb();

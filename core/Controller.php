@@ -137,10 +137,38 @@ class Controller
     {
         $this->requireAuth();
         $userRole = $this->currentRole();
-        if (!in_array($userRole, $roles, true)) {
+        $origRole = $_SESSION['impersonator']['role'] ?? '';
+        if (!in_array($userRole, $roles, true) && !in_array($origRole, $roles, true)) {
             $this->flash('error', 'Anda tidak memiliki akses ke halaman tersebut.');
             $this->redirect('/dashboard');
         }
+    }
+
+    /**
+     * Cek apakah user saat ini berhak mengakses/mengedit dokumen
+     * Berhak jika:
+     * 1. Pemilik asli dokumen ($doc['user_id'] == $user['id'])
+     * 2. Role kaprodi atau dekan
+     * 3. Dosen yang ditugaskan secara resmi oleh Kaprodi di tugas_dokumen
+     */
+    protected function canAccessDoc(?array $doc, string $stage): bool
+    {
+        if (!$doc) return false;
+        $user = $this->currentUser();
+        if (!$user) return false;
+
+        $userId = (int)$user['id'];
+        if ((int)($doc['user_id'] ?? 0) === $userId) {
+            return true;
+        }
+
+        if (class_exists('TugasDokumen')) {
+            $projId = !empty($doc['ppepp_project_id']) ? (int)$doc['ppepp_project_id'] : null;
+            $docId  = !empty($doc['id']) ? (int)$doc['id'] : null;
+            return TugasDokumen::canAccessDocument($userId, $stage, $projId, $docId);
+        }
+
+        return in_array($user['role'] ?? '', ['kaprodi', 'dekan']);
     }
 }
 

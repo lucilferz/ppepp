@@ -49,21 +49,22 @@ class PeningkatanController extends Controller
         $selectedProject = null;
 
         if ($projectId > 0) {
-            $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND pr.user_id = ? LIMIT 1");
-            $stmtPr->execute([$projectId, $user['id']]);
+            $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND (pr.user_id = ? OR EXISTS (SELECT 1 FROM tugas_dokumen td WHERE td.project_id = pr.id AND td.dosen_id = ?)) LIMIT 1");
+            $stmtPr->execute([$projectId, $user['id'], $user['id']]);
             $selectedProject = $stmtPr->fetch(PDO::FETCH_ASSOC);
 
             $stmt = $db->prepare(
                 "SELECT p.*, ta.nama AS ta_nama, ta.semester,
-                        (SELECT id FROM pengendalian WHERE penetapan_id = p.id AND user_id = ? ORDER BY created_at DESC LIMIT 1) AS pengendalian_id,
-                        (SELECT judul FROM pengendalian WHERE penetapan_id = p.id AND user_id = ? ORDER BY created_at DESC LIMIT 1) AS pengendalian_judul,
-                        (SELECT id FROM evaluasi WHERE penetapan_id = p.id AND user_id = ? ORDER BY created_at DESC LIMIT 1) AS evaluasi_id
+                        (SELECT id FROM pengendalian WHERE penetapan_id = p.id AND (user_id = ? OR user_id = ?) ORDER BY created_at DESC LIMIT 1) AS pengendalian_id,
+                        (SELECT judul FROM pengendalian WHERE penetapan_id = p.id AND (user_id = ? OR user_id = ?) ORDER BY created_at DESC LIMIT 1) AS pengendalian_judul,
+                        (SELECT id FROM evaluasi WHERE penetapan_id = p.id AND (user_id = ? OR user_id = ?) ORDER BY created_at DESC LIMIT 1) AS evaluasi_id
                  FROM penetapan p
                  JOIN tahun_ajaran ta ON ta.id = p.tahun_ajaran_id
-                 WHERE p.user_id = ? AND (p.ppepp_project_id = ? OR (p.ppepp_project_id IS NULL AND p.tahun_ajaran_id = (SELECT tahun_ajaran_id FROM ppepp_project WHERE id = ? AND user_id = ?)))
+                 WHERE (p.user_id = ? OR p.user_id = ? OR p.ppepp_project_id = ?) AND (p.ppepp_project_id = ? OR (p.ppepp_project_id IS NULL AND p.tahun_ajaran_id = (SELECT tahun_ajaran_id FROM ppepp_project WHERE id = ?)))
                  ORDER BY p.created_at DESC"
             );
-            $stmt->execute([$user['id'], $user['id'], $user['id'], $user['id'], $projectId, $projectId, $user['id']]);
+            $ownerId = $selectedProject['user_id'] ?? $user['id'];
+            $stmt->execute([$user['id'], $ownerId, $user['id'], $ownerId, $user['id'], $ownerId, $user['id'], $ownerId, $projectId, $projectId, $projectId]);
         } else {
             $stmt = $db->prepare(
                 "SELECT p.*, ta.nama AS ta_nama, ta.semester,
@@ -122,6 +123,10 @@ class PeningkatanController extends Controller
             'deskripsi'        => $deskripsi,
             'status'           => 'draft',
         ]);
+
+        if (!empty($penetapan['ppepp_project_id'])) {
+            (new TugasDokumen())->updateDocumentId((int)$penetapan['ppepp_project_id'], 'peningkatan', $pkId);
+        }
 
         // Inisialisasi peningkatan_detail untuk setiap indikator di penetapan_detail
         $stmtK = $db->prepare("SELECT id, kriteria_id FROM penetapan_detail WHERE penetapan_id = ? ORDER BY id ASC");
@@ -185,7 +190,7 @@ class PeningkatanController extends Controller
         $value             = $this->post('value', '');
 
         $pk = $this->model->find($pkId);
-        if (!$pk || $pk['user_id'] != $user['id']) {
+        if (!$pk || !$this->canAccessDoc($pk, 'peningkatan')) {
             $this->json(['success' => false, 'message' => 'Peningkatan tidak ditemukan.']);
             return;
         }
@@ -757,7 +762,7 @@ class PeningkatanController extends Controller
         $user = $this->currentUser();
 
         $pk = $this->model->find($id);
-        if (!$pk || $pk['user_id'] != $user['id']) {
+        if (!$pk || !$this->canAccessDoc($pk, 'peningkatan')) {
             $this->flash('error', 'Peningkatan tidak ditemukan.');
             $this->redirect('/peningkatan');
             return;
