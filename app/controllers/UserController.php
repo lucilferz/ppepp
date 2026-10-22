@@ -216,4 +216,127 @@ class UserController extends Controller
         $this->flash('success', 'API Key Gemini berhasil disimpan! Fitur AI kini aktif untuk akun Anda.');
         $this->redirect('/users/api-key');
     }
+
+    /**
+     * Login langsung ke akun yang dipilih (Impersonate / Switch Account)
+     */
+    public function loginAs(string $id): void
+    {
+        $this->requireAuth();
+        $currentUser     = $this->currentUser();
+        $userRole        = $currentUser['role'] ?? '';
+        $isImpersonating = !empty($_SESSION['impersonator']);
+        $origRole        = $_SESSION['impersonator']['role'] ?? '';
+
+        // Hanya kaprodi, dekan, atau admin yang sedang melakukan sesi impersonate
+        if (!in_array($userRole, ['kaprodi', 'dekan'], true) && !in_array($origRole, ['kaprodi', 'dekan'], true)) {
+            $this->flash('error', 'Anda tidak memiliki hak akses untuk berpindah akun.');
+            $this->redirect('/dashboard');
+            return;
+        }
+
+        $targetId = (int)$id;
+        if ($targetId === (int)$currentUser['id']) {
+            $this->flash('warning', 'Anda sudah berada di akun ini.');
+            $this->redirect('/admin');
+            return;
+        }
+
+        $targetUser = $this->userModel->find($targetId);
+        if (!$targetUser) {
+            $this->flash('error', 'Pengguna tujuan tidak ditemukan.');
+            $this->redirect('/admin');
+            return;
+        }
+
+        // Catat akun asli jika ini perpindahan pertama
+        if (!$isImpersonating) {
+            $_SESSION['impersonator'] = [
+                'id'           => $currentUser['id'],
+                'username'     => $currentUser['username'],
+                'nama_lengkap' => $currentUser['nama_lengkap'] ?: $currentUser['username'],
+                'role'         => $currentUser['role'],
+            ];
+        }
+
+        // Set session target user
+        $prodiNama = '';
+        if (!empty($targetUser['prodi_id'])) {
+            $prodiModel = new Prodi();
+            $prodi = $prodiModel->find((int)$targetUser['prodi_id']);
+            $prodiNama = $prodi['nama'] ?? '';
+        }
+
+        $_SESSION['user_id'] = $targetUser['id'];
+        $_SESSION['user']    = [
+            'id'             => $targetUser['id'],
+            'username'       => $targetUser['username'],
+            'nama_lengkap'   => $targetUser['nama_lengkap'] ?? '',
+            'nama_prodi'     => $prodiNama ?: ($targetUser['nama_lengkap'] ?? ''),
+            'email'          => $targetUser['email'],
+            'role'           => $targetUser['role'] ?? 'dosen',
+            'prodi_id'       => $targetUser['prodi_id'] ?? null,
+            'prodi_nama'     => $prodiNama,
+            'avatar_url'     => $targetUser['avatar_url'] ?? null,
+            'gemini_api_key' => $targetUser['gemini_api_key'] ?? '',
+            'gemini_model'   => $targetUser['gemini_model'] ?? DEFAULT_GEMINI_MODEL,
+        ];
+
+        $targetName = $targetUser['nama_lengkap'] ?: $targetUser['username'];
+        $roleName   = ['dekan' => 'Dekan', 'kaprodi' => 'Kaprodi', 'dosen' => 'Dosen'][$targetUser['role'] ?? 'dosen'] ?? 'Dosen';
+        $this->flash('success', "Berhasil login sebagai {$targetName} ({$roleName}).");
+        $this->redirect('/dashboard');
+    }
+
+    /**
+     * Kembali ke akun awal (Stop Impersonating)
+     */
+    public function switchBack(): void
+    {
+        $this->requireAuth();
+
+        if (empty($_SESSION['impersonator']['id'])) {
+            $this->flash('error', 'Tidak ada sesi perpindahan akun yang aktif.');
+            $this->redirect('/dashboard');
+            return;
+        }
+
+        $origId   = (int)$_SESSION['impersonator']['id'];
+        $origUser = $this->userModel->find($origId);
+
+        if (!$origUser) {
+            unset($_SESSION['impersonator']);
+            $this->flash('error', 'Akun asli tidak ditemukan.');
+            $this->redirect('/auth/logout');
+            return;
+        }
+
+        unset($_SESSION['impersonator']);
+
+        $prodiNama = '';
+        if (!empty($origUser['prodi_id'])) {
+            $prodiModel = new Prodi();
+            $prodi = $prodiModel->find((int)$origUser['prodi_id']);
+            $prodiNama = $prodi['nama'] ?? '';
+        }
+
+        $_SESSION['user_id'] = $origUser['id'];
+        $_SESSION['user']    = [
+            'id'             => $origUser['id'],
+            'username'       => $origUser['username'],
+            'nama_lengkap'   => $origUser['nama_lengkap'] ?? '',
+            'nama_prodi'     => $prodiNama ?: ($origUser['nama_lengkap'] ?? ''),
+            'email'          => $origUser['email'],
+            'role'           => $origUser['role'] ?? 'dosen',
+            'prodi_id'       => $origUser['prodi_id'] ?? null,
+            'prodi_nama'     => $prodiNama,
+            'avatar_url'     => $origUser['avatar_url'] ?? null,
+            'gemini_api_key' => $origUser['gemini_api_key'] ?? '',
+            'gemini_model'   => $origUser['gemini_model'] ?? DEFAULT_GEMINI_MODEL,
+        ];
+
+        $origName = $origUser['nama_lengkap'] ?: $origUser['username'];
+        $this->flash('success', "Telah kembali ke akun awal: {$origName}.");
+        $this->redirect('/admin');
+    }
 }

@@ -63,11 +63,13 @@ class Laporan extends Model
                               COALESCE(NULLIF(pd.kode, ''), k.kode) AS kriteria_kode,
                               k.nama AS kriteria_nama,
                               k.deskripsi AS kriteria_deskripsi,
+                              pd.is_turunan,
                               pd.target_capaian AS p1_target,
                               pd.indikator AS p1_indikator,
                               pd.strategi AS p1_aturan,
                               COALESCE(pld.status_pelaksanaan, 'belum') AS p2_status,
                               pld.catatan_pelaksanaan AS p2_catatan,
+                              pld.capaian_angka AS p2_capaian_angka,
                               COALESCE(ed.status_capaian, 'belum_tercapai') AS e_status,
                               ed.evaluasi_teks AS e_evaluasi,
                               ed.hasil_aktual AS e_hasil,
@@ -171,6 +173,18 @@ class Laporan extends Model
         $berkasKoreksi   = !empty($pengendalian['berkas_koreksi']) ? json_decode($pengendalian['berkas_koreksi'], true) : [];
         $berkasSk        = !empty($peningkatan['berkas_sk']) ? json_decode($peningkatan['berkas_sk'], true) : [];
 
+        // 6. Info User, Prodi, Kaprodi & Dekan
+        $userRow = $this->queryOne("SELECT id, username, nama_lengkap, email, role, prodi_id FROM users WHERE id = ? LIMIT 1", [$userId]) ?: [];
+        $prodiId = (int)($userRow['prodi_id'] ?? 0);
+        $prodi = null;
+        if ($prodiId > 0) {
+            $stmtPr = $db->prepare("SELECT p.*, u.nama_lengkap AS kaprodi_nama, u.username AS kaprodi_nip FROM prodi p LEFT JOIN users u ON p.kaprodi_id = u.id WHERE p.id = ?");
+            $stmtPr->execute([$prodiId]);
+            $prodi = $stmtPr->fetch(PDO::FETCH_ASSOC) ?: null;
+        }
+        $stmtDk = $db->query("SELECT id, username, nama_lengkap, email FROM users WHERE role = 'dekan' LIMIT 1");
+        $dekan = $stmtDk ? $stmtDk->fetch(PDO::FETCH_ASSOC) : null;
+
         return [
             'project'          => $project,
             'penetapan'        => $penetapan,
@@ -179,6 +193,9 @@ class Laporan extends Model
             'pengendalian'     => $pengendalian,
             'peningkatan'      => $peningkatan,
             'matrix'           => $matrix,
+            'user'             => $userRow,
+            'prodi'            => $prodi,
+            'dekan'            => $dekan,
             'stats'            => [
                 'total_standar'    => $totalStandar,
                 'pelaksanaan'      => $statPelaksanaan,

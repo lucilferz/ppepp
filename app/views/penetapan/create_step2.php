@@ -22,56 +22,52 @@ $allKriteriaList = !empty($allKriteria) ? array_values($allKriteria) : (isset($s
 </div>
 
 <!-- Progress Wizard -->
-<div class="ppepp-progress mb-4">
-  <div class="pp-step done">
-    <div class="pp-step-inner">
-      <div class="pp-step-circle">✓</div>
-      <span class="pp-step-label">Info Penetapan</span>
-    </div>
+<div style="display:flex;align-items:center;gap:0;margin-bottom:24px;">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <div style="width:36px;height:36px;border-radius:50%;background:#e2e8f0;color:#64748b;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;">1</div>
+    <div style="font-size:11px;font-weight:600;color:#64748b;">Info Penetapan</div>
   </div>
-  <div class="pp-connector done"></div>
-  <div class="pp-step active">
-    <div class="pp-step-inner">
-      <div class="pp-step-circle">2</div>
-      <span class="pp-step-label">Pengisian Standar</span>
-    </div>
+  <div style="flex:1;height:2px;background:#3f51b5;max-width:80px;min-width:30px;"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1a237e,#3f51b5);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;box-shadow:0 4px 14px rgba(26,35,126,0.3);">2</div>
+    <div style="font-size:11px;font-weight:700;color:#3f51b5;">Pengisian Standar</div>
   </div>
-  <div class="pp-connector"></div>
-  <div class="pp-step">
-    <div class="pp-step-inner">
-      <div class="pp-step-circle">3</div>
-      <span class="pp-step-label">Simpan / Finalisasi</span>
-    </div>
+  <div style="flex:1;height:2px;background:#e2e8f0;max-width:80px;min-width:30px;"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <div style="width:36px;height:36px;border-radius:50%;background:#e2e8f0;color:#94a3b8;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;">3</div>
+    <div style="font-size:11px;font-weight:600;color:#94a3b8;">Simpan / Finalisasi</div>
   </div>
 </div>
 
 <!-- BANNER & PANEL IMPORT EXCEL STANDAR -->
-<div class="card mb-4" style="background:#fff;padding:18px 20px;">
+<div style="background:#fff;border:1.5px solid #c7d2fe;border-radius:14px;padding:20px 24px;margin-bottom:24px;box-shadow:0 4px 16px rgba(79,70,229,0.06);">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
     <div style="display:flex;align-items:center;gap:14px;">
-      <div style="width:42px;height:42px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--success);flex-shrink:0;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+      <div style="width:46px;height:46px;background:linear-gradient(135deg,#059669,#10b981);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.25);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
       </div>
       <div>
-        <h3 style="font-size:15px;font-weight:700;color:var(--text-main);margin:0 0 3px;">Template &amp; Import Excel Standar</h3>
-        <div style="font-size:12.5px;color:var(--text-muted);">
+        <h3 style="font-size:16px;font-weight:800;color:#1e293b;margin:0 0 4px;">Template &amp; Import Excel Standar</h3>
+        <div style="font-size:12.5px;color:#64748b;">
           Download template Excel, isi data standar (No, Aturan, Pernyataan Standar, Indikator), lalu upload file Excel untuk memetakan seluruh baris standar ke form.
         </div>
       </div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-      <a href="<?= BASE_URL ?>/penetapan/download-template-excel?format=xlsx" class="btn btn-outline btn-sm"
+      <a href="<?= BASE_URL ?>/penetapan/download-template-excel?format=xlsx" class="btn btn-outline"
+         style="color:#059669;border-color:#a7f3d0;background:#ecfdf5;font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px;"
          title="Download format Excel resmi">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download Template (.xlsx)
       </a>
-      <a href="<?= BASE_URL ?>/penetapan/download-template-excel?format=csv" class="btn btn-outline btn-sm"
+      <a href="<?= BASE_URL ?>/penetapan/download-template-excel?format=csv" class="btn btn-outline"
+         style="color:#475569;border-color:#e2e8f0;font-weight:600;font-size:12px;display:flex;align-items:center;gap:4px;"
          title="Download format CSV">
         .csv
       </a>
-      <button type="button" onclick="triggerExcelUpload()" class="btn btn-primary btn-sm"
-         style="cursor:pointer;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <button type="button" onclick="triggerExcelUpload()" class="btn btn-primary"
+              style="background:#059669;border:none;font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px;cursor:pointer;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Upload File Excel
       </button>
       <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv,.txt" style="display:none;" onchange="handleExcelUpload(this)">
@@ -79,20 +75,20 @@ $allKriteriaList = !empty($allKriteria) ? array_values($allKriteria) : (isset($s
   </div>
 
   <!-- Loading State -->
-  <div id="excelLoading" style="display:none;margin-top:14px;padding:14px;background:var(--success-bg);border:1px dashed var(--success-border);border-radius:var(--radius-sm);text-align:center;color:#065f46;font-size:13px;font-weight:600;">
-    <div style="width:20px;height:20px;border:2px solid #a7f3d0;border-top-color:var(--success);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 8px;"></div>
+  <div id="excelLoading" style="display:none;margin-top:14px;padding:16px;background:#f0fdf4;border:1.5px dashed #10b981;border-radius:10px;text-align:center;color:#065f46;font-size:13px;font-weight:600;">
+    <div style="width:22px;height:22px;border:2.5px solid #a7f3d0;border-top-color:#059669;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 8px;"></div>
     Membaca dan memecah isi file Excel...
   </div>
 
   <!-- Excel Split Results Container (Table & Mapping) -->
-  <div id="excelResultsContainer" style="display:none;margin-top:16px;border-top:1px solid var(--border);padding-top:16px;">
+  <div id="excelResultsContainer" style="display:none;margin-top:16px;border-top:1.5px solid #e0e7ff;padding-top:16px;">
     <!-- Top Action Bar -->
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
       <div>
-        <div style="font-size:14px;font-weight:700;color:var(--text-main);" id="excelResultsTitle">
-          Hasil Pembacaan File Excel (<span id="excelRowCount">0</span> standar di sheet ini)
+        <div style="font-size:14px;font-weight:800;color:#1e293b;" id="excelResultsTitle">
+          📋 Hasil Pembacaan File Excel (<span id="excelRowCount">0</span> standar di sheet ini)
         </div>
-        <div style="font-size:12px;color:var(--text-muted);" id="excelResultsSubtitle">
+        <div style="font-size:12px;color:#64748b;" id="excelResultsSubtitle">
           Pilih sheet dan centang standar yang ingin dimasukkan ke form penetapan.
         </div>
       </div>

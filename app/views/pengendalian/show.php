@@ -143,7 +143,7 @@ foreach ($details as $idx => $d) {
       <svg viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" width="15" height="15" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" id="pengendalianSearchInput" onkeyup="filterPengendalian()" placeholder="Cari kode, nama standar, akar masalah, rencana tindak lanjut..."
              style="width:100%;padding:8px 12px 8px 34px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;outline:none;font-family:inherit;background:#f8fafc;"
-             onfocus="this.style.background='#fff';this.style.borderColor='var(--primary)';" onblur="this.style.background='#f8fafc';this.style.borderColor='#cbd5e1';">
+             onfocus="this.style.background='#fff';this.style.borderColor='#1a237e';" onblur="this.style.background='#f8fafc';this.style.borderColor='#cbd5e1';">
     </div>
 
     <!-- RTL Status Buttons -->

@@ -118,16 +118,24 @@ $noApiKey     = count(array_filter($users, fn($u) => empty($u['gemini_api_key'])
             <?php endif; ?>
           </td>
           <td style="padding:14px 18px;text-align:center;">
-            <div style="display:flex;justify-content:center;gap:6px;">
-              <a href="<?= BASE_URL ?>/users/<?= $u['id'] ?>/edit" class="btn btn-sm btn-outline"
-                 style="font-size:12px;padding:5px 10px;font-weight:600;">
-                Edit
+            <div style="display:flex;justify-content:center;gap:6px;align-items:center;">
+              <?php if ($currentUser['id'] != $u['id']): ?>
+              <form action="<?= BASE_URL ?>/users/<?= $u['id'] ?>/login-as" method="POST" style="margin:0;">
+                <button type="submit" style="display:inline-flex;align-items:center;gap:5px;background:#4f46e5;color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;" title="Login langsung ke akun <?= htmlspecialchars($u['nama_lengkap'] ?: $u['username']) ?>">
+                  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                  Login
+                </button>
+              </form>
+              <?php endif; ?>
+              <a href="<?= BASE_URL ?>/users/<?= $u['id'] ?>/edit"
+                 style="display:inline-flex;align-items:center;gap:5px;background:#f1f5f9;color:#334155;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;text-decoration:none;border:1px solid #e2e8f0;">
+                ✏️ Edit
               </a>
               <?php if ($currentUser['id'] != $u['id']): ?>
               <form action="<?= BASE_URL ?>/users/<?= $u['id'] ?>/delete" method="POST" style="margin:0;"
                     onsubmit="return confirm('Yakin hapus user <?= htmlspecialchars(addslashes($u['nama_lengkap'] ?: $u['username'])) ?>?')">
-                <button type="submit" class="btn btn-sm btn-danger" style="font-size:12px;padding:5px 8px;">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                <button type="submit" style="display:inline-flex;align-items:center;gap:5px;background:#fef2f2;color:#dc2626;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;border:1px solid #fecaca;cursor:pointer;">
+                  🗑️
                 </button>
               </form>
               <?php endif; ?>

@@ -79,18 +79,19 @@ class PelaksanaanController extends Controller
         $selectedProject = null;
 
         if ($projectId > 0) {
-            $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND pr.user_id = ? LIMIT 1");
-            $stmtPr->execute([$projectId, $user['id']]);
+            $stmtPr = $db->prepare("SELECT pr.*, ta.nama AS ta_nama FROM ppepp_project pr JOIN tahun_ajaran ta ON ta.id = pr.tahun_ajaran_id WHERE pr.id = ? AND (pr.user_id = ? OR EXISTS (SELECT 1 FROM tugas_dokumen td WHERE td.project_id = pr.id AND td.dosen_id = ?)) LIMIT 1");
+            $stmtPr->execute([$projectId, $user['id'], $user['id']]);
             $selectedProject = $stmtPr->fetch(PDO::FETCH_ASSOC);
 
             $stmt = $db->prepare(
                 "SELECT p.*, ta.nama AS ta_nama, ta.semester
                  FROM penetapan p
                  JOIN tahun_ajaran ta ON ta.id = p.tahun_ajaran_id
-                 WHERE p.user_id = ? AND (p.ppepp_project_id = ? OR (p.ppepp_project_id IS NULL AND p.tahun_ajaran_id = (SELECT tahun_ajaran_id FROM ppepp_project WHERE id = ? AND user_id = ?)))
+                 WHERE (p.user_id = ? OR p.user_id = ? OR p.ppepp_project_id = ?) AND (p.ppepp_project_id = ? OR (p.ppepp_project_id IS NULL AND p.tahun_ajaran_id = (SELECT tahun_ajaran_id FROM ppepp_project WHERE id = ?)))
                  ORDER BY p.created_at DESC"
             );
-            $stmt->execute([$user['id'], $projectId, $projectId, $user['id']]);
+            $ownerId = $selectedProject['user_id'] ?? $user['id'];
+            $stmt->execute([$user['id'], $ownerId, $projectId, $projectId, $projectId]);
         } else {
             $stmt = $db->prepare(
                 "SELECT p.*, ta.nama AS ta_nama, ta.semester
@@ -150,6 +151,10 @@ class PelaksanaanController extends Controller
             'status'           => 'draft',
         ]);
 
+        if ($ppeppProjectId) {
+            (new TugasDokumen())->updateDocumentId($ppeppProjectId, 'pelaksanaan', $id);
+        }
+
         // Inisialisasi pelaksanaan_detail status checklist untuk setiap standar target di penetapan_detail
         $db = $this->model->getDb();
         $stmtK = $db->prepare("SELECT id, kriteria_id FROM penetapan_detail WHERE penetapan_id = ?");
@@ -183,7 +188,7 @@ class PelaksanaanController extends Controller
         $capaianAngka      = $this->post('capaian_angka', null);
 
         $pl = $this->model->find($pelaksanaanId);
-        if (!$pl || $pl['user_id'] != $user['id']) {
+        if (!$pl || !$this->canAccessDoc($pl, 'pelaksanaan')) {
             $this->json(['success' => false, 'message' => 'Pelaksanaan tidak ditemukan.'], 404);
             return;
         }
@@ -240,9 +245,9 @@ class PelaksanaanController extends Controller
             return;
         }
 
-        // Validasi kepemilikan
+        // Validasi kepemilikan / akses penugasan
         $pl = $this->model->find($pelaksanaanId);
-        if (!$pl || $pl['user_id'] != $user['id']) {
+        if (!$pl || !$this->canAccessDoc($pl, 'pelaksanaan')) {
             $this->json(['success' => false, 'message' => 'Pelaksanaan tidak ditemukan.']);
             return;
         }
@@ -295,7 +300,7 @@ class PelaksanaanController extends Controller
         $pelaksanaanId = (int) $this->post('pelaksanaan_id', 0);
 
         $pl = $this->model->find($pelaksanaanId);
-        if (!$pl || $pl['user_id'] != $user['id']) {
+        if (!$pl || !$this->canAccessDoc($pl, 'pelaksanaan')) {
             $this->json(['success' => false, 'message' => 'Akses ditolak.']);
             return;
         }
@@ -313,7 +318,7 @@ class PelaksanaanController extends Controller
         $user = $this->currentUser();
 
         $pl = $this->model->find($id);
-        if (!$pl || $pl['user_id'] != $user['id']) {
+        if (!$pl || !$this->canAccessDoc($pl, 'pelaksanaan')) {
             $this->flash('error', 'Pelaksanaan tidak ditemukan.');
             $this->redirect('/pelaksanaan');
             return;
@@ -334,7 +339,7 @@ class PelaksanaanController extends Controller
         $flash = $this->getFlash();
 
         $pelaksanaan = $this->model->findWithDetail($id, $user['id']);
-        if (!$pelaksanaan || $pelaksanaan['user_id'] != $user['id']) {
+        if (!$pelaksanaan || !$this->canAccessDoc($pelaksanaan, 'pelaksanaan')) {
             $this->flash('error', 'Pelaksanaan tidak ditemukan.');
             $this->redirect('/pelaksanaan');
             return;
@@ -364,7 +369,7 @@ class PelaksanaanController extends Controller
         $user = $this->currentUser();
 
         $pelaksanaan = $this->model->find($id);
-        if (!$pelaksanaan || $pelaksanaan['user_id'] != $user['id']) {
+        if (!$pelaksanaan || !$this->canAccessDoc($pelaksanaan, 'pelaksanaan')) {
             $this->flash('error', 'Pelaksanaan tidak ditemukan.');
             $this->redirect('/pelaksanaan');
             return;

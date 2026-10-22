@@ -1,21 +1,21 @@
-<?php $pageTitle = 'Login — PPEPP Fakultas'; ?>
+<?php $pageTitle = 'Masuk ke Sistem — SIPMI PPEPP'; ?>
 
 <div class="auth-card">
-  <!-- Logo -->
+  <!-- Logo & Title -->
   <div class="auth-logo">
     <div class="logo-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" style="width:24px;height:24px;fill:none;stroke:#ffffff;stroke-width:2;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2">
         <path d="M12 2L2 7l10 5 10-5-10-5z"/>
         <path d="M2 17l10 5 10-5"/>
         <path d="M2 12l10 5 10-5"/>
       </svg>
     </div>
-    <h1><?= APP_NAME ?></h1>
-    <p><?= APP_INSTITUTION ?></p>
+    <h1>SIPMI PPEPP</h1>
+    <p><?= APP_INSTITUTION ?> &bull; Penjaminan Mutu Internal</p>
   </div>
 
-  <!-- Flash -->
-  <?php if ($flash): ?>
+  <!-- Flash Message -->
+  <?php if (!empty($flash)): ?>
   <div class="alert alert-<?= $flash['type'] === 'error' ? 'error' : ($flash['type'] === 'warning' ? 'warning' : 'success') ?>">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <?php if ($flash['type'] === 'error'): ?>
@@ -26,12 +26,12 @@
         <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
       <?php endif; ?>
     </svg>
-    <span><?= htmlspecialchars($flash['message']) ?></span>
+    <div><?= htmlspecialchars($flash['message']) ?></div>
   </div>
   <?php endif; ?>
 
-  <h2>Masuk ke Sistem</h2>
-  <p class="auth-subtitle">Gunakan NIP atau Email dosen @unika.ac.id Anda</p>
+  <h2 style="font-size:18px;font-weight:700;color:var(--text-main);margin-bottom:4px;text-align:center;">Masuk ke Akun Anda</h2>
+  <p class="auth-subtitle">Gunakan NIP, username, atau email resmi Anda</p>
 
   <!-- Login Form -->
   <form action="<?= BASE_URL ?>/auth/login" method="POST" id="loginForm">
@@ -57,43 +57,40 @@
           </svg>
         </span>
         <input type="password" id="password" name="password" class="form-control"
-               placeholder="Masukkan password" autocomplete="current-password" required>
+               placeholder="Masukkan kata sandi" autocomplete="current-password" required>
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16" style="flex-shrink:0;">
+    <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" style="width:100%;margin-top:10px;">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16">
         <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/>
         <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
       </svg>
-      Masuk
+      Masuk ke Sistem
     </button>
   </form>
 
   <!-- Divider -->
-  <div style="display:flex;align-items:center;gap:12px;margin:20px 0;">
-    <div style="flex:1;height:1px;background:#e2e8f0;"></div>
-    <span style="font-size:12px;color:#94a3b8;font-weight:500;white-space:nowrap;">atau masuk dengan</span>
-    <div style="flex:1;height:1px;background:#e2e8f0;"></div>
+  <div style="display:flex;align-items:center;gap:12px;margin:22px 0;">
+    <div style="flex:1;height:1px;background:var(--border);"></div>
+    <span style="font-size:11.5px;color:var(--text-muted);font-weight:500;white-space:nowrap;">atau</span>
+    <div style="flex:1;height:1px;background:var(--border);"></div>
   </div>
 
   <!-- Google Login Button -->
-  <a href="<?= BASE_URL ?>/auth/google" id="googleLoginBtn"
-     style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:10px 18px;background:#fff;border:1px solid #e2e8f0;border-radius:6px;font-size:13.5px;font-weight:600;color:#374151;text-decoration:none;transition:all 0.15s ease;"
-     onmouseover="this.style.background='#f8fafc';this.style.borderColor='#cbd5e1'"
-     onmouseout="this.style.background='#fff';this.style.borderColor='#e2e8f0'">
-    <!-- Google G icon -->
-    <svg width="18" height="18" viewBox="0 0 48 48" style="flex-shrink:0;">
+  <a href="<?= BASE_URL ?>/auth/google" id="googleLoginBtn" class="btn btn-outline"
+     style="width:100%;padding:10px 16px;border-color:var(--border);background:#fff;justify-content:center;gap:10px;font-weight:600;font-size:13px;">
+    <svg width="18" height="18" viewBox="0 0 48 48">
       <path fill="#4285F4" d="M46.145 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h12.44c-.54 2.9-2.18 5.36-4.64 7.01l7.5 5.82C43.73 37.44 46.145 31.42 46.145 24.5z"/>
       <path fill="#34A853" d="M24 47c6.48 0 11.92-2.15 15.89-5.82l-7.5-5.82C30.27 36.56 27.27 37.5 24 37.5c-6.26 0-11.57-4.23-13.47-9.91l-7.74 5.97C6.63 42.57 14.79 47 24 47z"/>
       <path fill="#FBBC05" d="M10.53 27.59A13.96 13.96 0 0110 24c0-1.25.17-2.46.47-3.61l-7.74-5.97A23.95 23.95 0 000 24c0 3.86.93 7.51 2.56 10.74l7.97-7.15z"/>
       <path fill="#EA4335" d="M24 10.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 3.27 30.47 1 24 1 14.79 1 6.63 5.43 2.56 13.26l7.97 7.14C12.43 14.73 17.74 10.5 24 10.5z"/>
     </svg>
-    Masuk dengan Akun Google
+    Masuk dengan Akun Google Institusi
   </a>
 
-  <p style="text-align:center;font-size:11.5px;color:#94a3b8;margin-top:20px;line-height:1.5;">
-    Sistem PPEPP hanya dapat diakses oleh dosen yang terdaftar.<br>
-    Hubungi Kaprodi atau Dekan jika akun belum tersedia.
+  <p style="text-align:center;font-size:11.5px;color:var(--text-muted);margin-top:20px;line-height:1.5;">
+    Platform Sistem Informasi Penjaminan Mutu Internal (SIPMI)<br>
+    Bila akun belum terdaftar, silakan menghubungi Ketua Program Studi atau Dekan.
   </p>
 </div>

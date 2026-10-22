@@ -7,58 +7,60 @@ $breadcrumbs = [
 ];
 ?>
 
-<div style="max-width:680px;margin:0 auto;">
-  <div class="card" style="border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-    <div style="background:var(--primary);padding:22px 28px;color:#fff;">
-      <h2 style="font-size:18px;font-weight:800;color:#fff;margin:0 0 4px;">Tambah Program Studi Baru</h2>
-      <p style="font-size:13px;color:rgba(255,255,255,0.75);margin:0;">
-        Dosen bisa ditambahkan ke prodi ini setelah prodi dibuat.
-      </p>
-    </div>
+<div class="page-header">
+  <div>
+    <h2>Tambah Program Studi Baru</h2>
+    <p class="page-desc">Daftarkan Program Studi baru ke dalam unit akademik fakultas.</p>
+  </div>
+  <div class="page-actions">
+    <a href="<?= BASE_URL ?>/admin" class="btn btn-outline">
+      ← Kembali ke Admin
+    </a>
+  </div>
+</div>
 
-    <?php if (!empty($flash['message'])): ?>
-    <div style="margin:16px;padding:12px 16px;border-radius:8px;font-size:13.5px;font-weight:600;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;">
-      <?= htmlspecialchars($flash['message']) ?>
-    </div>
-    <?php endif; ?>
+<div class="card" style="max-width:680px;margin:0 auto;">
+  <div class="card-header">
+    <h3 class="card-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Formulir Program Studi
+    </h3>
+  </div>
 
-    <form action="<?= BASE_URL ?>/prodi/store" method="POST" style="padding:28px;display:flex;flex-direction:column;gap:18px;">
+  <?php if (!empty($flash['message'])): ?>
+  <div class="alert alert-danger" style="margin:16px 20px 0;">
+    <?= htmlspecialchars($flash['message']) ?>
+  </div>
+  <?php endif; ?>
 
-      <div style="display:grid;grid-template-columns:120px 1fr;gap:14px;">
-        <div>
-          <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-            Kode Prodi <span style="color:#ef4444;">*</span>
-          </label>
-          <input type="text" name="kode" class="form-control" required maxlength="10"
-                 placeholder="SI / TI / MI"
-                 style="font-size:13.5px;padding:10px 14px;border-radius:8px;font-weight:700;text-transform:uppercase;text-align:center;">
-          <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Contoh: SI, TI, MI</div>
+  <form action="<?= BASE_URL ?>/prodi/store" method="POST">
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:14px;" class="mb-3">
+        <div class="form-group mb-0">
+          <label for="kode" class="form-label">Kode Prodi <span style="color:var(--danger);">*</span></label>
+          <input type="text" id="kode" name="kode" class="form-control font-mono" required maxlength="10"
+                 placeholder="SI" style="text-transform:uppercase;text-align:center;font-weight:700;">
         </div>
-        <div>
-          <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-            Nama Program Studi <span style="color:#ef4444;">*</span>
-          </label>
-          <input type="text" name="nama" class="form-control" required
-                 placeholder="Contoh: Teknik Informatika"
-                 style="font-size:13.5px;padding:10px 14px;border-radius:8px;">
+        <div class="form-group mb-0">
+          <label for="nama" class="form-label">Nama Program Studi <span style="color:var(--danger);">*</span></label>
+          <input type="text" id="nama" name="nama" class="form-control" required
+                 placeholder="Contoh: Sistem Informasi">
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <div>
-          <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">Jenjang</label>
-          <select name="jenjang" class="form-control" style="font-size:13.5px;padding:10px 14px;border-radius:8px;">
-            <option value="D3">D-III (Diploma 3)</option>
-            <option value="S1" selected>S-1 (Sarjana)</option>
-            <option value="S2">S-2 (Magister)</option>
-            <option value="S3">S-3 (Doktor)</option>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:14px;" class="mb-3">
+        <div class="form-group mb-0">
+          <label for="jenjang" class="form-label">Jenjang Pendidikan</label>
+          <select id="jenjang" name="jenjang" class="form-control">
+            <option value="D3">Diploma 3 (D3)</option>
+            <option value="S1" selected>Sarjana (S1)</option>
+            <option value="S2">Magister (S2)</option>
+            <option value="S3">Doktor (S3)</option>
           </select>
         </div>
-        <div>
-          <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-            Kaprodi <span style="font-weight:400;color:var(--text-muted);">(Opsional)</span>
-          </label>
-          <select name="kaprodi_id" class="form-control" style="font-size:13.5px;padding:10px 14px;border-radius:8px;">
+        <div class="form-group mb-0">
+          <label for="kaprodi_id" class="form-label">Ketua Program Studi (Opsional)</label>
+          <select id="kaprodi_id" name="kaprodi_id" class="form-control">
             <option value="">— Belum Ditentukan —</option>
             <?php foreach ($allDosen as $u): ?>
             <option value="<?= $u['id'] ?>"><?= htmlspecialchars($u['nama_lengkap']) ?></option>
@@ -67,27 +69,27 @@ $breadcrumbs = [
         </div>
       </div>
 
-      <div>
-        <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-          Deskripsi <span style="font-weight:400;color:var(--text-muted);">(Opsional)</span>
-        </label>
-        <textarea name="deskripsi" class="form-control" rows="3"
-                  placeholder="Deskripsi singkat program studi..."
-                  style="font-size:13.5px;padding:10px 14px;border-radius:8px;resize:vertical;"></textarea>
+      <div class="form-group mb-3">
+        <label for="deskripsi" class="form-label">Deskripsi / Visi Prodi (Opsional)</label>
+        <textarea id="deskripsi" name="deskripsi" class="form-control" rows="3"
+                  placeholder="Keterangan singkat tentang program studi..."></textarea>
       </div>
 
-      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:12.5px;color:var(--text-muted);line-height:1.5;">
-        <strong>Info:</strong> Setelah prodi dibuat, Anda dapat menambahkan dosen ke prodi ini melalui halaman detail prodi. Dosen yang ditambahkan ke prodi ini akan bisa membuat PPEPP dan melihat data sesama prodi.
+      <div class="alert alert-info" style="margin:0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div>
+          Setelah prodi dibuat, dosen dan tim penjaminan mutu dapat ditugaskan ke prodi ini melalui halaman detail prodi.
+        </div>
       </div>
+    </div>
 
-      <div style="display:flex;gap:10px;justify-content:flex-end;padding-top:8px;border-top:1px solid #f1f5f9;">
-        <a href="<?= BASE_URL ?>/admin" class="btn btn-outline" style="padding:10px 20px;font-weight:600;font-size:13px;border-radius:8px;text-decoration:none;">
-          Batal / Kembali
-        </a>
-        <button type="submit" class="btn btn-primary" style="font-size:13px;padding:10px 24px;border-radius:8px;font-weight:700;">
-          Buat Program Studi
-        </button>
-      </div>
-    </form>
-  </div>
+    <div class="card-footer" style="display:flex;justify-content:flex-end;gap:10px;">
+      <a href="<?= BASE_URL ?>/admin" class="btn btn-outline">
+        Batal
+      </a>
+      <button type="submit" class="btn btn-primary">
+        Buat Program Studi
+      </button>
+    </div>
+  </form>
 </div>

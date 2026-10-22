@@ -39,20 +39,17 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
   padding: 10px 20px;
   border: none;
   background: transparent;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 13px;
-  color: var(--text-muted);
+  color: #64748b;
   cursor: pointer;
   border-bottom: 2.5px solid transparent;
   transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 .tab-btn.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-  background: rgba(23,59,103,0.04);
+  color: #4f46e5;
+  border-bottom-color: #4f46e5;
+  background: rgba(79,70,229,0.04);
 }
 .table-matrix {
   width: 100%;
@@ -123,9 +120,14 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
       Export CSV / Excel
     </a>
     <a href="<?= BASE_URL ?>/laporan/cetak?project_id=<?= $selectedProjectId ?>" target="_blank" class="btn btn-primary"
-       style="font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:6px;">
+       style="font-size:12.5px;font-weight:800;background:#4f46e5;border:none;display:inline-flex;align-items:center;gap:6px;" title="Buka Dokumen PDF Resmi TCPDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Cetak / Buka PDF (TCPDF) ↗
+    </a>
+    <a href="<?= BASE_URL ?>/laporan/cetak?project_id=<?= $selectedProjectId ?>&format=html" target="_blank" class="btn btn-outline"
+       style="font-size:12.5px;font-weight:700;background:#fff;border-color:#cbd5e1;color:#334155;display:inline-flex;align-items:center;gap:6px;" title="Pratinjau Cetak Browser HTML">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-      Cetak / Simpan PDF ↗
+      Pratinjau HTML ↗
     </a>
   </div>
   <?php endif; ?>
@@ -133,15 +135,15 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
 
 <?php if (empty($project)): ?>
 <!-- Empty State -->
-<div class="card" style="padding:60px 20px;text-align:center;border-radius:12px;">
-  <div style="width:64px;height:64px;background:#f1f5f9;color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+<div class="card" style="padding:60px 20px;text-align:center;border-radius:16px;">
+  <div style="width:64px;height:64px;background:#e0e7ff;color:#4f46e5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
   </div>
-  <h3 style="font-size:18px;font-weight:700;color:var(--text-main);margin-bottom:6px;">Belum Ada Project PPEPP yang Dipilih</h3>
-  <p style="font-size:13.5px;color:var(--text-muted);max-width:440px;margin:0 auto 20px;">
+  <h3 style="font-size:18px;font-weight:800;color:#1e293b;margin-bottom:6px;">Belum Ada Project PPEPP yang Dipilih</h3>
+  <p style="font-size:13.5px;color:#64748b;max-width:440px;margin:0 auto 20px;">
     Silakan buat project PPEPP dan lengkapi standar pada siklus Penetapan hingga Peningkatan untuk melihat laporan komprehensif.
   </p>
-  <a href="<?= BASE_URL ?>/ppepp/create" class="btn btn-primary">
+  <a href="<?= BASE_URL ?>/ppepp/create" class="btn btn-primary" style="background:#4f46e5;border:none;font-weight:700;">
     + Buat Project PPEPP Baru
   </a>
 </div>
@@ -242,16 +244,13 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
   
   <div class="no-print" style="display:flex;border-bottom:1.5px solid #e2e8f0;background:#f8fafc;padding:0 12px;gap:6px;">
     <button type="button" onclick="switchReportTab('matrix')" id="tabBtn_matrix" class="tab-btn active">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
-      Matriks Lengkap PPEPP (5 Tahap)
+      📋 Matriks Lengkap PPEPP (5 Tahap)
     </button>
     <button type="button" onclick="switchReportTab('cards')" id="tabBtn_cards" class="tab-btn">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Ringkasan Kartu Per Standar
+      📑 Ringkasan Kartu Per Standar
     </button>
     <button type="button" onclick="switchReportTab('rtm')" id="tabBtn_rtm" class="tab-btn">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Bukti RTM &amp; Dokumen SK
+      📜 Bukti RTM &amp; Dokumen SK
     </button>
   </div>
 
@@ -261,21 +260,21 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
     <div id="tabContent_matrix">
       <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
         <div>
-          <h3 style="font-size:16px;font-weight:800;color:var(--text-main);margin:0 0 2px;">
+          <h3 style="font-size:16px;font-weight:900;color:#1e293b;margin:0 0 2px;">
             Matriks Penjaminan Mutu PPEPP Komprehensif
           </h3>
-          <p style="font-size:12.5px;color:var(--text-muted);margin:0;">
+          <p style="font-size:12.5px;color:#64748b;margin:0;">
             Menyajikan alur lengkap tiap kriteria standar mulai dari Penetapan, Keterlaksanaan, Evaluasi Capaian, RTL Pengendalian, hingga Peningkatan Standar Baru.
           </p>
         </div>
 
         <div class="no-print" style="display:flex;align-items:center;gap:8px;">
           <input type="text" id="matrixSearch" placeholder="Cari standar / indikator..." onkeyup="filterMatrixTable(this.value)"
-                 style="font-size:12px;padding:6px 12px;border:1px solid #cbd5e1;border-radius:6px;width:220px;">
+                 style="font-size:12px;padding:6px 12px;border:1.5px solid #cbd5e1;border-radius:8px;width:220px;">
         </div>
       </div>
 
-      <div style="overflow-x:auto;border:1px solid #e2e8f0;border-radius:10px;">
+      <div style="overflow-x:auto;border:1px solid #e2e8f0;border-radius:12px;">
         <table class="table-matrix" id="matrixTable">
           <thead>
             <tr>
@@ -296,27 +295,27 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
             <tr class="matrix-row">
               <!-- Kriteria -->
               <td style="font-weight:700;">
-                <div style="display:inline-block;padding:3px 8px;background:var(--primary);color:#fff;border-radius:6px;font-size:11.5px;font-weight:700;margin-bottom:4px;">
+                <div style="display:inline-block;padding:3px 8px;background:#1e293b;color:#fff;border-radius:6px;font-size:11.5px;font-weight:900;margin-bottom:4px;">
                   <?= htmlspecialchars($m['kriteria_kode']) ?>
                 </div>
-                <div style="font-size:13px;color:var(--text-main);font-weight:700;"><?= htmlspecialchars($m['kriteria_nama']) ?></div>
+                <div style="font-size:13px;color:#1e293b;font-weight:800;"><?= htmlspecialchars($m['kriteria_nama']) ?></div>
                 <?php if (!empty($m['kriteria_deskripsi'])): ?>
-                <div style="font-size:11px;color:var(--text-muted);margin-top:2px;"><?= htmlspecialchars($m['kriteria_deskripsi']) ?></div>
+                <div style="font-size:11px;color:#64748b;margin-top:2px;"><?= htmlspecialchars($m['kriteria_deskripsi']) ?></div>
                 <?php endif; ?>
               </td>
 
               <!-- 1. Penetapan -->
               <td>
                 <span class="stage-tag" style="background:#eff6ff;color:#1d4ed8;">Penetapan Standar</span>
-                <div style="font-size:13px;color:var(--text-main);margin-bottom:4px;line-height:1.5;">
-                  <strong>Pernyataan Standar:</strong> <?= htmlspecialchars($m['p1_target']) ?>
+                <div style="font-size:13.5px;color:#1e293b;margin-bottom:4px;line-height:1.5;">
+                  <strong>🎯 Pernyataan Standar:</strong> <?= htmlspecialchars($m['p1_target']) ?>
                 </div>
                 
-                <div style="font-size:12.5px;color:#0369a1;margin-top:4px;line-height:1.5;">
+                <div style="font-size:13px;color:#0369a1;margin-top:4px;line-height:1.5;">
                   <strong>Target / Indikator:</strong> <?= htmlspecialchars($m['p1_indikator']) ?>
                 </div>
                 <?php if (!empty($m['p1_aturan']) && $m['p1_aturan'] !== '—'): ?>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+                <div style="font-size:12px;color:#64748b;margin-top:4px;">
                   <em>Aturan: <?= htmlspecialchars($m['p1_aturan']) ?></em>
                 </div>
                 <?php endif; ?>
@@ -325,7 +324,7 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
               <!-- 2. Pelaksanaan -->
               <td>
                 <span class="stat-pill-badge" style="<?= $stP2 === 'terlaksana' ? 'background:#ecfdf5;color:#065f46;' : ($stP2 === 'proses' ? 'background:#fffbeb;color:#92400e;' : 'background:#fef2f2;color:#991b1b;') ?>">
-                  <?= $stP2 === 'terlaksana' ? '✓ Terlaksana' : ($stP2 === 'proses' ? 'Sedang Proses' : '✕ Belum Terlaksana') ?>
+                  <?= $stP2 === 'terlaksana' ? '✓ Terlaksana' : ($stP2 === 'proses' ? '⏳ Sedang Proses' : '✕ Belum Terlaksana') ?>
                 </span>
                 <?php if (!empty($m['p2_catatan'])): ?>
                 <div style="font-size:11.5px;color:#334155;margin-top:6px;">
@@ -337,10 +336,10 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
               <!-- 3. Evaluasi -->
               <td>
                 <span class="stat-pill-badge" style="<?= $isTercapai ? 'background:#d1fae5;color:#065f46;' : 'background:#fee2e2;color:#991b1b;' ?>">
-                  <?= $isTercapai ? '✓ Tercapai Penuh' : ($m['e_status'] === 'sebagian' ? 'Sebagian Tercapai' : '✕ Belum Tercapai') ?>
+                  <?= $isTercapai ? '✓ Tercapai Penuh' : ($m['e_status'] === 'sebagian' ? '⚠️ Sebagian Tercapai' : '✕ Belum Tercapai') ?>
                 </span>
                 <?php if (!empty($m['e_evaluasi'])): ?>
-                <div style="font-size:11.5px;color:var(--text-muted);margin-top:6px;line-height:1.4;">
+                <div style="font-size:11.5px;color:#475569;margin-top:6px;line-height:1.4;">
                   <?= nl2br(htmlspecialchars($m['e_evaluasi'])) ?>
                 </div>
                 <?php endif; ?>
@@ -349,16 +348,16 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
               <!-- 4. Pengendalian -->
               <td>
                 <?php if ($isTercapai): ?>
-                <div style="background:#f0fdf4;border:1px dashed #a7f3d0;border-radius:6px;padding:8px 10px;font-size:11.5px;color:#065f46;">
+                <div style="background:#f0fdf4;border:1px dashed #a7f3d0;border-radius:8px;padding:8px 10px;font-size:11.5px;color:#065f46;">
                   ✓ Standar terpenuhi, tidak memerlukan tindakan koreksi.
                 </div>
                 <?php else: ?>
-                <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:8px 12px;font-size:11.5px;">
-                  <strong style="color:#9a3412;">RTL:</strong> <?= htmlspecialchars($m['p4_rtl'] ?: 'Sedang dirumuskan') ?><br>
+                <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 12px;font-size:11.5px;">
+                  <strong style="color:#9a3412;">🛠️ RTL:</strong> <?= htmlspecialchars($m['p4_rtl'] ?: 'Sedang dirumuskan') ?><br>
                   <?php if (!empty($m['p4_akar_masalah'])): ?>
                   <div style="margin-top:4px;color:#c2410c;"><em>Akar Masalah: <?= htmlspecialchars($m['p4_akar_masalah']) ?></em></div>
                   <?php endif; ?>
-                  <div style="margin-top:4px;color:var(--text-muted);font-size:11px;">
+                  <div style="margin-top:4px;color:#64748b;font-size:11px;">
                     PIC: <?= htmlspecialchars($m['p4_pic'] ?: '—') ?> &nbsp;·&nbsp; Waktu: <?= htmlspecialchars($m['p4_waktu'] ?: '—') ?>
                   </div>
                 </div>
@@ -368,18 +367,18 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
               <!-- 5. Peningkatan -->
               <td>
                 <?php if (!$isTercapai): ?>
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;font-size:11.5px;color:var(--text-muted);">
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px;font-size:11.5px;color:#64748b;">
                   Dilanjutkan ke tahun depan tanpa perubahan target (tetap/dapat diedit).
                 </div>
                 <?php else: ?>
-                <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:6px;padding:8px 12px;font-size:11.5px;">
-                  <strong style="color:#065f46;">Target Baru:</strong><br>
+                <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:8px 12px;font-size:11.5px;">
+                  <strong style="color:#065f46;">🎯 Target Baru:</strong><br>
                   <span style="font-weight:700;color:#064e3b;"><?= htmlspecialchars($m['p5_target_baru'] ?: $m['p1_target']) ?></span>
                   <?php if (!empty($m['p5_indikator_baru'])): ?>
                   <div style="margin-top:4px;color:#047857;"><strong>Indikator Baru:</strong> <?= htmlspecialchars($m['p5_indikator_baru']) ?></div>
                   <?php endif; ?>
                   <?php if (!empty($m['p5_nilai_kenaikan'])): ?>
-                  <div style="margin-top:4px;color:#059669;font-weight:700;">Kenaikan: <?= htmlspecialchars($m['p5_nilai_kenaikan']) ?></div>
+                  <div style="margin-top:4px;color:#059669;font-weight:700;">📈 <?= htmlspecialchars($m['p5_nilai_kenaikan']) ?></div>
                   <?php endif; ?>
                 </div>
                 <?php endif; ?>
@@ -407,7 +406,7 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
             </div>
 
             <span class="stat-pill-badge" style="<?= $isTercapai ? 'background:#059669;color:#fff;' : 'background:#fee2e2;color:#991b1b;' ?>">
-              <?= $isTercapai ? '✓ Terpenuhi &amp; Ditingkatkan' : 'Belum Terpenuhi (Dalam Pengendalian)' ?>
+              <?= $isTercapai ? '✓ Terpenuhi &amp; Ditingkatkan' : '⚠️ Belum Terpenuhi (Dalam Pengendalian)' ?>
             </span>
           </div>
 
@@ -459,7 +458,7 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
       <!-- Dokumen Rapat RTM Evaluasi -->
       <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:14px;padding:20px;margin-bottom:20px;">
         <h4 style="font-size:15px;font-weight:800;color:#1e293b;margin:0 0 12px;display:flex;align-items:center;gap:8px;">
-          <span>Dokumen Rapat Tinjauan Manajemen (RTM) Evaluasi</span>
+          <span>📝 Dokumen Rapat Tinjauan Manajemen (RTM) Evaluasi</span>
         </h4>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:16px;">
@@ -467,9 +466,8 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
           <div style="background:#fff;padding:12px 16px;border-radius:10px;border:1px solid #e2e8f0;">
             <div style="font-size:11px;font-weight:800;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Surat Undangan RTM:</div>
             <?php if (!empty($dokumen['evaluasi_undangan'])): ?>
-            <a href="<?= BASE_URL . '/' . $dokumen['evaluasi_undangan'] ?>" target="_blank" style="color:#059669;font-weight:700;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:4px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <?= htmlspecialchars($dokumen['evaluasi_undangan_nama'] ?: 'Lihat Undangan') ?> ↗
+            <a href="<?= BASE_URL . '/' . $dokumen['evaluasi_undangan'] ?>" target="_blank" style="color:#059669;font-weight:700;text-decoration:none;font-size:13px;">
+              📄 <?= htmlspecialchars($dokumen['evaluasi_undangan_nama'] ?: 'Lihat Undangan') ?> ↗
             </a>
             <?php else: ?>
             <span style="font-size:12px;color:#94a3b8;font-style:italic;">Belum ada undangan diunggah</span>
@@ -520,7 +518,7 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
       <!-- Berkas SK Peningkatan Standar Baru -->
       <div style="background:#f0fdf4;border:1.5px solid #a7f3d0;border-radius:14px;padding:20px;">
         <h4 style="font-size:15px;font-weight:800;color:#065f46;margin:0 0 12px;display:flex;align-items:center;gap:8px;">
-          <span>Berkas Surat Keputusan (SK) Standar Baru / Kebijakan Mutu</span>
+          <span>📜 Berkas Surat Keputusan (SK) Standar Baru / Kebijakan Mutu</span>
         </h4>
 
         <?php if (empty($dokumen['berkas_sk'])): ?>
@@ -535,7 +533,7 @@ $peningkatan   = $reportData['peningkatan'] ?? [];
             </div>
             <a href="<?= htmlspecialchars($sk['url'] ?? BASE_URL . '/' . $sk['file_path']) ?>" target="_blank"
                class="btn btn-outline btn-sm" style="color:#059669;border-color:#10b981;font-weight:700;">
-              Buka SK ↗
+              📄 Buka SK ↗
             </a>
           </div>
           <?php endforeach; ?>

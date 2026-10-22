@@ -68,17 +68,17 @@ $breadcrumbs = [
           </div>
         </div>
         <div class="card-body" style="padding:14px;">
-          <div style="font-size:12.5px;color:var(--text-muted);margin-bottom:12px;">Dokumen penetapan acuan pelaksanaan ini:</div>
+          <div style="font-size:12.5px;color:#64748b;margin-bottom:12px;">Dokumen penetapan acuan pelaksanaan ini:</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <?php foreach ($penetapans as $p): ?>
-            <label style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:#fff;border:1.5px solid <?= $p['id'] == $pelaksanaan['penetapan_id'] ? 'var(--primary)' : '#e2e8f0' ?>;border-radius:8px;cursor:pointer;">
+            <label style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:#f8faff;border:1.5px solid <?= $p['id'] == $pelaksanaan['penetapan_id'] ? '#3f51b5' : '#e2e8f0' ?>;border-radius:10px;cursor:pointer;">
               <input type="radio" name="penetapan_id" value="<?= $p['id'] ?>" <?= $p['id'] == $pelaksanaan['penetapan_id'] ? 'checked' : '' ?> required
-                     style="margin-top:2px;flex-shrink:0;accent-color:var(--primary);">
+                     style="margin-top:2px;flex-shrink:0;accent-color:#3f51b5;">
               <div style="flex:1;min-width:0;">
-                <div style="font-size:13.5px;font-weight:600;color:var(--text);"><?= htmlspecialchars($p['judul']) ?></div>
+                <div style="font-size:13.5px;font-weight:700;color:#1e293b;"><?= htmlspecialchars($p['judul']) ?></div>
                 <div style="display:flex;gap:7px;margin-top:4px;flex-wrap:wrap;">
                   <span class="badge badge-primary"><?= htmlspecialchars($p['ta_nama']) ?></span>
-                  <span class="badge <?= $p['status'] === 'final' ? 'badge-success' : 'badge-warning' ?>"><?= $p['status'] === 'final' ? 'Final' : 'Draft' ?></span>
+                  <span class="badge <?= $p['status'] === 'final' ? 'badge-success' : 'badge-warning' ?>"><?= $p['status'] === 'final' ? 'Final ✓' : 'Draft' ?></span>
                 </div>
               </div>
             </label>
@@ -102,7 +102,7 @@ $breadcrumbs = [
   </div>
   <div class="card-body" style="padding:16px;">
     <?php if (empty($pelaksanaan['details'])): ?>
-    <div style="padding:30px;text-align:center;color:var(--text-muted);">
+    <div style="padding:30px;text-align:center;color:#64748b;">
       Belum ada kriteria pada penetapan acuan ini.
     </div>
     <?php else: ?>
@@ -114,35 +114,35 @@ $breadcrumbs = [
         $nBukti = count($det['bukti']);
         $displayKode = !empty($det['kode']) ? $det['kode'] : (!empty($det['kriteria_kode']) ? $det['kriteria_kode'] : 'STD-' . ($idx + 1));
       ?>
-      <div style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;background:#fff;" id="det_<?= $pdId ?>">
+      <div style="border:1.5px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#fff;" id="det_<?= $pdId ?>">
         <!-- Header Kriteria -->
-        <div style="padding:14px 18px;background:#F8FAFC;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;cursor:pointer;"
+        <div style="padding:16px 20px;background:#f8fafc;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;cursor:pointer;"
              onclick="toggleKriteria(<?= $pdId ?>)">
-          <div style="display:flex;align-items:flex-start;gap:12px;flex:1;">
-            <span style="background:var(--primary);color:#fff;font-weight:700;font-size:12px;padding:3px 8px;border-radius:6px;flex-shrink:0;">
-              <?= htmlspecialchars($displayKode) ?>
+          <div style="display:flex;align-items:flex-start;gap:14px;flex:1;">
+            <span style="background:#3f51b5;color:#fff;font-weight:900;font-size:13px;padding:4px 10px;border-radius:6px;flex-shrink:0;">
+              [<?= htmlspecialchars($displayKode) ?>]
             </span>
             <div style="flex:1;">
-              <div style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:4px;"><?= htmlspecialchars($det['kriteria_nama']) ?></div>
+              <div style="font-weight:800;font-size:16px;color:#0f172a;margin-bottom:4px;"><?= htmlspecialchars($det['kriteria_nama']) ?></div>
               
               <?php if (!empty($det['target_capaian'])): ?>
-              <div style="font-size:13.5px;color:var(--text-muted);margin-bottom:3px;line-height:1.5;">
-                <strong style="color:var(--text);">Pernyataan Standar:</strong> <?= htmlspecialchars($det['target_capaian']) ?>
+              <div style="font-size:14.5px;color:#334155;margin-bottom:3px;line-height:1.5;">
+                <strong style="color:#0f172a;">🎯 Pernyataan Standar:</strong> <?= htmlspecialchars($det['target_capaian']) ?>
               </div>
               <?php endif; ?>
 
               <?php if (!empty($det['indikator'])): ?>
-              <div style="font-size:13.5px;color:var(--text-muted);line-height:1.5;">
-                <strong style="color:var(--primary);">Target / Indikator:</strong> <?= htmlspecialchars($det['indikator']) ?>
+              <div style="font-size:14.5px;color:#0369a1;line-height:1.5;">
+                <strong style="color:#0284c7;">📊 Target / Indikator:</strong> <?= htmlspecialchars($det['indikator']) ?>
               </div>
               <?php endif; ?>
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-            <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:6px;color:<?= $nBukti > 0 ? 'var(--success)' : 'var(--warning)' ?>;background:<?= $nBukti > 0 ? '#ECFDF5' : '#FFFBEB' ?>;border:1px solid <?= $nBukti > 0 ? '#A7F3D0' : '#FDE68A' ?>;">
+            <span style="font-size:12.5px;font-weight:800;padding:5px 14px;border-radius:20px;color:<?= $nBukti > 0 ? '#059669' : '#d97706' ?>;background:<?= $nBukti > 0 ? '#ecfdf5' : '#fffbeb' ?>;">
               <?= $nBukti ?> Bukti Link
             </span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" id="toggle_<?= $pdId ?>" style="transition:transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" id="toggle_<?= $pdId ?>" style="transition:transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
         </div>
 
@@ -150,25 +150,25 @@ $breadcrumbs = [
         <div id="body_<?= $pdId ?>" style="display:block;padding:18px;background:#fff;">
           
           <!-- Rincian Acuan Penetapan Standar -->
-          <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:14px;margin-bottom:16px;display:flex;flex-direction:column;gap:10px;">
+          <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:12px;padding:16px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;">
             <?php if (!empty($det['strategi'])): ?>
-            <div style="background:#fff;border-left:3px solid var(--primary);padding:8px 12px;border-radius:0 6px 6px 0;border:1px solid #E2E8F0;border-left-width:3px;">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);margin-bottom:2px;letter-spacing:0.5px;">Aturan / Dasar Hukum:</div>
-              <div style="font-size:13.5px;color:var(--text);line-height:1.5;"><?= htmlspecialchars($det['strategi']) ?></div>
+            <div style="background:#fff;border-left:4px solid #4f46e5;padding:10px 14px;border-radius:0 10px 10px 0;">
+              <div style="font-size:12px;font-weight:800;text-transform:uppercase;color:#4f46e5;margin-bottom:3px;letter-spacing:0.5px;">📌 Aturan / Dasar Hukum:</div>
+              <div style="font-size:15px;color:#1e293b;line-height:1.6;font-weight:500;"><?= htmlspecialchars($det['strategi']) ?></div>
             </div>
             <?php endif; ?>
 
             <?php if (!empty($det['target_capaian'])): ?>
-            <div style="background:#fff;border-left:3px solid var(--success);padding:8px 12px;border-radius:0 6px 6px 0;border:1px solid #E2E8F0;border-left-width:3px;">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--success);margin-bottom:2px;letter-spacing:0.5px;">Pernyataan Standar:</div>
-              <div style="font-size:13.5px;color:var(--text);line-height:1.5;"><?= htmlspecialchars($det['target_capaian']) ?></div>
+            <div style="background:#fff;border-left:4px solid #059669;padding:10px 14px;border-radius:0 10px 10px 0;">
+              <div style="font-size:12px;font-weight:800;text-transform:uppercase;color:#065f46;margin-bottom:3px;letter-spacing:0.5px;">🎯 Pernyataan Standar:</div>
+              <div style="font-size:15px;color:#1e293b;line-height:1.6;font-weight:500;"><?= htmlspecialchars($det['target_capaian']) ?></div>
             </div>
             <?php endif; ?>
 
             <?php if (!empty($det['indikator'])): ?>
-            <div style="background:#fff;border-left:3px solid var(--warning);padding:8px 12px;border-radius:0 6px 6px 0;border:1px solid #E2E8F0;border-left-width:3px;">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--warning);margin-bottom:2px;letter-spacing:0.5px;">Target / Indikator Ketercapaian:</div>
-              <div style="font-size:13.5px;color:var(--text);line-height:1.5;"><?= htmlspecialchars($det['indikator']) ?></div>
+            <div style="background:#fff;border-left:4px solid #d97706;padding:10px 14px;border-radius:0 10px 10px 0;">
+              <div style="font-size:12px;font-weight:800;text-transform:uppercase;color:#92400e;margin-bottom:3px;letter-spacing:0.5px;">📊 Target / Indikator Ketercapaian:</div>
+              <div style="font-size:15px;color:#1e293b;line-height:1.6;font-weight:500;"><?= htmlspecialchars($det['indikator']) ?></div>
             </div>
             <?php endif; ?>
           </div>
@@ -181,21 +181,21 @@ $breadcrumbs = [
             </div>
             <?php else: ?>
             <?php foreach ($det['bukti'] as $b): ?>
-            <div class="bukti-item" id="bukti_<?= $b['id'] ?>" style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;margin-bottom:8px;">
-              <div style="width:30px;height:30px;background:var(--primary);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+            <div class="bukti-item" id="bukti_<?= $b['id'] ?>" style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;margin-bottom:8px;">
+              <div style="width:32px;height:32px;background:#3f51b5;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
               </div>
               <div style="flex:1;min-width:0;">
-                <div style="font-size:13px;font-weight:600;color:var(--text);"><?= htmlspecialchars($b['judul_bukti']) ?></div>
-                <a href="<?= htmlspecialchars($b['url_link']) ?>" target="_blank" rel="noopener" style="font-size:12px;color:var(--primary);display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px;">
+                <div style="font-size:13.5px;font-weight:700;color:#1e293b;"><?= htmlspecialchars($b['judul_bukti']) ?></div>
+                <a href="<?= htmlspecialchars($b['url_link']) ?>" target="_blank" rel="noopener" style="font-size:12px;color:#3f51b5;display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px;">
                   <?= htmlspecialchars($b['url_link']) ?> ↗
                 </a>
                 <?php if ($b['keterangan']): ?>
-                <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;"><?= htmlspecialchars($b['keterangan']) ?></div>
+                <div style="font-size:12px;color:#64748b;margin-top:3px;"><?= htmlspecialchars($b['keterangan']) ?></div>
                 <?php endif; ?>
               </div>
-              <button type="button" onclick="deleteBukti(<?= $b['id'] ?>, <?= $pelaksanaan['id'] ?>, <?= $pdId ?>)" style="background:none;border:none;cursor:pointer;color:var(--danger);padding:4px 8px;border-radius:4px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;" title="Hapus bukti link ini">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+              <button type="button" onclick="deleteBukti(<?= $b['id'] ?>, <?= $pelaksanaan['id'] ?>, <?= $pdId ?>)" style="background:none;border:none;cursor:pointer;color:#ef4444;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;" title="Hapus bukti link ini">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
                 Hapus
               </button>
             </div>
@@ -204,29 +204,29 @@ $breadcrumbs = [
           </div>
 
           <!-- Form Tambah Bukti Baru -->
-          <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:14px;">
-            <div style="font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" width="15" height="15"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-              Tambah Bukti Link Baru (<?= htmlspecialchars($displayKode) ?>)
+          <div style="background:#f0f4ff;border:1.5px solid #c7d2fe;border-radius:10px;padding:14px;">
+            <div style="font-size:12.5px;font-weight:700;color:#1e293b;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3f51b5" stroke-width="2" width="15" height="15"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              Tambah Bukti Link Baru untuk Indikator (<?= htmlspecialchars($displayKode) ?>)
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
               <div>
-                <label style="font-size:11.5px;font-weight:600;color:var(--text);display:block;margin-bottom:4px;">Judul Bukti <span style="color:var(--danger);">*</span></label>
-                <input type="text" id="judulBukti_<?= $pdId ?>" placeholder="Contoh: Surat Tugas / RPS / Dokumen Evaluasi" class="form-control" style="font-size:13px;padding:7px 10px;">
+                <label style="font-size:12px;font-weight:600;color:#334155;display:block;margin-bottom:4px;">Judul Bukti <span style="color:#ef4444;">*</span></label>
+                <input type="text" id="judulBukti_<?= $pdId ?>" placeholder="Contoh: Surat Tugas / RPS / Dokumen Evaluasi" class="form-control" style="font-size:13px;padding:8px 12px;">
               </div>
               <div>
-                <label style="font-size:11.5px;font-weight:600;color:var(--text);display:block;margin-bottom:4px;">URL Link Bukti Fisik <span style="color:var(--danger);">*</span></label>
-                <input type="url" id="urlLink_<?= $pdId ?>" placeholder="https://drive.google.com/... atau https://..." class="form-control" style="font-size:13px;padding:7px 10px;">
+                <label style="font-size:12px;font-weight:600;color:#334155;display:block;margin-bottom:4px;">URL Link Bukti Fisik <span style="color:#ef4444;">*</span></label>
+                <input type="url" id="urlLink_<?= $pdId ?>" placeholder="https://drive.google.com/... atau https://..." class="form-control" style="font-size:13px;padding:8px 12px;">
               </div>
             </div>
             <div style="margin-bottom:10px;">
-              <label style="font-size:11.5px;font-weight:600;color:var(--text);display:block;margin-bottom:4px;">Keterangan Singkat (Opsional)</label>
-              <input type="text" id="ketBukti_<?= $pdId ?>" placeholder="Contoh: Halaman 2-5, Lampiran SK No. 8" class="form-control" style="font-size:13px;padding:7px 10px;">
+              <label style="font-size:12px;font-weight:600;color:#334155;display:block;margin-bottom:4px;">Keterangan Singkat (Opsional)</label>
+              <input type="text" id="ketBukti_<?= $pdId ?>" placeholder="Contoh: Halaman 2-5, Lampiran SK No. 8" class="form-control" style="font-size:13px;padding:8px 12px;">
             </div>
             <button type="button" onclick="addBukti(<?= $pdId ?>, <?= $kid ?>, <?= $pelaksanaan['id'] ?>)" id="btnAddBukti_<?= $pdId ?>" class="btn btn-primary btn-sm">
               + Tambah Bukti Link Ini
             </button>
-            <div id="buktiError_<?= $pdId ?>" style="display:none;margin-top:8px;font-size:12px;color:var(--danger);background:#FEF2F2;border-radius:6px;padding:6px 10px;"></div>
+            <div id="buktiError_<?= $pdId ?>" style="display:none;margin-top:8px;font-size:12px;color:#991b1b;background:#fef2f2;border-radius:6px;padding:6px 10px;"></div>
           </div>
 
         </div>

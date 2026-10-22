@@ -4,13 +4,18 @@
  * Platform PPEPP Fakultas
  */
 
-// Auto-detect base URL path for CSS/JS assets and routes
+$httpHost   = $_SERVER['HTTP_HOST'] ?? '';
 $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
-$reqUri = str_replace('\\', '/', $_SERVER['REQUEST_URI'] ?? '');
+$reqUri     = str_replace('\\', '/', $_SERVER['REQUEST_URI'] ?? '');
 
-if (str_contains($reqUri, '/ppepp/public') || str_contains($scriptName, '/ppepp/public')) {
+// If accessed via dedicated vhost (ppepp.test), baseUrl is always empty
+if (str_contains($httpHost, 'ppepp.test') || str_ends_with(explode(':', $httpHost)[0], '.test')) {
+    $baseUrl = '';
+} elseif (str_contains($reqUri, '/ppepp/public') || str_contains($scriptName, '/ppepp/public')) {
     $baseUrl = '/ppepp/public';
-} elseif (str_contains($reqUri, '/ppepp') || str_contains($scriptName, '/ppepp')) {
+} elseif (preg_match('#^/ppepp/(public|auth|dashboard|penetapan|pelaksanaan|evaluasi|pengendalian|peningkatan|laporan|users|prodi|setting)#i', $reqUri)) {
+    $baseUrl = '/ppepp/public';
+} elseif (str_contains($scriptName, '/ppepp')) {
     $baseUrl = '/ppepp/public';
 } else {
     $baseUrl = '';

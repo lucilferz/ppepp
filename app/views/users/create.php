@@ -1,51 +1,62 @@
 <?php
-$pageTitle   = 'Tambah Dosen Baru';
+$pageTitle   = 'Tambah Pengguna Baru';
 $breadcrumbs = [
   ['label' => 'Dashboard', 'url' => BASE_URL . '/dashboard'],
   ['label' => 'Admin', 'url' => BASE_URL . '/admin'],
-  ['label' => 'Tambah Dosen'],
+  ['label' => 'Tambah Pengguna'],
 ];
 ?>
 
-<div style="max-width:640px;margin:0 auto;">
-  <div class="card" style="border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-    <div style="background:var(--primary);padding:22px 28px;color:#fff;">
-      <h2 style="font-size:18px;font-weight:800;color:#fff;margin:0 0 4px;">+ Tambah Dosen Baru</h2>
-      <p style="font-size:13px;color:rgba(255,255,255,0.75);margin:0;">Dosen baru akan dapat login dan membuat PPEPP sendiri</p>
-    </div>
+<div class="page-header">
+  <div>
+    <h2>Tambah Pengguna Baru</h2>
+    <p class="page-desc">Daftarkan akun pengelola, kaprodi, atau dosen penjaminan mutu ke dalam sistem SIPMI.</p>
+  </div>
+  <div class="page-actions">
+    <a href="<?= BASE_URL ?>/admin" class="btn btn-outline">
+      ← Kembali ke Admin
+    </a>
+  </div>
+</div>
 
-    <?php if (!empty($flash['message'])): ?>
-    <div style="margin:16px;padding:12px 16px;border-radius:8px;font-size:13.5px;font-weight:600;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;">
-      <?= htmlspecialchars($flash['message']) ?>
-    </div>
-    <?php endif; ?>
+<div class="card" style="max-width:680px;margin:0 auto;">
+  <div class="card-header">
+    <h3 class="card-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
+      Formulir Pengguna Baru
+    </h3>
+  </div>
 
-    <form action="<?= BASE_URL ?>/users/store" method="POST" style="padding:28px;display:flex;flex-direction:column;gap:18px;">
+  <?php if (!empty($flash['message'])): ?>
+  <div class="alert alert-danger" style="margin:16px 20px 0;">
+    <?= htmlspecialchars($flash['message']) ?>
+  </div>
+  <?php endif; ?>
 
-      <div>
-        <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-          Nama Lengkap (dengan gelar) <span style="color:#ef4444;">*</span>
+  <form action="<?= BASE_URL ?>/users/store" method="POST">
+    <div class="card-body">
+      <div class="form-group mb-3">
+        <label for="nama_lengkap" class="form-label">
+          Nama Lengkap (dengan gelar) <span style="color:var(--danger);">*</span>
         </label>
-        <input type="text" name="nama_lengkap" class="form-control" required
-               placeholder="Contoh: Dr. Budi Santoso, S.T., M.T."
-               style="font-size:13.5px;padding:10px 14px;border-radius:8px;">
-        <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">Nama lengkap beserta gelar akademik</div>
+        <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control" required
+               placeholder="Contoh: Dr. Budi Santoso, S.T., M.T.">
+        <div class="form-text">Nama lengkap beserta gelar akademik resmi.</div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <div>
-          <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-            Username (NIP) <span style="color:#ef4444;">*</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;" class="mb-3">
+        <div class="form-group mb-0">
+          <label for="username" class="form-label">
+            Username / NIP <span style="color:var(--danger);">*</span>
           </label>
-          <input type="text" name="username" class="form-control" required
-                 placeholder="Contoh: 5812019362"
-                 style="font-size:13.5px;padding:10px 14px;border-radius:8px;">
+          <input type="text" id="username" name="username" class="form-control" required
+                 placeholder="Contoh: 5812019362">
         </div>
-        <div>
-          <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-            Role <span style="color:#ef4444;">*</span>
+        <div class="form-group mb-0">
+          <label for="role" class="form-label">
+            Peran / Hak Akses <span style="color:var(--danger);">*</span>
           </label>
-          <select name="role" class="form-control" style="font-size:13.5px;padding:10px 14px;border-radius:8px;">
+          <select id="role" name="role" class="form-control">
             <option value="dosen">Dosen</option>
             <option value="kaprodi">Kaprodi</option>
             <option value="dekan">Dekan</option>
@@ -53,34 +64,32 @@ $breadcrumbs = [
         </div>
       </div>
 
-      <div>
-        <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-          Email (@unika.ac.id) <span style="color:#ef4444;">*</span>
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">
+          Email Institusi (@unika.ac.id) <span style="color:var(--danger);">*</span>
         </label>
-        <input type="email" name="email" class="form-control" required
-               placeholder="Contoh: budi.santoso@unika.ac.id"
-               style="font-size:13.5px;padding:10px 14px;border-radius:8px;">
-        <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">Email ini juga digunakan untuk login Google</div>
+        <input type="email" id="email" name="email" class="form-control" required
+               placeholder="Contoh: budi.santoso@unika.ac.id">
+        <div class="form-text">Alamat email resmi untuk notifikasi dan integrasi SSO Google.</div>
       </div>
 
-      <div>
-        <label style="font-size:13px;font-weight:700;color:var(--text-main);display:block;margin-bottom:6px;">
-          Password <span style="color:#ef4444;">*</span>
+      <div class="form-group mb-0">
+        <label for="password" class="form-label">
+          Password Awal <span style="color:var(--danger);">*</span>
         </label>
-        <input type="password" name="password" class="form-control" required
-               placeholder="Minimal 6 karakter"
-               style="font-size:13.5px;padding:10px 14px;border-radius:8px;" minlength="6">
-        <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">Dosen dapat mengubah password sendiri setelah login</div>
+        <input type="password" id="password" name="password" class="form-control" required
+               placeholder="Minimal 6 karakter" minlength="6">
+        <div class="form-text">Pengguna dapat memperbarui password secara mandiri setelah login.</div>
       </div>
+    </div>
 
-      <div style="display:flex;gap:10px;justify-content:flex-end;padding-top:8px;border-top:1px solid #f1f5f9;">
-        <a href="<?= BASE_URL ?>/admin" class="btn btn-outline" style="padding:10px 20px;font-weight:600;font-size:13px;border-radius:8px;text-decoration:none;">
-          Batal / Kembali
-        </a>
-        <button type="submit" class="btn btn-primary" style="font-size:13px;padding:10px 24px;border-radius:8px;font-weight:700;">
-          + Simpan Dosen Baru
-        </button>
-      </div>
-    </form>
-  </div>
+    <div class="card-footer" style="display:flex;justify-content:flex-end;gap:10px;">
+      <a href="<?= BASE_URL ?>/admin" class="btn btn-outline">
+        Batal
+      </a>
+      <button type="submit" class="btn btn-primary">
+        Simpan Pengguna Baru
+      </button>
+    </div>
+  </form>
 </div>
